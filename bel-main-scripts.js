@@ -214,9 +214,15 @@ $.fn.belCreateWizardProcessStep = function(steps, messagesStep, selectedStep) {
 
 /**
  *Codigo para la animacion de contandor.
+ *
+ **
+ **
+ **
+ *
  */
+
 // Funcion para animacion de Contando 
-var belRemaingTimeForFinishUserSession = 60;
+var belRemaingTimeForFinishUserSession = 10;
 var startLoadingTime = 1000;
 var belShowMessageTimeout = null;
 var belSetTimerForFinishTheSession = null;
@@ -226,18 +232,17 @@ belShowMessageTimeout = setTimeout(belShowMessageTimer, startLoadingTime);
 
 // Funcion que inicia el contador
 function belShowMessageTimer() {
-      $('.bel-animation-circle').css('stroke-dashoffset', 300);
+      $('.bel-timer-cont__circle').css('stroke-dashoffset', 300);
     belExecuteCircleTimer();
 }
 
 function belExecuteCircleTimer() {
     var time = belRemaingTimeForFinishUserSession;
-    var timer = $('#seconds')[0];
+    var timer = $('#belSeconds')[0];
     timer.innerHTML = time;
     var seconds = Number(timer.innerHTML);
     var i = 1;
     belSetTimerForFinishTheSession = setTimeout(function() {
-    	alert("iniciar");
    // ejecutal el inicio del conteo
    // *****************************************
         }, belRemaingTimeForFinishUserSession);
@@ -246,7 +251,7 @@ function belExecuteCircleTimer() {
         if (seconds >= 0) {
             timer.innerHTML = seconds;
             i++;
-            $('.bel-animation-circle').css('stroke-dashoffset',
+            $('.bel-timer-cont__circle').css('stroke-dashoffset',
                     300 + Math.floor((i * 40 / time) + (i * 100 / time)));
         }else{
      // Finaliza el tiempo
