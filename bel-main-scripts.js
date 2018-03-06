@@ -257,7 +257,6 @@ if ( $( "#belSeconds" ).length ) {
 	        }else{
 	     // Finaliza el tiempo
 	     // ***************************
-	        	alert("se acabo el tiempo");
 	        	clearInterval(belCircleInterval);
 	        }
 	    }, 1000);
