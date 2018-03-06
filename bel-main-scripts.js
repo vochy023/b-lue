@@ -221,7 +221,7 @@ $.fn.belCreateWizardProcessStep = function(steps, messagesStep, selectedStep) {
  *
  */
 
-if ( $( "#belSeconds" ).length ) {
+if ($("#belSeconds")[0] != undefined) {
 
 	// Funcion para animacion de Contando
 	var belRemaingTimeForFinishUserSession = 10;
