@@ -6,30 +6,7 @@
 // WORKTEAM: ----- Codebreakers-Anonymous (1.0)
 // version 1.0
 
-if(undefined == $ || 'undefined' == typeof $){
-	//En caso de que JQuery se esta ejecutando en la variable gloabal wIndow lo tome de ahi
-	if(undefined != window.$j){
-		//Define $ que se ejecuta en window.$j
-		$ = window.$j;
-		//En caso de no tener JQuery cargado se encarga de cargar el archivo de la vesion 1.7.2
-	}else{
-		//Se crea el tag script con el tipo y la ruta del archivo
-		var jQueryFileScript = document.createElement('script');
-		jQueryFileScript.type='text/javascript';
-		jQueryFileScript.src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js';
-		jQueryFileScript.async = 1;
-		//Se agrega al body
-		document.getElementsByTagName('body')[0].appendChild(jQueryFileScript);
-		//Metodo que se encarga de cargar el archivo
-		jQueryFileScript.onload = jQueryFileScript.onreadystatechange = function( _, isAbort ) {
-			if(isAbort || !jQueryFileScript.readyState || /loaded|complete/.test(jQueryFileScript.readyState) ) {
-				jQueryFileScript.onload = jQueryFileScript.onreadystatechange = null;
-				jQueryFileScript = undefined;
-				if(!isAbort) { if(callback) callback(); }
-			}
-		};
-	}
-}
+validateJQuery();
 
 //input
 $(".bel-input-disabled").prop('disabled', true);
@@ -97,13 +74,13 @@ $('.bel-textarea').blur(function(){
 
 var tx = document.getElementsByTagName('textarea');
 for (var i = 0; i < tx.length; i++) {
-	tx[i].setAttribute('style', 'height:' + (tx[i].scrollHeight) + 'px;');
-	tx[i].addEventListener("input", OnInput, false);
+  tx[i].setAttribute('style', 'height:' + (tx[i].scrollHeight) + 'px;');
+  tx[i].addEventListener("input", OnInput, false);
 }
 
 function OnInput(e) {
-	this.style.height = 'auto';
-	this.style.height = (this.scrollHeight) + 'px';
+  this.style.height = 'auto';
+  this.style.height = (this.scrollHeight) + 'px';
 }
 
 //funcion tab
@@ -158,134 +135,133 @@ function validateJQuery() {
 			// Se crea el tag script con el tipo y la ruta del archivo
 			var jQueryFileScript = document.createElement('script');
 			jQueryFileScript.type = 'text/javascript';
-			jQueryFileScript.src = '/jquery-1.7.2.js';
+			jQueryFileScript.src = 'https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js';
 			jQueryFileScript.async = 1;
 			// Se agrega al body
 			document.getElementsByTagName('body')[0]
-			.appendChild(jQueryFileScript);
+					.appendChild(jQueryFileScript);
 			// Metodo que se encarga de cargar el archivo
 			jQueryFileScript.onload = jQueryFileScript.onreadystatechange = function(
-				_, isAbort) {
-					if (isAbort || !jQueryFileScript.readyState
+					_, isAbort) {
+				if (isAbort || !jQueryFileScript.readyState
 						|| /loaded|complete/.test(jQueryFileScript.readyState)) {
-							jQueryFileScript.onload = jQueryFileScript.onreadystatechange = null;
-							jQueryFileScript = undefined;
-							if (!isAbort) {
-								if (callback)
-								callback();
-							}
-						}
-					};
+					jQueryFileScript.onload = jQueryFileScript.onreadystatechange = null;
+					jQueryFileScript = undefined;
+					if (!isAbort) {
+						if (callback)
+							callback();
+					}
 				}
-			}
+			};
 		}
+	}
+}
 
 
-		/**
-		* Plugin creado para crear pasos de wizard generico
+/**
+ * Plugin creado para crear pasos de wizard generico
 
-		* Descripcion de uso
-		*
-		* $('#contenedorEjemplo').createWizard(steps, mensajesdePasos, mensajeNumeros,
-		* selectedStep);
-		*
-		* Los parametros son los pasos que se debe mostrar, con el texto y el numero
-		* del paso por cada paso en un arreglo y el paso seleccionado.
-		*
-		* messagesStep = []; messagesStep.push(<fmt:message
-		* key="common.label.wizard.step1" />); messagesStep.push(<fmt:message
-		* key="common.label.wizard.step2" />); messagesStep.push(<fmt:message
-		* key="common.label.wizard.step3" />);
-		*
-		* $('#contenedorEjemplo').belCreateWizardProcessStep(3, messagesStep,
-		* messagesNumber, 1);
-		*/
-		// Carga JQuery en caso de que no se este cargando en la pagina
-		validateJQuery();
-		$.fn.belCreateWizardProcessStep = function(steps, messagesStep, selectedStep) {
-			if (steps <= 5) {
-				var processList = $('<ul class="bel-wizard"></ul>');
-				for (var i = 0; i < steps; i++) {
-					var step = $('<li class="bel-wizard-li bel-wizard-step-inactive bel-wizard-steps-'
+ * Descripcion de uso
+ *
+ * $('#contenedorEjemplo').createWizard(steps, mensajesdePasos, mensajeNumeros,
+ * selectedStep);
+ *
+ * Los parametros son los pasos que se debe mostrar, con el texto y el numero
+ * del paso por cada paso en un arreglo y el paso seleccionado.
+ *
+ * messagesStep = []; messagesStep.push(<fmt:message
+ * key="common.label.wizard.step1" />); messagesStep.push(<fmt:message
+ * key="common.label.wizard.step2" />); messagesStep.push(<fmt:message
+ * key="common.label.wizard.step3" />);
+ *
+ * $('#contenedorEjemplo').belCreateWizardProcessStep(3, messagesStep,
+ * messagesNumber, 1);
+ */
+// Carga JQuery en caso de que no se este cargando en la pagina
+$.fn.belCreateWizardProcessStep = function(steps, messagesStep, selectedStep) {
+	if (steps <= 5) {
+		var processList = $('<ul class="bel-wizard"></ul>');
+		for (var i = 0; i < steps; i++) {
+			var step = $('<li class="bel-wizard-li bel-wizard-step-inactive bel-wizard-steps-'
 					+ steps
 					+ '"><label id="step'
 					+ (i + 1)
 					+ '" class="bel-wizard-label bel-wizard-label-inactive">'
 					+ messagesStep[i] + '</label></li>');
-					if ((i + 1) == selectedStep) {
-						step = $('<li class="bel-wizard-li bel-wizard-step-active bel-wizard-steps-'
+			if ((i + 1) == selectedStep) {
+				step = $('<li class="bel-wizard-li bel-wizard-step-active bel-wizard-steps-'
 						+ steps
 						+ '"><label id="step'
 						+ (i + 1)
 						+ '" class="bel-wizard-label bel-wizard-label-active">'
 						+ messagesStep[i] + '</label></li>');
-					} else if ((i + 1) < selectedStep) {
-						step = $('<li class="bel-wizard-li bel-wizard-step-completed bel-wizard-steps-'
+			} else if ((i + 1) < selectedStep) {
+				step = $('<li class="bel-wizard-li bel-wizard-step-completed bel-wizard-steps-'
 						+ steps
 						+ '"><label id="step'
 						+ (i + 1)
 						+ '" class="bel-wizard-label bel-wizard-label-active">'
 						+ messagesStep[i] + '</label></li>');
-					}
-					processList.append(step);
-				}
-				;
-				this.append(processList);
-			} else {
-				alert("Número de pasos esta por encima de la capacidad de Wizard");
 			}
+			processList.append(step);
 		}
+		;
+		this.append(processList);
+	} else {
+		alert("Número de pasos esta por encima de la capacidad de Wizard");
+	}
+}
 
-		/**
-		*Codigo para la animacion de contandor.
-		*
-		**
-		**
-		**
-		*
-		*/
+/**
+ *Codigo para la animacion de contandor.
+ *
+ **
+ **
+ **
+ *
+ */
 
-		// Funcion para animacion de Contando
-		var belRemaingTimeForFinishUserSession = 10;
-		var startLoadingTime = 1000;
-		var belShowMessageTimeout = null;
-		var belSetTimerForFinishTheSession = null;
-		var belCircleInterval = null;
+if ( $( "#belSeconds" ).length ) {
 
-		belShowMessageTimeout = setTimeout(belShowMessageTimer, startLoadingTime);
+	// Funcion para animacion de Contando
+	var belRemaingTimeForFinishUserSession = 10;
+	var startLoadingTime = 1000;
+	var belShowMessageTimeout = null;
+	var belSetTimerForFinishTheSession = null;
+	var belCircleInterval = null;
 
-		// Funcion que inicia el contador
-		function belShowMessageTimer() {
-			$('.bel-timer-cont__circle').css('stroke-dashoffset', 300);
-			if(undefined != $('#belSeconds')[0]){
-				belExecuteCircleTimer();
-			}
-		}
+	belShowMessageTimeout = setTimeout(belShowMessageTimer, startLoadingTime);
 
-		function belExecuteCircleTimer() {
-			var time = belRemaingTimeForFinishUserSession;
-			var timer = $('#belSeconds')[0];
-			timer.innerHTML = time;
-			var seconds = Number(timer.innerHTML);
-			var i = 1;
-			belSetTimerForFinishTheSession = setTimeout(function() {
-				// ejecutal el inicio del conteo
-				// *****************************************
-			}, belRemaingTimeForFinishUserSession);
-			belCircleInterval = setInterval(function() {
-				seconds--;
-				if (seconds >= 0) {
-					timer.innerHTML = seconds;
-					i++;
-					$('.bel-timer-cont__circle').css('stroke-dashoffset',
-					300 + Math.floor((i * 40 / time) + (i * 100 / time)));
-				}else{
-					// Finaliza el tiempo
-					// ***************************
-					alert("se acabo el tiempo");
-					clearInterval(belCircleInterval);
-				}
-			}, 1000);
-		}
+	// Funcion que inicia el contador
+	function belShowMessageTimer() {
+	      $('.bel-timer-cont__circle').css('stroke-dashoffset', 300);
+	    belExecuteCircleTimer();
+	}
+	function belExecuteCircleTimer() {
+	    var time = belRemaingTimeForFinishUserSession;
+	    var timer = $('#belSeconds')[0];
+	    timer.innerHTML = time;
+	    var seconds = Number(timer.innerHTML);
+	    var i = 1;
+	    belSetTimerForFinishTheSession = setTimeout(function() {
+	   // ejecutal el inicio del conteo
+	   // *****************************************
+	        }, belRemaingTimeForFinishUserSession);
+	      belCircleInterval = setInterval(function() {
+	        seconds--;
+	        if (seconds >= 0) {
+	            timer.innerHTML = seconds;
+	            i++;
+	            $('.bel-timer-cont__circle').css('stroke-dashoffset',
+	                    300 + Math.floor((i * 40 / time) + (i * 100 / time)));
+	        }else{
+	     // Finaliza el tiempo
+	     // ***************************
+	        	alert("se acabo el tiempo");
+	        	clearInterval(belCircleInterval);
+	        }
+	    }, 1000);
+	}
+}
 
-		// Fin funcion animacion contador
+// Fin funcion animacion contador
