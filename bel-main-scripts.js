@@ -83,7 +83,7 @@ function OnInput(e) {
 }
 
 //funcion tab
-//Caga los textos al hacer click en los tabs 
+//Caga los textos al hacer click en los tabs
 $.fn.makeTabs = function(tabSelected){
 	var tabContiner = this;
 	this.attr('class', 'bel-tab-container');
@@ -106,16 +106,16 @@ $.fn.makeTabs = function(tabSelected){
 			$(this).attr('class', 'bel-tab-container__bel-tab tab-selected');
 			$(tab).show();
 		});
-		
+
 		if("#"+tabSelected == tab){
 			$(this).attr('class', 'bel-tab-container__bel-tab tab-selected');
 			$(this).click();
 		}else{
 			$(this).attr('class', 'bel-tab-container__bel-tab tab-unselected');
 		}
-		
+
 	});
-	
+
 };
 //fin funcion tab
 
@@ -159,20 +159,20 @@ function validateJQuery() {
 
 /**
  * Plugin creado para crear pasos de wizard generico
- 
+
  * Descripcion de uso
- * 
+ *
  * $('#contenedorEjemplo').createWizard(steps, mensajesdePasos, mensajeNumeros,
  * selectedStep);
- * 
+ *
  * Los parametros son los pasos que se debe mostrar, con el texto y el numero
  * del paso por cada paso en un arreglo y el paso seleccionado.
- * 
+ *
  * messagesStep = []; messagesStep.push(<fmt:message
  * key="common.label.wizard.step1" />); messagesStep.push(<fmt:message
  * key="common.label.wizard.step2" />); messagesStep.push(<fmt:message
  * key="common.label.wizard.step3" />);
- * 
+ *
  * $('#contenedorEjemplo').belCreateWizardProcessStep(3, messagesStep,
  * messagesNumber, 1);
  */
@@ -221,14 +221,14 @@ $.fn.belCreateWizardProcessStep = function(steps, messagesStep, selectedStep) {
  *
  */
 
-// Funcion para animacion de Contando 
+// Funcion para animacion de Contando
 var belRemaingTimeForFinishUserSession = 10;
 var startLoadingTime = 1000;
 var belShowMessageTimeout = null;
 var belSetTimerForFinishTheSession = null;
 var belCircleInterval = null;
 
-belShowMessageTimeout = setTimeout(belShowMessageTimer, startLoadingTime);
+//belShowMessageTimeout = setTimeout(belShowMessageTimer, startLoadingTime);
 
 // Funcion que inicia el contador
 function belShowMessageTimer() {
@@ -262,5 +262,4 @@ function belExecuteCircleTimer() {
     }, 1000);
 }
 
-// Fin funcion animacion contador 
-
+// Fin funcion animacion contador
