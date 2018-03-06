@@ -6,7 +6,7 @@
 // WORKTEAM: ----- Codebreakers-Anonymous (1.0)
 // version 1.0
 
-if(undefined == $ || ‘undefined’ == typeof $){
+if(undefined == $ || 'undefined' == typeof $){
 	//En caso de que JQuery se esta ejecutando en la variable gloabal wIndow lo tome de ahi
 	if(undefined != window.$j){
 		//Define $ que se ejecuta en window.$j
@@ -14,12 +14,12 @@ if(undefined == $ || ‘undefined’ == typeof $){
 		//En caso de no tener JQuery cargado se encarga de cargar el archivo de la vesion 1.7.2
 	}else{
 		//Se crea el tag script con el tipo y la ruta del archivo
-		var jQueryFileScript = document.createElement(‘script’);
-		jQueryFileScript.type=‘text/javascript’;
-		jQueryFileScript.src=’https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js';
+		var jQueryFileScript = document.createElement('script');
+		jQueryFileScript.type='text/javascript';
+		jQueryFileScript.src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js';
 		jQueryFileScript.async = 1;
 		//Se agrega al body
-		document.getElementsByTagName(‘body’)[0].appendChild(jQueryFileScript);
+		document.getElementsByTagName('body')[0].appendChild(jQueryFileScript);
 		//Metodo que se encarga de cargar el archivo
 		jQueryFileScript.onload = jQueryFileScript.onreadystatechange = function( _, isAbort ) {
 			if(isAbort || !jQueryFileScript.readyState || /loaded|complete/.test(jQueryFileScript.readyState) ) {
