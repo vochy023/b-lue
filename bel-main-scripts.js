@@ -264,3 +264,9 @@ if ( $( "#belSeconds" ).length ) {
 }
 
 // Fin funcion animacion contador
+
+
+funcion closeModal(box, modal){
+	document.getElementById(box).style.display = 'None';
+	document.getElementById(modal).style.display = 'None';
+}
