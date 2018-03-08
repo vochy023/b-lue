@@ -220,49 +220,49 @@ $.fn.belCreateWizardProcessStep = function(steps, messagesStep, selectedStep) {
  **
  *
  */
-
-if ( $( "#belSeconds" ).length ) {
-
-	// Funcion para animacion de Contando
-	var belRemaingTimeForFinishUserSession = 10;
-	var startLoadingTime = 1000;
-	var belShowMessageTimeout = null;
-	var belSetTimerForFinishTheSession = null;
-	var belCircleInterval = null;
-
-	belShowMessageTimeout = setTimeout(belShowMessageTimer, startLoadingTime);
-
-	// Funcion que inicia el contador
-	function belShowMessageTimer() {
-	      $('.bel-timer-cont__circle').css('stroke-dashoffset', 300);
-	    belExecuteCircleTimer();
-	}
-	function belExecuteCircleTimer() {
-	    var time = belRemaingTimeForFinishUserSession;
-	    var timer = $('#belSeconds')[0];
-	    timer.innerHTML = time;
-	    var seconds = Number(timer.innerHTML);
-	    var i = 1;
-	    belSetTimerForFinishTheSession = setTimeout(function() {
-	   // ejecutal el inicio del conteo
-	   // *****************************************
-	        }, belRemaingTimeForFinishUserSession);
-	      belCircleInterval = setInterval(function() {
-	        seconds--;
-	        if (seconds >= 0) {
-	            timer.innerHTML = seconds;
-	            i++;
-	            $('.bel-timer-cont__circle').css('stroke-dashoffset',
-	                    300 + Math.floor((i * 40 / time) + (i * 100 / time)));
-	        }else{
-	     // Finaliza el tiempo
-	     // ***************************
-	        	clearInterval(belCircleInterval);
-	        }
-	    }, 1000);
+function startAmimationTimer(){
+	if ( $( "#belSeconds" ).length ) {
+	
+		// Funcion para animacion de Contando
+		var belRemaingTimeForFinishUserSession = 10;
+		var startLoadingTime = 1000;
+		var belShowMessageTimeout = null;
+		var belSetTimerForFinishTheSession = null;
+		var belCircleInterval = null;
+	
+		belShowMessageTimeout = setTimeout(belShowMessageTimer, startLoadingTime);
+	
+		// Funcion que inicia el contador
+		function belShowMessageTimer() {
+		      $('.bel-timer-cont__circle').css('stroke-dashoffset', 300);
+		    belExecuteCircleTimer();
+		}
+		function belExecuteCircleTimer() {
+		    var time = belRemaingTimeForFinishUserSession;
+		    var timer = $('#belSeconds')[0];
+		    timer.innerHTML = time;
+		    var seconds = Number(timer.innerHTML);
+		    var i = 1;
+		    belSetTimerForFinishTheSession = setTimeout(function() {
+		   // ejecutal el inicio del conteo
+		   // *****************************************
+		        }, belRemaingTimeForFinishUserSession);
+		      belCircleInterval = setInterval(function() {
+		        seconds--;
+		        if (seconds >= 0) {
+		            timer.innerHTML = seconds;
+		            i++;
+		            $('.bel-timer-cont__circle').css('stroke-dashoffset',
+		                    300 + Math.floor((i * 40 / time) + (i * 100 / time)));
+		        }else{
+		     // Finaliza el tiempo
+		     // ***************************
+		        	clearInterval(belCircleInterval);
+		        }
+		    }, 1000);
+		}
 	}
 }
-
 // Fin funcion animacion contador
 
 
