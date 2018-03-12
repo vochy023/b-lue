@@ -222,16 +222,16 @@ $.fn.belCreateWizardProcessStep = function(steps, messagesStep, selectedStep) {
  */
 function startAmimationTimer(){
 	if ( $( "#belSeconds" ).length ) {
-	
+
 		// Funcion para animacion de Contando
 		var belRemaingTimeForFinishUserSession = 10;
 		var startLoadingTime = 1000;
 		var belShowMessageTimeout = null;
 		var belSetTimerForFinishTheSession = null;
 		var belCircleInterval = null;
-	
+
 		belShowMessageTimeout = setTimeout(belShowMessageTimer, startLoadingTime);
-	
+
 		// Funcion que inicia el contador
 		function belShowMessageTimer() {
 		      $('.bel-timer-cont__circle').css('stroke-dashoffset', 300);
@@ -267,6 +267,15 @@ function startAmimationTimer(){
 
 
 function closeModal(box, modal){
-	document.getElementById(box).style.display = 'None';
-	document.getElementById(modal).style.display = 'None';
+	document.getElementById(box).classList.remove('bel-box-visible');
+	document.getElementById(modal).classList.remove('bel-modal-visible');
+	document.getElementById(box).classList.add('bel-box-hidden');
+	document.getElementById(modal).classList.add('bel-modal-hidden');
+}
+
+function openModal(box, modal){
+	document.getElementById(box).classList.remove('bel-box-hidden');
+	document.getElementById(modal).classList.remove('bel-modal-hidden');
+	document.getElementById(box).classList.add('bel-box-visible');
+	document.getElementById(modal).classList.add('bel-modal-visible');
 }
