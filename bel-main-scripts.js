@@ -20,6 +20,7 @@ $(".bel-input").on('click', function() {
 
 $('.bel-input').blur(function() {
 	$(this).removeClass('bel-input-edit');
+	$(this).addClass('bel-input-filled');
 });
 
 // select
@@ -180,6 +181,7 @@ function validateJQuery() {
 // Carga JQuery en caso de que no se este cargando en la pagina
 $.fn.belCreateWizardProcessStep = function(steps, messagesStep, selectedStep) {
 	if (steps <= 5) {
+
 		var processList = $('<ul class="bel-wizard"></ul>');
 		for (var i = 0; i < steps; i++) {
 			var step = $('<li class="bel-wizard-li bel-wizard-step-inactive bel-wizard-steps-'
@@ -207,8 +209,22 @@ $.fn.belCreateWizardProcessStep = function(steps, messagesStep, selectedStep) {
 		}
 		;
 		this.append(processList);
+		animationProgressBar(steps, selectedStep);
+
 	} else {
 		alert("Número de pasos esta por encima de la capacidad de Wizard");
+	}
+}
+
+function animationProgressBar(steps, selectedStep){
+
+	if(selectedStep > steps){
+			alert("El paso actúal elegido es mayor a la cantidad de pasos disponible");
+	}else {
+		var barEfect = document.getElementsByClassName("bel-wizard-step-active")[0];
+		var lblEfect = document.getElementsByClassName("bel-wizard-label-active")[selectedStep-1];
+		barEfect.className += " bel-wizard-step-actual";
+		lblEfect.className += " bel-wizard-label-actual";
 	}
 }
 
