@@ -35,26 +35,32 @@ function updateBelSelect(idList, idLabel, optionText, element) {
 	$(element).addClass('selected');
 }
 
+
 function displayBelOption(idList, idLabel) {
 	if ($('#' + idLabel).hasClass('bel-select-open-icon')) {
 		$("#" + idLabel).removeClass('bel-select-open-icon');
 		$("#" + idLabel).addClass('bel-select-close-icon');
 		$("#" + idList).removeClass("bel-display-list");
 	} else {
+		scrollToElement('#' + idLabel);
 		var allOptions = $(".bel-option-list");
 		allOptions.removeClass('bel-display-list');
-
 		var allSelectLabels = $(".bel-select");
 		allSelectLabels.removeClass('bel-select-open-icon');
 		allSelectLabels.addClass('bel-select-close-icon');
-
 		if (!$('#' + idLabel).hasClass('bel-select-disabled')) {
 			var allOptions = $("#mySelect").children('li');
 			allOptions.removeClass('selected');
-			$('#' + idList).toggleClass('bel-display-list');
+			$('#' + idList).toggleClass('bel-display-list');			
 			$("#" + idLabel).addClass('bel-select-open-icon');
 		}
 	}
+}
+
+function scrollToElement(elementID){
+	$('html').animate({
+	    scrollTop: $(elementID).offset().top
+	  }, 2000);
 }
 
 //obtiene el valor seleccionado del select
