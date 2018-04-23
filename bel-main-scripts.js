@@ -51,8 +51,31 @@ function displayBelOption(idList, idLabel) {
 		if (!$('#' + idLabel).hasClass('bel-select-disabled')) {
 			var allOptions = $("#mySelect").children('li');
 			allOptions.removeClass('selected');
-			$('#' + idList).toggleClass('bel-display-list');			
+			$('#' + idList).toggleClass('bel-display-list');
 			$("#" + idLabel).addClass('bel-select-open-icon');
+		}
+	}
+}
+
+function displayDownloadOption(idList, idLabel) {
+	if (document.getElementById("downloadOptions").style.display == "block" ) {
+		$("#" + idList).removeClass("bel-display-list");
+		$("#" + idList).removeClass("bel-download-options");
+		document.getElementById("downloadOptions").style.display = "none";
+	} else {
+		scrollToElement('#' + idLabel);
+		var allOptions = $(".bel-option-list");
+		allOptions.removeClass('bel-display-list');
+		var allSelectLabels = $(".bel-select");
+		//allSelectLabels.removeClass('bel-select-open-icon');
+		//allSelectLabels.addClass('bel-select-close-icon');
+		document.getElementById("downloadOptions").style.display = "block";
+		if (!$('#' + idLabel).hasClass('bel-select-disabled')) {
+			var allOptions = $("#mySelect").children('li');
+			allOptions.removeClass('selected');
+			$('#' + idList).toggleClass('bel-display-list');
+			$('#' + idList).toggleClass('bel-download-options');
+
 		}
 	}
 }
@@ -60,7 +83,7 @@ function displayBelOption(idList, idLabel) {
 function scrollToElement(elementID){
 	$('html').animate({
 	    scrollTop: $(elementID).offset().top
-	  }, 2000);
+	  }, 1000);
 }
 
 //obtiene el valor seleccionado del select
