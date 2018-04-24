@@ -62,14 +62,14 @@ function displayDownloadOption(idList, idLabel) {
 		$("#" + idList).removeClass("bel-display-list");
 		$("#" + idList).removeClass("bel-download-options");
 		document.getElementById("downloadOptions").style.display = "none";
+		document.getElementById(idList).style.display = "none";
 	} else {
 		scrollToElement('#' + idLabel);
 		var allOptions = $(".bel-option-list");
 		allOptions.removeClass('bel-display-list');
 		var allSelectLabels = $(".bel-select");
-		//allSelectLabels.removeClass('bel-select-open-icon');
-		//allSelectLabels.addClass('bel-select-close-icon');
 		document.getElementById("downloadOptions").style.display = "block";
+		document.getElementById(idList).style.display = "block";
 		if (!$('#' + idLabel).hasClass('bel-select-disabled')) {
 			var allOptions = $("#mySelect").children('li');
 			allOptions.removeClass('selected');
