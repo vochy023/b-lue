@@ -2,7 +2,7 @@
 // SP: ----------- CRI-025171
 // DATE: --------- 19-02-2018
 // DESCRIPTION: -- funciones para los elementos: campo de texto, textarea y combo de seleccion
-// AUTHOR: ------- jcastillov (1.0)
+// AUTHOR: ------- jcastillov, aramirez (1.0)
 // WORKTEAM: ----- Codebreakers-Anonymous (1.0)
 // version 1.0
 
@@ -75,7 +75,6 @@ function displayDownloadOption(idList, idLabel) {
 			allOptions.removeClass('selected');
 			$('#' + idList).toggleClass('bel-display-list');
 			$('#' + idList).toggleClass('bel-download-options');
-
 		}
 	}
 }
@@ -323,4 +322,16 @@ function openModal(box, modal){
 	document.getElementById(modal).classList.remove('bel-modal-hidden');
 	document.getElementById(box).classList.add('bel-box-visible');
 	document.getElementById(modal).classList.add('bel-modal-visible');
+}
+
+//Funcion para esconder o mostrar el resultado de las busquedas
+function belShowResultsContent(myInput, myContent) {
+    var input, resultCont;
+    input = document.getElementById(myInput);
+    resultCont = document.getElementById(myContent);
+    if(input.value==""){
+    	resultCont.classList.add("bel-hide-element");
+    }else{
+    	resultCont.classList.remove("bel-hide-element");
+    }
 }
