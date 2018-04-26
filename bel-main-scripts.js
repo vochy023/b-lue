@@ -61,6 +61,7 @@ function displayDownloadOption(idList, idLabel) {
 	if (document.getElementById("downloadOptions").style.display == "block" ) {
 		$("#" + idList).removeClass("bel-display-list");
 		$("#" + idList).removeClass("bel-download-options");
+		$("#" + idLabel).removeClass("bel-download-open");
 		document.getElementById("downloadOptions").style.display = "none";
 		document.getElementById(idList).style.display = "none";
 	} else {
@@ -75,6 +76,7 @@ function displayDownloadOption(idList, idLabel) {
 			allOptions.removeClass('selected');
 			$('#' + idList).toggleClass('bel-display-list');
 			$('#' + idList).toggleClass('bel-download-options');
+			$("#" + idLabel).toggleClass("bel-download-open");
 		}
 	}
 }
