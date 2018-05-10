@@ -24,15 +24,18 @@ $('.bel-input').blur(function() {
 });
 
 // select
-function updateBelSelect(idList, idLabel, optionText, element) {
-	document.getElementById(idLabel).innerHTML = optionText;
-	$("#" + idLabel).addClass("bel-select-filled");
-	$("#" + idList).removeClass("bel-display-list");
-	$("#" + idLabel).removeClass('bel-select-open-icon');
-	$("#" + idLabel).addClass('bel-select-close-icon');
-	var allOptions = $("#" + idList).children('li');
+function updateBelSelect(id, value, optionText, element) {
+	document.getElementById(id + "Label").innerHTML = optionText;
+	$("#" + id + "Label").addClass("bel-select-filled");
+	$("#" + id + "List").removeClass("bel-display-list");
+	$("#" + id + "Label").removeClass('bel-select-open-icon');
+	$("#" + id + "Label").addClass('bel-select-close-icon');
+	var allOptions = $("#" + id + "List").children('li');
 	allOptions.removeClass('selected');
 	$(element).addClass('selected');
+	$('#'+id+' option:selected').removeAttr("selected");
+	$('#'+id+' option[value="'+value+'"]').attr('selected', 'selected');
+	$("#" + id).trigger("change");
 }
 
 
@@ -337,3 +340,160 @@ function belShowResultsContent(myInput, myContent) {
     	resultCont.classList.remove("bel-hide-element");
     }
 }
+
+
+/**
+ *Funcionalidad para el componente de Notificaciones-email
+ *
+ */
+ (function ($) {
+ 	$.fn.delayKeyup = function(callback, ms){
+ 		var timer = 0;
+ 		$(this).keyup(function(){                   
+ 			clearTimeout (timer);
+ 			timer = setTimeout(callback, ms);
+ 		});
+ 		return $(this);
+ 	};
+ })(jQuery);
+
+ $('#belInputEmailId').delayKeyup(function(){ 
+ 	belValidateEmail('belInputEmailId', 'belInpEmailSpan'); 
+ }, 500);
+
+ function belAddNewEmail(inputId, mainContId, spanId, maxEmails){	
+ 	var belMoreEmailsContId = document.getElementById(mainContId);
+ 	var divs = belMoreEmailsContId.querySelectorAll('div');
+ 	var cantidad = divs.length;
+ 	var inputTextAux = $("#"+inputId).val();
+ 	if (maxEmails>cantidad && inputTextAux!="") {
+ 		if ($('#'+spanId).hasClass('bel-validation-icon-success-s')) {
+ 			$('#'+inputId).removeClass('bel-input-error');
+ 			var contAux = document.createElement("div");
+ 			contAux.className = "bel-space-top-xs";
+
+ 			var inputAux = document.createElement("input");
+ 			inputAux.className = "bel-input--icon bel-input--icon-m bel-input-default bel-input-non-editable";
+ 			inputAux.setAttribute('type','text');
+ 			inputAux.setAttribute('value', inputTextAux);
+ 			$("#"+inputId).val("");
+ 			belClearInputMain(spanId,inputId);
+
+ 			var spanAux = document.createElement("span");
+ 			spanAux.className = "bel-error-validation bel-error-validation-item";
+ 			spanAux.setAttribute('onclick','belDeleteEmailCont(this)');
+
+ 			contAux.appendChild(inputAux);
+ 			contAux.appendChild(spanAux);
+ 			belMoreEmailsContId.appendChild(contAux);
+ 		}else{
+ 			$('#'+inputId).addClass('bel-input-error');
+ 			$('#'+spanId).addClass('el-typography-main bel-typography-label-error');
+ 			$('#'+spanId).removeClass('bel-hide-element');
+ 			$('#'+spanId).text("Formato no válido");
+ 		}
+ 	}
+ 	if (cantidad==maxEmails && inputTextAux!="") {
+ 		$('#'+spanId).removeClass('bel-validation-icon bel-validation-icon-success-s bel-hide-element');
+ 		$('#'+inputId).addClass('bel-input-error');
+ 		$("#"+inputId).val("");
+ 		$('#'+spanId).addClass('el-typography-main bel-typography-label-error');
+ 		$('#'+spanId).text("No se pueden agregar más correos");
+ 	}
+ }
+
+ function belCheckExistEmails(inputId, spanId, mainContId){
+ 	var belMoreEmailsContId = document.getElementById(mainContId);
+ 	var divs = belMoreEmailsContId.querySelectorAll('div');
+ 	var cantidad = divs.length;
+ 	if (cantidad==0 && !$('#'+spanId).hasClass('bel-validation-icon-success-s')) {
+ 		$('#'+spanId).removeClass('bel-validation-icon bel-validation-icon-success-s bel-hide-element');
+ 		$('#'+inputId).addClass('bel-input-error');
+ 		$('#'+spanId).addClass('el-typography-main bel-typography-label-error');
+ 		$('#'+spanId).text("Campo requerido");
+ 	}
+ }
+
+ function belDeleteEmailCont(element){
+ 	$( element ).parent(".bel-col-7").remove();
+ 	$( element ).parent(".bel-space-top-xs").remove();
+ }
+
+ function belValidateEmail(inputId, spanId) {
+ 	var email = $('#'+inputId).val();
+ 	if (email!="") {
+ 		var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; 		
+ 		$("#"+spanId).removeClass('bel-hide-element');
+ 		$("#"+spanId).text('');
+ 		if (re.test(String(email).toLowerCase())) {
+ 			$("#"+spanId).removeClass('el-typography-main bel-typography-label-error');
+ 			$("#"+spanId).text('');
+ 			$("#"+inputId).removeClass('bel-input-error');
+ 			$("#"+spanId).addClass('bel-validation-icon bel-validation-icon-success-s');
+ 		}else{
+ 			$("#"+spanId).removeClass('bel-validation-icon bel-validation-icon-success-s');
+ 		}
+ 	}else{
+ 		$("#"+spanId).addClass('bel-hide-element');
+ 	}
+ }
+
+ function belClearInputMain(spanId, inputId){
+ 	$('#'+inputId).val('');
+ 	$("#"+spanId).removeClass();
+ 	$("#"+spanId).addClass('bel-hide-element');
+ 	$("#"+spanId).unbind( "click" );
+ }
+
+
+$.fn.blueSelect = function(size, label){
+	if(this.attr('id') == undefined){
+		this.attr('id', this.attr('name'));
+	}
+	var elementId = this.attr('id');
+	this.removeClass();
+	this.removeAttr( 'style' );
+	var hasCategory = false;
+	
+	
+	var selectedLabel = null;
+	
+	var selectDiv = $("<div></div>")
+	
+	var selectList = $('<ul id="'+elementId+'List" class="bel-option-list bel-option-list-'+size+'"></ul>')
+	
+	this.find( 'optgroup' ).each(function () {
+		hasCategory = true;
+		$(selectList).append($('<li class="bel-option-disabled">'+$(this).attr("label")+'</li>')); 
+		$(this).find( 'option' ).each(function () {
+			$(selectList).append($('<li class="bel-option" onclick="updateBelSelect(\''+elementId+'\', \''+$(this).attr('value')+'\', this.innerHTML, this);">'+$(this).text()+'</li>')); 
+			if($(this).prop('selected')){
+				selectedLabel = $(this).text();
+			}
+		});
+	});
+	
+	if(!hasCategory){
+		$(this).find( 'option' ).each(function () {
+			if($(this).prop('disabled')){
+				$(selectList).append($('<li class="bel-option-disabled">'+$(this).text()+'</li>')); 
+			}else{
+				$(selectList).append($('<li class="bel-option" onclick="updateBelSelect(\''+elementId+'\', \''+$(this).attr('value')+'\', this.innerHTML, this);">'+$(this).text()+'</li>')); 
+				if($(this).prop('selected')){
+					selectedLabel = $(this).text();
+				}
+			}
+			
+		});
+	}
+	if(null == selectedLabel){
+		selectedLabel = label;
+	}
+	
+	$(selectDiv).append($('<label id="'+elementId+'Label" class="bel-select bel-select-'+size+' bel-select-default bel-select-close-icon"  onclick="displayBelOption(\''+elementId+'List\', \''+elementId+'Label\');">'+selectedLabel+'</label>'));
+	$(selectDiv).append($(selectList));
+	
+	this.before( selectDiv);
+	
+	this.addClass('bel-box-hidden');
+};
