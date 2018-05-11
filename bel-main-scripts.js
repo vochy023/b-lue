@@ -446,7 +446,7 @@ function belShowResultsContent(myInput, myContent) {
  }
 
 
-$.fn.blueSelect = function(size, label){
+$.fn.blueSelect = function(size){
 	if(this.attr('id') == undefined){
 		this.attr('id', this.attr('name'));
 	}
