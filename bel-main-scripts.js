@@ -462,34 +462,30 @@ $.fn.blueSelect = function(size, label){
 	
 	var selectList = $('<ul id="'+elementId+'List" class="bel-option-list bel-option-list-'+size+'"></ul>')
 	
+	$(this).children( 'option' ).each(function () {
+		if($(this).prop('disabled')){
+			$(selectList).append($('<li class="bel-option-disabled">'+$(this).text()+'</li>')); 
+		}else{
+			$(selectList).append($('<li class="bel-option" onclick="updateBelSelect(\''+elementId+'\', \''+$(this).attr('value')+'\', this.innerHTML, this);">'+$(this).text()+'</li>')); 
+		}
+		if($(this).prop('selected')){
+			selectedLabel = $(this).text();
+		}
+	});
 	this.find( 'optgroup' ).each(function () {
 		hasCategory = true;
 		$(selectList).append($('<li class="bel-option-disabled">'+$(this).attr("label")+'</li>')); 
+		
 		$(this).find( 'option' ).each(function () {
 			$(selectList).append($('<li class="bel-option" onclick="updateBelSelect(\''+elementId+'\', \''+$(this).attr('value')+'\', this.innerHTML, this);">'+$(this).text()+'</li>')); 
 			if($(this).prop('selected')){
 				selectedLabel = $(this).text();
 			}
 		});
+		
 	});
 	
-	if(!hasCategory){
-		$(this).find( 'option' ).each(function () {
-			if($(this).prop('disabled')){
-				$(selectList).append($('<li class="bel-option-disabled">'+$(this).text()+'</li>')); 
-			}else{
-				$(selectList).append($('<li class="bel-option" onclick="updateBelSelect(\''+elementId+'\', \''+$(this).attr('value')+'\', this.innerHTML, this);">'+$(this).text()+'</li>')); 
-				if($(this).prop('selected')){
-					selectedLabel = $(this).text();
-				}
-			}
-			
-		});
-	}
-	if(null == selectedLabel){
-		selectedLabel = label;
-	}
-	
+		
 	$(selectDiv).append($('<label id="'+elementId+'Label" class="bel-select bel-select-'+size+' bel-select-default bel-select-close-icon"  onclick="displayBelOption(\''+elementId+'List\', \''+elementId+'Label\');">'+selectedLabel+'</label>'));
 	$(selectDiv).append($(selectList));
 	
