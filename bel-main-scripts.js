@@ -495,3 +495,14 @@ $.fn.blueSelect = function(size){
 	
 	this.addClass('bel-box-hidden');
 };
+
+function toggleTable(tableId){
+	$("#tBody"+tableId ).toggle();
+	if ($("#caption"+tableId ).hasClass('bel-table-open-icon')) {
+	$("#caption"+tableId ).removeClass('bel-table-open-icon');
+	$("#caption"+tableId ).addClass('bel-table-close-icon');
+	}else{
+		$("#caption"+tableId ).addClass('bel-table-open-icon');
+	$("#caption"+tableId ).removeClass('bel-table-close-icon');
+	}
+}
