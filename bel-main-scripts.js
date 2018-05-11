@@ -464,7 +464,9 @@ $.fn.blueSelect = function(size){
 	
 	$(this).children( 'option' ).each(function () {
 		if($(this).prop('disabled')){
-			$(selectList).append($('<li class="bel-option-disabled">'+$(this).text()+'</li>')); 
+			if($(this).attr('value') != '-1'){
+				$(selectList).append($('<li class="bel-option-disabled">'+$(this).text()+'</li>')); 
+			}
 		}else{
 			$(selectList).append($('<li class="bel-option" onclick="updateBelSelect(\''+elementId+'\', \''+$(this).attr('value')+'\', this.innerHTML, this);">'+$(this).text()+'</li>')); 
 		}
