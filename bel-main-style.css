@@ -4678,6 +4678,9 @@ button.Zebra_DatePicker_Icon {
 .bel-search__item:hover {
   background: #f1f1f2;
 }
+.bel-table {
+  border-collapse: collapse;
+}
 .bel-table_caption {
   border-bottom: 1px solid #6d6e71;
   text-align: left;
@@ -4701,53 +4704,69 @@ button.Zebra_DatePicker_Icon {
   padding-right: 10px;
   font-weight: 500;
 }
-.bel-table_th__left {
+.bel-table_col__left {
   text-align: left;
 }
-.bel-table_th__right {
+.bel-table_col__right {
   text-align: right;
 }
-.bel-table_th__center {
+.bel-table_col__center {
   text-align: center;
 }
-.bel-table_th__12 {
+.bel-table_col__12 {
   width: 12%;
 }
-.bel-table_th__34 {
-  width: 34%;
+.bel-table_col__14 {
+  width: 14%;
 }
-.bel-table_th__32 {
-  width: 32%;
+.bel-table_col__16 {
+  width: 16%;
 }
-.bel-table_th__24 {
-  width: 24%;
-}
-.bel-table_th__18 {
+.bel-table_col__18 {
   width: 18%;
 }
-.bel-subheader-tr {
+.bel-table_col__24 {
+  width: 24%;
+}
+.bel-table_col__32 {
+  width: 32%;
+}
+.bel-table_col__34 {
+  width: 34%;
+}
+.bel-table_col_50 {
+  width: 50%;
+}
+.bel-table_col_100 {
+  width: 100%;
+}
+.bel-table_row {
   padding: 10px;
   font-family: Graphik;
   color: #000000;
   font-size: 14px;
-  font-weight: 500;
   height: 40px;
 }
-.bel-subheader-tr-positive {
+.bel-table_row__positive {
   background-color: rgba(42, 148, 70, 0.12);
+  font-weight: 500;
 }
-.bel-subheader-tr-negative {
+.bel-table_row__negative {
   background-color: rgba(228, 0, 43, 0.12);
+  font-weight: 500;
 }
-.bel-subheader-title {
+.bel-table_column_subheader {
   width: 32%;
   padding-left: 10px;
 }
-.bel-subheader-balance {
+.bel-table_column_subheader__right {
   width: 16%;
   text-align: right;
   padding-right: 10px;
   padding-left: 10px;
+}
+.bel-table_column {
+  border-bottom: 1px solid #e6e6e6;
 }
 .bel-btn {
   background: none;
@@ -5109,6 +5128,10 @@ button.Zebra_DatePicker_Icon {
   color: white;
   cursor: pointer;
   background: #e4002b;
+}
+.bel-table_col_100:hover {
+  background-color: #f1f1f2;
+  cursor: pointer;
 }
 .bel-preloader-span:nth-child(1) {
   left: 0px;
