@@ -1484,12 +1484,13 @@ button {
   width: 36px;
 }
 .bel-preloader-text {
+  color: #ffffff;
   text-align: center;
   line-height: 20px;
   margin-top: 30px;
   line-height: 1.5;
   font-family: Graphik;
-  color: #ffffff;
+  color: white;
   font-size: 14px;
 }
 .bel-preloader-span {
@@ -4625,9 +4626,9 @@ button.Zebra_DatePicker_Icon {
   color: black;
 }
 .bel-search__input {
-  -webkit-box-shadow: 0px 4px 35px -18px #000000;
-  -moz-box-shadow: 0px 4px 35px -18px #000000;
-  box-shadow: 0px 4px 35px -18px #000000;
+  -webkit-box-shadow: 0px 4px 35px -18px black;
+  -moz-box-shadow: 0px 4px 35px -18px black;
+  box-shadow: 0px 4px 35px -18px black;
   padding-left: 35px;
   padding-right: 30px;
 }
@@ -4659,9 +4660,9 @@ button.Zebra_DatePicker_Icon {
 }
 .bel-search__results-list {
   width: 100%;
-  -webkit-box-shadow: 0px 4px 35px -18px #000000;
-  -moz-box-shadow: 0px 4px 35px -18px #000000;
-  box-shadow: 0px 4px 35px -18px #000000;
+  -webkit-box-shadow: 0px 4px 35px -18px black;
+  -moz-box-shadow: 0px 4px 35px -18px black;
+  box-shadow: 0px 4px 35px -18px black;
   padding: 10px 10px 10px 10px;
   box-sizing: border-box;
 }
@@ -4725,25 +4726,26 @@ button.Zebra_DatePicker_Icon {
 .bel-table_th__18 {
   width: 18%;
 }
-.bel-subheader-tr {
+.bel-table_row {
   padding: 10px;
   font-family: Graphik;
   color: #000000;
   font-size: 14px;
-  font-weight: 500;
   height: 40px;
 }
-.bel-subheader-tr-positive {
+.bel-table_row__positive {
   background-color: rgba(42, 148, 70, 0.12);
+  font-weight: 500;
 }
-.bel-subheader-tr-negative {
+.bel-table_row__negative {
   background-color: rgba(228, 0, 43, 0.12);
+  font-weight: 500;
 }
-.bel-subheader-title {
+.bel-table_column_subheader {
   width: 32%;
   padding-left: 10px;
 }
-.bel-subheader-balance {
+.bel-table_column_subheader__right {
   width: 16%;
   text-align: right;
   padding-right: 10px;
