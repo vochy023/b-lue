@@ -4741,11 +4741,11 @@ button.Zebra_DatePicker_Icon {
   background-color: rgba(228, 0, 43, 0.12);
   font-weight: 500;
 }
-.bel-table_column_subheader {
+.bel-table_column-subheader {
   width: 32%;
   padding-left: 10px;
 }
-.bel-table_column_subheader__right {
+.bel-table_column-subheader__right {
   width: 16%;
   text-align: right;
   padding-right: 10px;
