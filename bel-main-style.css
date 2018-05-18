@@ -30,6 +30,9 @@
 .bel-show-element {
   display: initial;
 }
+.bel-display-inline {
+  display: inline-block;
+}
 button {
   background: none;
   border: 0;
@@ -4756,16 +4759,6 @@ button.Zebra_DatePicker_Icon {
 .bel-table_row__negative {
   background-color: rgba(228, 0, 43, 0.12);
   font-weight: 500;
-}
-.bel-table_column-subheader {
-  width: 32%;
-  padding-left: 10px;
-}
-.bel-table_column-subheader__right {
-  width: 16%;
-  text-align: right;
-  padding-right: 10px;
-  padding-left: 10px;
 }
 .bel-table_column {
   border-bottom: 1px solid #e6e6e6;
