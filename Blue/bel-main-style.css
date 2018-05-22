@@ -1,3 +1,4 @@
+@import url("fonts/bel-main-fonts.css");
 .bel-card {
   -moz-box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.05);
   padding: 15px 10px;
@@ -1487,12 +1488,13 @@ button {
   width: 36px;
 }
 .bel-preloader-text {
+  color: #ffffff;
   text-align: center;
   line-height: 20px;
   margin-top: 30px;
   line-height: 1.5;
   font-family: Graphik;
-  color: #ffffff;
+  color: white;
   font-size: 14px;
 }
 .bel-preloader-span {
@@ -4628,9 +4630,9 @@ button.Zebra_DatePicker_Icon {
   color: black;
 }
 .bel-search__input {
-  -webkit-box-shadow: 0px 4px 35px -18px #000000;
-  -moz-box-shadow: 0px 4px 35px -18px #000000;
-  box-shadow: 0px 4px 35px -18px #000000;
+  -webkit-box-shadow: 0px 4px 35px -18px black;
+  -moz-box-shadow: 0px 4px 35px -18px black;
+  box-shadow: 0px 4px 35px -18px black;
   padding-left: 35px;
   padding-right: 30px;
 }
@@ -4662,9 +4664,9 @@ button.Zebra_DatePicker_Icon {
 }
 .bel-search__results-list {
   width: 100%;
-  -webkit-box-shadow: 0px 4px 35px -18px #000000;
-  -moz-box-shadow: 0px 4px 35px -18px #000000;
-  box-shadow: 0px 4px 35px -18px #000000;
+  -webkit-box-shadow: 0px 4px 35px -18px black;
+  -moz-box-shadow: 0px 4px 35px -18px black;
+  box-shadow: 0px 4px 35px -18px black;
   padding: 10px 10px 10px 10px;
   box-sizing: border-box;
 }
@@ -4942,6 +4944,53 @@ button.Zebra_DatePicker_Icon {
 }
 .bel-btn-quaternary-disabled {
   display: none;
+}
+.extensiveMenuItem {
+  list-style: none;
+  border-bottom: 1px solid #e6e6e6;
+}
+.extensiveMenuItem:last-child {
+  border-bottom: 1px solid transparent;
+}
+.extensiveMenu {
+  margin: 0;
+  padding: 0;
+}
+.extensiveLink {
+  padding: 15px 0 10px;
+  text-align: center;
+}
+.extensiveMenuItem a {
+  text-decoration: none;
+  display: block;
+  padding: 10px;
+  position: relative;
+  cursor: pointer;
+  transition: 0.5s;
+}
+.extensiveMenuItem a:hover {
+  background-color: #f1f1f2;
+}
+.extensiveMenuItem a::after {
+  content: "\6e";
+  font-family: bluecredomatic-iconset;
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  top: 0px;
+  bottom: 0;
+  right: 10px;
+  margin: auto;
+  border: 2px solid #e4002b;
+  color: #e4002b;
+  border-radius: 37px;
+  padding-left: 4px;
+  box-sizing: border-box;
+  transition: 0.5s;
+}
+.extensiveMenuItem a:hover::after {
+  background: #e4002b;
+  color: white;
 }
 .bel-grid-row::after {
   display: block;
