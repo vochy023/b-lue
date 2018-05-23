@@ -4933,8 +4933,8 @@ button.Zebra_DatePicker_Icon {
 }
 .bel-btn-quaternary-active {
   background: #ffffff;
-  color: #4d4d4f;
-  border: 1px solid #4d4d4f;
+  color: #6d6e71;
+  border: 1px solid #6d6e71;
   -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
   -moz-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
@@ -5182,9 +5182,9 @@ button.Zebra_DatePicker_Icon {
   cursor: pointer;
 }
 .bel-btn-quaternary-active:hover {
-  background: #4d4d4f;
+  background: #6d6e71;
   color: #ffffff;
-  border: 1px solid #4d4d4f;
+  border: 1px solid #6d6e71;
   -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
   -moz-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
