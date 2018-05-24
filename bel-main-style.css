@@ -979,10 +979,10 @@ button {
   background-color: #bebebe;
 }
 .bel-wizard-step-completed {
-  background-color: #2a9446;
+  background-color: #6d6e71;
 }
 .bel-wizard-step-actual {
-  background-color: #bebebe;
+  background-color: #000000;
 }
 .bel-wizard-label {
   width: 100%;
@@ -999,11 +999,11 @@ button {
   font-size: 14px;
 }
 .bel-wizard-label-active {
-  color: #6d6e71;
+  color: #000000;
   font-weight: 400;
 }
 .bel-wizard-label-inactive {
-  color: #6d6e71;
+  color: #bebebe;
   font-weight: 400;
 }
 .bel-wizard-label-actual {
@@ -1419,7 +1419,7 @@ button {
 }
 .bel-tooltip {
   border-radius: 25px;
-  background-color: #1075bb;
+  background-color: #6d6e71;
   width: 20px;
   height: 20px;
   color: #ffffff;
@@ -1428,7 +1428,7 @@ button {
 }
 .bel-tooltip-text {
   visibility: hidden;
-  background-color: #4d4d4f;
+  background-color: #6d6e71;
   text-align: justify;
   position: absolute;
   z-index: 1;
@@ -1445,7 +1445,7 @@ button {
 }
 .bel-tooltip-text-dowm {
   visibility: hidden;
-  background-color: #4d4d4f;
+  background-color: #6d6e71;
   text-align: justify;
   position: absolute;
   z-index: 1;
@@ -4459,16 +4459,6 @@ button.Zebra_DatePicker_Icon {
   content: "\33";
   position: absolute;
 }
-.bel-icon-info-tooltip:after {
-  font-size: 12px;
-  font-family: bluecredomatic-iconset;
-  line-height: 1.7;
-  margin-left: -6px;
-  margin-right: 6px;
-  vertical-align: initial;
-  content: "\61";
-  position: absolute;
-}
 .bel-validation-icon {
   position: relative;
   right: 40px;
@@ -4487,16 +4477,6 @@ button.Zebra_DatePicker_Icon {
 .bel-loading-icon {
   background: url(../WebContent/resources/images/Spinner.svg) no-repeat 98%;
   background-size: 40px;
-}
-.bel-icon-info-tooltip:after {
-  font-size: 12px;
-  font-family: bluecredomatic-iconset;
-  line-height: 1.7;
-  margin-left: -6px;
-  margin-right: 6px;
-  vertical-align: initial;
-  content: "\61";
-  position: absolute;
 }
 .bel-icon-download::before {
   font-size: 14px;
@@ -5116,7 +5096,7 @@ button.Zebra_DatePicker_Icon {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #2a9446;
+  background-color: #000000;
   z-index: 1;
   animation-name: widthAnimation;
   animation-duration: 0.8s;
@@ -5200,7 +5180,7 @@ button.Zebra_DatePicker_Icon {
   cursor: pointer;
 }
 .bel-tooltip:hover {
-  background-color: #0a609c;
+  background-color: #000000;
   cursor: pointer;
 }
 .bel-modal-close-btn:hover,
@@ -5341,7 +5321,7 @@ li.option:hover > label {
   font-weight: 600;
 }
 .Zebra_DatePicker .dp_body .dp_selected {
-  background: #2C9646;
+  background: #1075bb;
   color: #fff;
 }
 .Zebra_DatePicker .dp_body .dp_hover {
