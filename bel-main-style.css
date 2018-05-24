@@ -5001,19 +5001,19 @@ button.Zebra_DatePicker_Icon {
   transition: .5s;
   margin-right: 15px;
 }
-/**.radio-button-icon::after {
-    position: absolute;
-    background: @color-white;
-    content: '';
-    transition: .5s;
-    border-radius: @border-radius-xxl;
-    left: 6px;
-    top: 2px;
-    bottom: 0;
-    margin: auto;
-    width: 6px;
-    height: 6px;
-}*/
+.radio-button-icon::after {
+  position: absolute;
+  background: #ffffff;
+  content: '';
+  transition: .5s;
+  border-radius: 25px;
+  left: 6px;
+  top: 0px;
+  bottom: 0;
+  margin: auto;
+  width: 6px;
+  height: 6px;
+}
 .bel-slider:before {
   position: absolute;
   cursor: pointer;
@@ -5385,4 +5385,31 @@ li.option:hover > label {
 }
 .bel-directMessage_group-button {
   padding: 10px 15px 10px 10px;
+}
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+button {
+  background: none;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  line-height: normal;
+  overflow: visible;
+  padding: 0;
+  -webkit-user-select: none;
+  /* for button */
+  -webkit-appearance: button;
+  /* for input */
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+.radio-button-icon::after {
+  transform: translateY(1px);
+  -moz-transform: translateY(0px);
+}
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  .radio-button-icon::after {
+    transform: translateY(-3px);
+  }
 }
