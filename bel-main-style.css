@@ -5013,6 +5013,7 @@ button.Zebra_DatePicker_Icon {
   margin: auto;
   width: 6px;
   height: 6px;
+  transform: translateY(2px);
 }
 .bel-slider:before {
   position: absolute;
@@ -5403,13 +5404,4 @@ button {
   /* for input */
   -moz-user-select: none;
   -ms-user-select: none;
-}
-.radio-button-icon::after {
-  transform: translateY(1px);
-  -moz-transform: translateY(0px);
-}
-@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
-  .radio-button-icon::after {
-    transform: translateY(-3px);
-  }
 }
