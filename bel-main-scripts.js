@@ -349,7 +349,7 @@ function belShowResultsContent(myInput, myContent) {
  (function ($) {
  	$.fn.delayKeyup = function(callback, ms){
  		var timer = 0;
- 		$(this).keyup(function(){                   
+ 		$(this).keyup(function(){
  			clearTimeout (timer);
  			timer = setTimeout(callback, ms);
  		});
@@ -357,11 +357,11 @@ function belShowResultsContent(myInput, myContent) {
  	};
  })(jQuery);
 
- $('#belInputEmailId').delayKeyup(function(){ 
- 	belValidateEmail('belInputEmailId', 'belInpEmailSpan'); 
+ $('#belInputEmailId').delayKeyup(function(){
+ 	belValidateEmail('belInputEmailId', 'belInpEmailSpan');
  }, 500);
 
- function belAddNewEmail(inputId, mainContId, spanId, maxEmails){	
+ function belAddNewEmail(inputId, mainContId, spanId, maxEmails){
  	var belMoreEmailsContId = document.getElementById(mainContId);
  	var divs = belMoreEmailsContId.querySelectorAll('div');
  	var cantidad = divs.length;
@@ -422,7 +422,7 @@ function belShowResultsContent(myInput, myContent) {
  function belValidateEmail(inputId, spanId) {
  	var email = $('#'+inputId).val();
  	if (email!="") {
- 		var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; 		
+ 		var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
  		$("#"+spanId).removeClass('bel-hide-element');
  		$("#"+spanId).text('');
  		if (re.test(String(email).toLowerCase())) {
@@ -454,21 +454,21 @@ $.fn.blueSelect = function(size){
 	this.removeClass();
 	this.removeAttr( 'style' );
 	var hasCategory = false;
-	
-	
+
+
 	var selectedLabel = null;
-	
+
 	var selectDiv = $("<div></div>")
-	
+
 	var selectList = $('<ul id="'+elementId+'List" class="bel-option-list bel-option-list-'+size+'"></ul>')
-	
+
 	$(this).children( 'option' ).each(function () {
 		if($(this).prop('disabled')){
 			if($(this).attr('value') != '-1'){
-				$(selectList).append($('<li class="bel-option-disabled">'+$(this).text()+'</li>')); 
+				$(selectList).append($('<li class="bel-option-disabled">'+$(this).text()+'</li>'));
 			}
 		}else{
-			$(selectList).append($('<li class="bel-option" onclick="updateBelSelect(\''+elementId+'\', \''+$(this).attr('value')+'\', this.innerHTML, this);">'+$(this).text()+'</li>')); 
+			$(selectList).append($('<li class="bel-option" onclick="updateBelSelect(\''+elementId+'\', \''+$(this).attr('value')+'\', this.innerHTML, this);">'+$(this).text()+'</li>'));
 		}
 		if($(this).prop('selected')){
 			selectedLabel = $(this).text();
@@ -476,28 +476,29 @@ $.fn.blueSelect = function(size){
 	});
 	this.find( 'optgroup' ).each(function () {
 		hasCategory = true;
-		$(selectList).append($('<li class="bel-option-disabled">'+$(this).attr("label")+'</li>')); 
-		
+		$(selectList).append($('<li class="bel-option-disabled">'+$(this).attr("label")+'</li>'));
+
 		$(this).find( 'option' ).each(function () {
-			$(selectList).append($('<li class="bel-option" onclick="updateBelSelect(\''+elementId+'\', \''+$(this).attr('value')+'\', this.innerHTML, this);">'+$(this).text()+'</li>')); 
+			$(selectList).append($('<li class="bel-option" onclick="updateBelSelect(\''+elementId+'\', \''+$(this).attr('value')+'\', this.innerHTML, this);">'+$(this).text()+'</li>'));
 			if($(this).prop('selected')){
 				selectedLabel = $(this).text();
 			}
 		});
-		
+
 	});
-	
-		
+
+
 	$(selectDiv).append($('<label id="'+elementId+'Label" class="bel-select bel-select-'+size+' bel-select-default bel-select-close-icon"  onclick="displayBelOption(\''+elementId+'List\', \''+elementId+'Label\');">'+selectedLabel+'</label>'));
 	$(selectDiv).append($(selectList));
-	
+
 	this.before( selectDiv);
-	
+
 	this.addClass('bel-box-hidden');
 };
 
 function toggleTable(tableId){
-	$("#tBody"+tableId ).toggle();
+	$("#tBody"+tableId ).toggle(500);
+	$("#thead"+tableId ).toggle(500);
 	if ($("#caption"+tableId ).hasClass('bel-table-open-icon')) {
 	$("#caption"+tableId ).removeClass('bel-table-open-icon');
 	$("#caption"+tableId ).addClass('bel-table-close-icon');
@@ -505,4 +506,34 @@ function toggleTable(tableId){
 		$("#caption"+tableId ).addClass('bel-table-open-icon');
 	$("#caption"+tableId ).removeClass('bel-table-close-icon');
 	}
+}
+
+
+/**
+ *Funcionalidad para el componente input Mostrar - Ocultar
+ *
+ */
+$.fn.blueInputPasswordType = function(inputId, inputSize, show, hide){
+	 $('#'+inputId).removeClass();
+	 $('#'+inputId).addClass("bel-input--icon bel-input--icon-"+inputSize.toLowerCase()+" bel-input-default");
+	 $('#'+inputId).prop("type", "password");
+	 $('#'+inputId).css("padding: 0px 68px 0 10px;");
+	 var selectDiv = $('<span onclick="validateShowElementLabel(\''+inputId+'\',this,\''+show+'\',\''+hide+'\' )" style="margin-left: -26px;color:#6D6E71; font-size: 14px; cursor:pointer;" class="bel-validation-icon bel-typography bel-typography-label">Mostrar</span>');
+	 $('#'+inputId).after( selectDiv);
+};
+
+
+function validateShowElementLabel(inputId, spanObject, show, hide){
+ if ($('#'+inputId).val()!="") {
+	 if ( $('#'+inputId).is('input:text')) {
+		 $('#'+inputId).removeAttr("type", "text");
+		 $('#'+inputId).prop("type", "password");
+		 $(spanObject).text(show);
+	 }else{
+		 $('#'+inputId).removeAttr("type", "password");
+		 $('#'+inputId).prop("type", "text");
+		 $('#'+inputId).prop("type", "text");
+		 $(spanObject).text(hide);
+	 }
+ }
 }
