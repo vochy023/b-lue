@@ -1488,12 +1488,13 @@ button {
   width: 36px;
 }
 .bel-preloader-text {
+  color: #ffffff;
   text-align: center;
   line-height: 20px;
   margin-top: 30px;
   line-height: 1.5;
   font-family: Graphik;
-  color: #ffffff;
+  color: white;
   font-size: 14px;
 }
 .bel-preloader-span {
@@ -1605,7 +1606,7 @@ button {
 .bel-modal {
   background: #ffffff;
   position: fixed;
-  z-index: 10;
+  z-index: 2;
   top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
@@ -4609,9 +4610,9 @@ button.Zebra_DatePicker_Icon {
   color: black;
 }
 .bel-search__input {
-  -webkit-box-shadow: 0px 4px 35px -18px #000000;
-  -moz-box-shadow: 0px 4px 35px -18px #000000;
-  box-shadow: 0px 4px 35px -18px #000000;
+  -webkit-box-shadow: 0px 4px 35px -18px black;
+  -moz-box-shadow: 0px 4px 35px -18px black;
+  box-shadow: 0px 4px 35px -18px black;
   padding-left: 35px;
   padding-right: 30px;
 }
@@ -4643,9 +4644,9 @@ button.Zebra_DatePicker_Icon {
 }
 .bel-search__results-list {
   width: 100%;
-  -webkit-box-shadow: 0px 4px 35px -18px #000000;
-  -moz-box-shadow: 0px 4px 35px -18px #000000;
-  box-shadow: 0px 4px 35px -18px #000000;
+  -webkit-box-shadow: 0px 4px 35px -18px black;
+  -moz-box-shadow: 0px 4px 35px -18px black;
+  box-shadow: 0px 4px 35px -18px black;
   padding: 10px 10px 10px 10px;
   box-sizing: border-box;
 }
@@ -4945,30 +4946,6 @@ button.Zebra_DatePicker_Icon {
   cursor: pointer;
   transition: 0.5s;
 }
-.extensiveMenuItem a:hover {
-  background-color: #f1f1f2;
-}
-.extensiveMenuItem a::after {
-  content: "\6e";
-  font-family: bluecredomatic-iconset;
-  position: absolute;
-  width: 25px;
-  height: 25px;
-  top: 0px;
-  bottom: 0;
-  right: 10px;
-  margin: auto;
-  border: 2px solid #e4002b;
-  color: #e4002b;
-  border-radius: 37px;
-  padding-left: 4px;
-  box-sizing: border-box;
-  transition: 0.5s;
-}
-.extensiveMenuItem a:hover::after {
-  background: #e4002b;
-  color: white;
-}
 .bel-grid-row::after {
   display: block;
   clear: both;
@@ -5106,6 +5083,23 @@ button.Zebra_DatePicker_Icon {
   clear: both;
   content: ' ';
 }
+.extensiveMenuItem a::after {
+  content: "\6e";
+  font-family: bluecredomatic-iconset;
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  top: 0px;
+  bottom: 0;
+  right: 10px;
+  margin: auto;
+  border: 2px solid #4d4d4f;
+  color: #4d4d4f;
+  border-radius: 37px;
+  padding-left: 4px;
+  box-sizing: border-box;
+  transition: 0.5s;
+}
 .bel-directMessage_Icon::after {
   font-size: 30px;
   font-family: bluecredomatic-iconset;
@@ -5155,7 +5149,7 @@ button.Zebra_DatePicker_Icon {
 .bel-btn-tertiary-active:hover {
   background: #4d4d4f;
   color: #ffffff;
-  border: 2.3px solid color-extra-dark-gray;
+  border: 2.3px solid #4d4d4f;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
@@ -5222,6 +5216,13 @@ button.Zebra_DatePicker_Icon {
   color: #000000;
   background-color: #ffffff;
   border-bottom: 1px solid #4d4d4f;
+}
+.extensiveMenuItem a:hover {
+  background-color: #f1f1f2;
+}
+.extensiveMenuItem a:hover::after {
+  background: #4d4d4f;
+  color: #ffffff;
 }
 .Zebra_DatePicker .dp_footer {
   margin-top: 5px;
