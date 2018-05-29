@@ -882,18 +882,12 @@ button {
   transition: all 1s linear;
   stroke-width: 3;
   fill: none;
-  cy: 25;
-  cx: 25;
-  r: 20;
   stroke: #e4002b;
 }
 .bel-timer-cont__shadow {
   stroke-dasharray: 440;
   stroke-dashoffset: 300;
   fill: none;
-  cy: 25;
-  cx: 25;
-  r: 20;
   stroke: #bebebe;
 }
 .bel-timer-cont__numbers {
