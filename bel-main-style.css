@@ -1139,6 +1139,13 @@ button {
   color: #ffffff;
 }
 .bel-checkbox-button-text {
+  position: relative;
+  line-height: 1.5;
+  font-family: Graphik;
+  color: #4d4d4f;
+  font-size: 14px;
+  line-height: 0;
+  cursor: pointer;
   display: inline-block;
   vertical-align: middle;
 }
