@@ -521,7 +521,7 @@ $.fn.blueInputPasswordType = function(inputId, inputSize, show, hide){
 	 $('#'+inputId).removeClass();
 	 $('#'+inputId).addClass("bel-input--icon bel-input--icon-"+inputSize.toLowerCase()+" bel-input-default");
 	 $('#'+inputId).prop("type", "password");
-	 $('#'+inputId).css("padding: 0px 68px 0 10px;");
+	 $('#'+inputId).css("padding-right", "71px");
 	 var selectDiv = $('<span onclick="validateShowElementLabel(\''+inputId+'\',this,\''+show+'\',\''+hide+'\' )" style="margin-left: -26px;color:#6D6E71; font-size: 14px; cursor:pointer;" class="bel-validation-icon bel-typography bel-typography-label">Mostrar</span>');
 	 $('#'+inputId).after( selectDiv);
 };
