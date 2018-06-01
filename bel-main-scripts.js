@@ -606,7 +606,7 @@ function getAlertClassByType(alertType){
 /**
 	Funciona que recibe el idioma en que se encuentra la sucursal para cargar el date picker
 */
-function loadDatePicker(languaje){
+function loadDatePicker(idDatepicker ,languaje){
 
 	var langujesForDatePicker = {};
 	langujesForDatePicker.es = {
@@ -617,9 +617,11 @@ function loadDatePicker(languaje){
 		months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'Octuber', 'November', 'December'],
     	days: ['Sunday', 'Monday', 'Tuesdar', 'Wednesday', 'Thrusday', 'Friday', 'Saturday']
 	};
+	
 
-	$('#datepicker').Zebra_DatePicker({
+	$('#' + idDatepicker).Zebra_DatePicker({
    		months: langujesForDatePicker[languaje].months,
-   		days: langujesForDatePicker[languaje].days
+   		days: langujesForDatePicker[languaje].days,
+   		
    	});
 }
