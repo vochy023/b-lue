@@ -2,7 +2,7 @@
 // SP: ----------- CRI-025171
 // DATE: --------- 19-02-2018
 // DESCRIPTION: -- funciones para los elementos: campo de texto, textarea y combo de seleccion
-// AUTHOR: ------- jcastillov, aramirez, earaya (1.0)
+// AUTHOR: ------- jcastillov, aramirez (1.0)
 // WORKTEAM: ----- Codebreakers-Anonymous (1.0)
 // version 1.0
 
@@ -283,37 +283,39 @@ function startAmimationTimer(){
 	}
 
 
-		// Funcion que inicia el contador
-		function belShowMessageTimer() {
-		      $('.bel-timer-cont__circle').css('stroke-dashoffset', 300);
-		    belExecuteCircleTimer();
-		}
-		function belExecuteCircleTimer() {
-		    var time = belRemaingTimeForFinishUserSession;
-		    var timer = $('#belSeconds')[0];
-		    timer.innerHTML = time;
-		    var seconds = Number(timer.innerHTML);
-		    var i = 1;
-		    belSetTimerForFinishTheSession = setTimeout(function() {
-		   // ejecutal el inicio del conteo
-		   // *****************************************
-		        }, belRemaingTimeForFinishUserSession);
-		      belCircleInterval = setInterval(function() {
-		        seconds--;
-		        if (seconds >= 0) {
-		            timer.innerHTML = seconds;
-		            i++;
-		            $('.bel-timer-cont__circle').css('stroke-dashoffset',
-		                    300 + Math.floor((i * 40 / time) + (i * 100 / time)));
-		        }else{
-		     // Finaliza el tiempo
-		     // ***************************
-		        	clearInterval(belCircleInterval);
-		        }
-		    }, 1000);
-		}
-		// Fin funcion animacion contador
+
 }
+
+// Funcion que inicia el contador
+function belShowMessageTimer() {
+    $('.bel-timer-cont__circle').css('stroke-dashoffset', 300);
+	    belExecuteCircleTimer();
+	}
+function belExecuteCircleTimer() {
+    var time = belRemaingTimeForFinishUserSession;
+    var timer = $('#belSeconds')[0];
+    timer.innerHTML = time;
+    var seconds = Number(timer.innerHTML);
+    var i = 1;
+    belSetTimerForFinishTheSession = setTimeout(function() {
+   // ejecutal el inicio del conteo
+   // *****************************************
+        }, belRemaingTimeForFinishUserSession);
+      belCircleInterval = setInterval(function() {
+        seconds--;
+        if (seconds >= 0) {
+            timer.innerHTML = seconds;
+            i++;
+            $('.bel-timer-cont__circle').css('stroke-dashoffset',
+                    300 + Math.floor((i * 40 / time) + (i * 100 / time)));
+        }else{
+     // Finaliza el tiempo
+     // ***************************
+        	clearInterval(belCircleInterval);
+        }
+    }, 1000);
+}
+// Fin funcion animacion contador
 
 
 
@@ -519,7 +521,7 @@ $.fn.blueInputPasswordType = function(inputId, inputSize, show, hide){
 	 $('#'+inputId).removeClass();
 	 $('#'+inputId).addClass("bel-input--icon bel-input--icon-"+inputSize.toLowerCase()+" bel-input-default");
 	 $('#'+inputId).prop("type", "password");
-	 $('#'+inputId).css("padding: 0px 68px 0 10px;");
+	 $('#'+inputId).css("padding-right", "71px");
 	 var selectDiv = $('<span onclick="validateShowElementLabel(\''+inputId+'\',this,\''+show+'\',\''+hide+'\' )" style="margin-left: -26px;color:#6D6E71; font-size: 14px; cursor:pointer;" class="bel-validation-icon bel-typography bel-typography-label">Mostrar</span>');
 	 $('#'+inputId).after( selectDiv);
 };
@@ -538,6 +540,29 @@ function validateShowElementLabel(inputId, spanObject, show, hide){
 		 $(spanObject).text(hide);
 	 }
  }
+}
+
+/**
+	Funciona que recibe el idioma en que se encuentra la sucursal para cargar el date picker
+*/
+function loadDatePicker(idDatepicker ,languaje){
+
+	var langujesForDatePicker = {};
+	langujesForDatePicker.es = {
+		months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+      	days: ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado']
+	};
+	langujesForDatePicker.en = {
+		months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'Octuber', 'November', 'December'],
+    	days: ['Sunday', 'Monday', 'Tuesdar', 'Wednesday', 'Thrusday', 'Friday', 'Saturday']
+	};
+
+
+	$('#' + idDatepicker).Zebra_DatePicker({
+   		months: langujesForDatePicker[languaje].months,
+   		days: langujesForDatePicker[languaje].days,
+
+   	});
 }
 
 /*
@@ -611,7 +636,7 @@ function getAlertClassByType(alertType){
 		case 2: return "bel-alertMessage_greenIcon"; break;
 		case 3: return "bel-alertMessage_redIcon"; break;
 		case 4: return "bel-alertMessage_orangeIcon"; break;
-		default: "bel-alertMessage_grayIcon"; break;
+		default: return "bel-alertMessage_grayIcon"; break;
 
 	}
 }
