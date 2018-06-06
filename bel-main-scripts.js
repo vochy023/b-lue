@@ -118,40 +118,23 @@ function OnInput(e) {
 }
 
 //funcion tab
-//Caga los textos al hacer click en los tabs
-$.fn.makeTabs = function(tabSelected){
-	var tabContiner = this;
-	this.attr('class', 'bel-tab-container');
-	this.find( "div" ).each(function () {
-		$(this).attr('class', 'bel-tab-container__bel-tab-content');
-	});
-	this.find( "ul" ).each(function () {
-		$(this).attr('class', 'bel-tab-container__bel-tab-ul');
-	});
-	this.find( "ul" ).find( "li" ).each(function () {
-		var tab = $(this).find('a').attr( "href" );
-		$(this).find('a').attr('class', 'bel-tab-container__bel-tab-a');
-		$(this).click(function(){
-			$(tabContiner).find( "div" ).each(function () {
-				$(this).hide();
-			});
-			$(tabContiner).find( "ul" ).find( "li" ).each(function () {
-				$(this).attr('class', 'bel-tab-container__bel-tab tab-unselected');
-			});
-			$(this).attr('class', 'bel-tab-container__bel-tab tab-selected');
-			$(tab).show();
-		});
-
-		if("#"+tabSelected == tab){
-			$(this).attr('class', 'bel-tab-container__bel-tab tab-selected');
-			$(this).click();
-		}else{
-			$(this).attr('class', 'bel-tab-container__bel-tab tab-unselected');
-		}
-
-	});
-
-};
+function openTab(evt, tabID) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("bel-tab-content");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("bel-tab-container-link"); 
+    for (i = 0; i < tablinks.length; i++) {
+    	tablinks[i].className = tablinks[i].className.replace(" bel-tab-container-element__unselected", "");
+    	tablinks[i].className = tablinks[i].className.replace(" bel-tab-container-element__selected", "");    
+    	if(tablinks[i]!=evt.currentTarget){	 
+    	   tablinks[i].className +=" bel-tab-container-element__unselected";
+    	}
+       }
+    document.getElementById(tabID).style.display = "block";
+     evt.currentTarget.className += " bel-tab-container-element__selected";	
+}
 //fin funcion tab
 
 
@@ -320,17 +303,17 @@ function belExecuteCircleTimer() {
 
 
 function closeModal(box, modal){
-	document.getElementById(box).classList.remove('bel-box-visible');
-	document.getElementById(modal).classList.remove('bel-modal-visible');
-	document.getElementById(box).classList.add('bel-box-hidden');
-	document.getElementById(modal).classList.add('bel-modal-hidden');
+	$("#"+box).removeClass("bel-box-visible");
+	$("#"+modal).removeClass("bel-modal-visible");
+	$("#"+box).addClass("bel-box-hidden");
+	$("#"+modal).addClass("bel-modal-hidden");
 }
 
 function openModal(box, modal){
-	document.getElementById(box).classList.remove('bel-box-hidden');
-	document.getElementById(modal).classList.remove('bel-modal-hidden');
-	document.getElementById(box).classList.add('bel-box-visible');
-	document.getElementById(modal).classList.add('bel-modal-visible');
+	$("#"+box).removeClass("bel-box-hidden");
+	$("#"+modal).removeClass("bel-modal-hidden");
+	$("#"+box).addClass("bel-box-visible");
+	$("#"+modal).addClass("bel-modal-visible");
 }
 
 //Funcion para esconder o mostrar el resultado de las busquedas
