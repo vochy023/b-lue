@@ -118,23 +118,40 @@ function OnInput(e) {
 }
 
 //funcion tab
-function openTab(evt, tabID) {
-    var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("bel-tab-content");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-    }
-    tablinks = document.getElementsByClassName("bel-tab-container-link"); 
-    for (i = 0; i < tablinks.length; i++) {
-    	tablinks[i].className = tablinks[i].className.replace(" bel-tab-container-element__unselected", "");
-    	tablinks[i].className = tablinks[i].className.replace(" bel-tab-container-element__selected", "");    
-    	if(tablinks[i]!=evt.currentTarget){	 
-    	   tablinks[i].className +=" bel-tab-container-element__unselected";
-    	}
-       }
-    document.getElementById(tabID).style.display = "block";
-     evt.currentTarget.className += " bel-tab-container-element__selected";	
-}
+//Caga los textos al hacer click en los tabs
+$.fn.makeTabs = function(tabSelected){
+	var tabContiner = this;
+	this.attr('class', 'bel-tab');
+	this.find( "div" ).each(function () {
+		$(this).attr('class', 'bel-tab-container__bel-tab-content');
+	});
+	this.find( "ul" ).each(function () {
+		$(this).attr('class', 'bel-tab-container');
+	});
+	this.find( "ul" ).find( "li" ).each(function () {
+		var tab = $(this).find('a').attr( "href" );
+		$(this).find('a').attr('class', 'bel-tab-container-element');
+		$(this).click(function(){
+			$(tabContiner).find( "div" ).each(function () {
+				$(this).hide();
+			});
+			$(tabContiner).find( "ul" ).find( "li" ).each(function () {
+				$(this).attr('class', 'bel-tab-container-link bel-tab-container-element__unselected');
+			});
+			$(this).attr('class', 'bel-tab-container-link bel-tab-container-element__selected');
+			$(tab).show();
+		});
+
+		if("#"+tabSelected == tab){
+			$(this).attr('class', 'bel-tab-container-link bel-tab-container-element__selected');
+			$(this).click();
+		}else{
+			$(this).attr('class', 'bel-tab-container-link bel-tab-container-element__unselected');
+		}
+
+	});
+
+};
 //fin funcion tab
 
 
@@ -228,14 +245,14 @@ $.fn.belCreateWizardProcessStep = function(steps, messagesStep, selectedStep) {
 		animationProgressBar(steps, selectedStep);
 
 	} else {
-		alert("Número de pasos esta por encima de la capacidad de Wizard");
+		alert("NÃºmero de pasos esta por encima de la capacidad de Wizard");
 	}
 }
 
 function animationProgressBar(steps, selectedStep){
 
 	if(selectedStep > steps){
-			alert("El paso actúal elegido es mayor a la cantidad de pasos disponible");
+			alert("El paso actÃºal elegido es mayor a la cantidad de pasos disponible");
 	}else {
 		var barEfect = document.getElementsByClassName("bel-wizard-step-active")[0];
 		var lblEfect = document.getElementsByClassName("bel-wizard-label-active")[selectedStep-1];
@@ -377,7 +394,7 @@ function belShowResultsContent(myInput, myContent) {
  			$('#'+inputId).addClass('bel-input-error');
  			$('#'+spanId).addClass('el-typography-main bel-typography-label-error');
  			$('#'+spanId).removeClass('bel-hide-element');
- 			$('#'+spanId).text("Formato no válido");
+ 			$('#'+spanId).text("Formato no vÃ¡lido");
  		}
  	}
  	if (cantidad==maxEmails && inputTextAux!="") {
@@ -385,7 +402,7 @@ function belShowResultsContent(myInput, myContent) {
  		$('#'+inputId).addClass('bel-input-error');
  		$("#"+inputId).val("");
  		$('#'+spanId).addClass('el-typography-main bel-typography-label-error');
- 		$('#'+spanId).text("No se pueden agregar más correos");
+ 		$('#'+spanId).text("No se pueden agregar mÃ¡s correos");
  	}
  }
 
@@ -555,10 +572,10 @@ function loadDatePicker(idDatepicker ,languaje){
 	iconClass: Clase del icono
 	title: titulo del mensaje
 	message: Texto del mensaje
-	buttonText: texto del botón
-	buttonUrl: Url del botón
+	buttonText: texto del botÃ³n
+	buttonUrl: Url del botÃ³n
 
-	Nota: En caso de no necesitar botón o título dejar el parametro en null.
+	Nota: En caso de no necesitar botÃ³n o tÃ­tulo dejar el parametro en null.
 */
 
 //Metodo que crea el contenedor de los mensajes con la informacion del mensaje
@@ -576,7 +593,7 @@ function createAlertMessage(idContainer, alertType, iconClass, title, message, b
 	var alertMessagetype = $("<div/>").addClass(alertClass).appendTo(alertMessage);
 	var alertMessageIconContainer = $("<div/>").addClass("bel-alertMessage-icon-container").appendTo(alertMessagetype);
 	var alertMessageIcon = $("<div/>").addClass(iconClass +" bel-alertMessage-icon").appendTo(alertMessageIconContainer);
-	// Contenido del componente (título, texto)
+	// Contenido del componente (tÃ­tulo, texto)
 
 	if(buttonText != null && buttonText != "") {
 		var alertMessageContent = $("<div/>").addClass("bel-display-inline bel-alertMessage_content").appendTo(alertMessage);
@@ -603,7 +620,7 @@ function createAlertMessage(idContainer, alertType, iconClass, title, message, b
 		if (navInfo.indexOf('IE') != -1) {messageClass+=" bel-alertMessage-margin-ie9";}
 		var messsageText = $("<p/>").addClass(messageClass).append(message).appendTo(messsageTextContainer);
 	}
-	// Contenido del componente (botón)
+	// Contenido del componente (botÃ³n)
 	if(buttonText != null && buttonText != ""){
 		var alertMessageButton = $("<div/>").addClass("bel-alertMessage_button bel-display-inline").appendTo(alertMessage);
 		var alertMessageButtonContainer = $("<div/>").addClass("bel-display-inline").appendTo(alertMessageButton);
