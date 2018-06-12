@@ -2,7 +2,7 @@
 // SP: ----------- CRI-025171
 // DATE: --------- 19-02-2018
 // DESCRIPTION: -- funciones para los elementos: campo de texto, textarea y combo de seleccion
-// AUTHOR: ------- jcastillov, aramirez, earaya (1.0)
+// AUTHOR: ------- jcastillov, aramirez (1.0)
 // WORKTEAM: ----- Codebreakers-Anonymous (1.0)
 // version 1.0
 
@@ -121,32 +121,32 @@ function OnInput(e) {
 //Caga los textos al hacer click en los tabs
 $.fn.makeTabs = function(tabSelected){
 	var tabContiner = this;
-	this.attr('class', 'bel-tab-container');
+	this.attr('class', 'bel-tab');
 	this.find( "div" ).each(function () {
 		$(this).attr('class', 'bel-tab-container__bel-tab-content');
 	});
 	this.find( "ul" ).each(function () {
-		$(this).attr('class', 'bel-tab-container__bel-tab-ul');
+		$(this).attr('class', 'bel-tab-container');
 	});
 	this.find( "ul" ).find( "li" ).each(function () {
 		var tab = $(this).find('a').attr( "href" );
-		$(this).find('a').attr('class', 'bel-tab-container__bel-tab-a');
+		$(this).find('a').attr('class', 'bel-tab-container-element');
 		$(this).click(function(){
 			$(tabContiner).find( "div" ).each(function () {
 				$(this).hide();
 			});
 			$(tabContiner).find( "ul" ).find( "li" ).each(function () {
-				$(this).attr('class', 'bel-tab-container__bel-tab tab-unselected');
+				$(this).attr('class', 'bel-tab-container-link bel-tab-container-element__unselected');
 			});
-			$(this).attr('class', 'bel-tab-container__bel-tab tab-selected');
+			$(this).attr('class', 'bel-tab-container-link bel-tab-container-element__selected');
 			$(tab).show();
 		});
 
 		if("#"+tabSelected == tab){
-			$(this).attr('class', 'bel-tab-container__bel-tab tab-selected');
+			$(this).attr('class', 'bel-tab-container-link bel-tab-container-element__selected');
 			$(this).click();
 		}else{
-			$(this).attr('class', 'bel-tab-container__bel-tab tab-unselected');
+			$(this).attr('class', 'bel-tab-container-link bel-tab-container-element__unselected');
 		}
 
 	});
@@ -245,14 +245,14 @@ $.fn.belCreateWizardProcessStep = function(steps, messagesStep, selectedStep) {
 		animationProgressBar(steps, selectedStep);
 
 	} else {
-		alert("Número de pasos esta por encima de la capacidad de Wizard");
+		alert("NÃºmero de pasos esta por encima de la capacidad de Wizard");
 	}
 }
 
 function animationProgressBar(steps, selectedStep){
 
 	if(selectedStep > steps){
-			alert("El paso actúal elegido es mayor a la cantidad de pasos disponible");
+			alert("El paso actÃºal elegido es mayor a la cantidad de pasos disponible");
 	}else {
 		var barEfect = document.getElementsByClassName("bel-wizard-step-active")[0];
 		var lblEfect = document.getElementsByClassName("bel-wizard-label-active")[selectedStep-1];
@@ -283,52 +283,54 @@ function startAmimationTimer(){
 	}
 
 
-		// Funcion que inicia el contador
-		function belShowMessageTimer() {
-		      $('.bel-timer-cont__circle').css('stroke-dashoffset', 300);
-		    belExecuteCircleTimer();
-		}
-		function belExecuteCircleTimer() {
-		    var time = belRemaingTimeForFinishUserSession;
-		    var timer = $('#belSeconds')[0];
-		    timer.innerHTML = time;
-		    var seconds = Number(timer.innerHTML);
-		    var i = 1;
-		    belSetTimerForFinishTheSession = setTimeout(function() {
-		   // ejecutal el inicio del conteo
-		   // *****************************************
-		        }, belRemaingTimeForFinishUserSession);
-		      belCircleInterval = setInterval(function() {
-		        seconds--;
-		        if (seconds >= 0) {
-		            timer.innerHTML = seconds;
-		            i++;
-		            $('.bel-timer-cont__circle').css('stroke-dashoffset',
-		                    300 + Math.floor((i * 40 / time) + (i * 100 / time)));
-		        }else{
-		     // Finaliza el tiempo
-		     // ***************************
-		        	clearInterval(belCircleInterval);
-		        }
-		    }, 1000);
-		}
-		// Fin funcion animacion contador
+
 }
+
+// Funcion que inicia el contador
+function belShowMessageTimer() {
+    $('.bel-timer-cont__circle').css('stroke-dashoffset', 300);
+	    belExecuteCircleTimer();
+	}
+function belExecuteCircleTimer() {
+    var time = belRemaingTimeForFinishUserSession;
+    var timer = $('#belSeconds')[0];
+    timer.innerHTML = time;
+    var seconds = Number(timer.innerHTML);
+    var i = 1;
+    belSetTimerForFinishTheSession = setTimeout(function() {
+   // ejecutal el inicio del conteo
+   // *****************************************
+        }, belRemaingTimeForFinishUserSession);
+      belCircleInterval = setInterval(function() {
+        seconds--;
+        if (seconds >= 0) {
+            timer.innerHTML = seconds;
+            i++;
+            $('.bel-timer-cont__circle').css('stroke-dashoffset',
+                    300 + Math.floor((i * 40 / time) + (i * 100 / time)));
+        }else{
+     // Finaliza el tiempo
+     // ***************************
+        	clearInterval(belCircleInterval);
+        }
+    }, 1000);
+}
+// Fin funcion animacion contador
 
 
 
 function closeModal(box, modal){
-	document.getElementById(box).classList.remove('bel-box-visible');
-	document.getElementById(modal).classList.remove('bel-modal-visible');
-	document.getElementById(box).classList.add('bel-box-hidden');
-	document.getElementById(modal).classList.add('bel-modal-hidden');
+	$("#"+box).removeClass("bel-box-visible");
+	$("#"+modal).removeClass("bel-modal-visible");
+	$("#"+box).addClass("bel-box-hidden");
+	$("#"+modal).addClass("bel-modal-hidden");
 }
 
 function openModal(box, modal){
-	document.getElementById(box).classList.remove('bel-box-hidden');
-	document.getElementById(modal).classList.remove('bel-modal-hidden');
-	document.getElementById(box).classList.add('bel-box-visible');
-	document.getElementById(modal).classList.add('bel-modal-visible');
+	$("#"+box).removeClass("bel-box-hidden");
+	$("#"+modal).removeClass("bel-modal-hidden");
+	$("#"+box).addClass("bel-box-visible");
+	$("#"+modal).addClass("bel-modal-visible");
 }
 
 //Funcion para esconder o mostrar el resultado de las busquedas
@@ -392,7 +394,7 @@ function belShowResultsContent(myInput, myContent) {
  			$('#'+inputId).addClass('bel-input-error');
  			$('#'+spanId).addClass('el-typography-main bel-typography-label-error');
  			$('#'+spanId).removeClass('bel-hide-element');
- 			$('#'+spanId).text("Formato no válido");
+ 			$('#'+spanId).text("Formato no vÃ¡lido");
  		}
  	}
  	if (cantidad==maxEmails && inputTextAux!="") {
@@ -400,7 +402,7 @@ function belShowResultsContent(myInput, myContent) {
  		$('#'+inputId).addClass('bel-input-error');
  		$("#"+inputId).val("");
  		$('#'+spanId).addClass('el-typography-main bel-typography-label-error');
- 		$('#'+spanId).text("No se pueden agregar más correos");
+ 		$('#'+spanId).text("No se pueden agregar mÃ¡s correos");
  	}
  }
 
@@ -498,6 +500,17 @@ $.fn.blueSelect = function(size){
 	this.addClass('bel-box-hidden');
 };
 
+function toggleTable(tableId){
+	$("#tBody"+tableId ).toggle(500);
+	$("#thead"+tableId ).toggle(500);
+	if ($("#caption"+tableId ).hasClass('bel-table-open-icon')) {
+	$("#caption"+tableId ).removeClass('bel-table-open-icon');
+	$("#caption"+tableId ).addClass('bel-table-close-icon');
+	}else{
+		$("#caption"+tableId ).addClass('bel-table-open-icon');
+	$("#caption"+tableId ).removeClass('bel-table-close-icon');
+	}
+}
 
 
 /**
@@ -508,7 +521,7 @@ $.fn.blueInputPasswordType = function(inputId, inputSize, show, hide){
 	 $('#'+inputId).removeClass();
 	 $('#'+inputId).addClass("bel-input--icon bel-input--icon-"+inputSize.toLowerCase()+" bel-input-default");
 	 $('#'+inputId).prop("type", "password");
-	 $('#'+inputId).css("padding: 0px 68px 0 10px;");
+	 $('#'+inputId).css("padding-right", "71px");
 	 var selectDiv = $('<span onclick="validateShowElementLabel(\''+inputId+'\',this,\''+show+'\',\''+hide+'\' )" style="margin-left: -26px;color:#6D6E71; font-size: 14px; cursor:pointer;" class="bel-validation-icon bel-typography bel-typography-label">Mostrar</span>');
 	 $('#'+inputId).after( selectDiv);
 };
@@ -529,6 +542,29 @@ function validateShowElementLabel(inputId, spanObject, show, hide){
  }
 }
 
+/**
+	Funciona que recibe el idioma en que se encuentra la sucursal para cargar el date picker
+*/
+function loadDatePicker(idDatepicker ,languaje){
+
+	var langujesForDatePicker = {};
+	langujesForDatePicker.es = {
+		months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+      	days: ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado']
+	};
+	langujesForDatePicker.en = {
+		months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'Octuber', 'November', 'December'],
+    	days: ['Sunday', 'Monday', 'Tuesdar', 'Wednesday', 'Thrusday', 'Friday', 'Saturday']
+	};
+
+
+	$('#' + idDatepicker).Zebra_DatePicker({
+   		months: langujesForDatePicker[languaje].months,
+   		days: langujesForDatePicker[languaje].days,
+
+   	});
+}
+
 /*
 	Uso de parametros
 	idContainer: id del div donde se inyecta el componente
@@ -536,23 +572,28 @@ function validateShowElementLabel(inputId, spanObject, show, hide){
 	iconClass: Clase del icono
 	title: titulo del mensaje
 	message: Texto del mensaje
-	buttonText: texto del botón
-	buttonUrl: Url del botón
+	buttonText: texto del botÃ³n
+	buttonUrl: Url del botÃ³n
 
-	Nota: En caso de no necesitar botón o título dejar el parametro en null.
+	Nota: En caso de no necesitar botÃ³n o tÃ­tulo dejar el parametro en null.
 */
 
 //Metodo que crea el contenedor de los mensajes con la informacion del mensaje
 function createAlertMessage(idContainer, alertType, iconClass, title, message, buttonText, buttonUrl) {
 	var mainContainer = document.getElementById(idContainer);
+	var navInfo = getBrowserInfo();
+
 	// Estilo del componente (tipo, color, icono)
 	var row = $("<div/>").addClass("bel-grid-row");
 	var column = $("<div/>").addClass("bel-col-12").appendTo(row);
 	var alertMessage = $("<div/>").addClass("bel-alertMessage").appendTo(column);
-	var alertMessagetype = $("<div/>").addClass(getAlertClassByType(alertType)).appendTo(alertMessage);
+	var alertClass = getAlertClassByType(alertType);
+	//Valida si el navegador es IE
+	if (navInfo.indexOf('IE') != -1) {alertClass+="-ie9";}
+	var alertMessagetype = $("<div/>").addClass(alertClass).appendTo(alertMessage);
 	var alertMessageIconContainer = $("<div/>").addClass("bel-alertMessage-icon-container").appendTo(alertMessagetype);
 	var alertMessageIcon = $("<div/>").addClass(iconClass +" bel-alertMessage-icon").appendTo(alertMessageIconContainer);
-	// Contenido del componente (título, texto)
+	// Contenido del componente (tÃ­tulo, texto)
 
 	if(buttonText != null && buttonText != "") {
 		var alertMessageContent = $("<div/>").addClass("bel-display-inline bel-alertMessage_content").appendTo(alertMessage);
@@ -562,14 +603,24 @@ function createAlertMessage(idContainer, alertType, iconClass, title, message, b
 
 	if(title != null && title != "") {
 		var titleSpace = $("<div/>").addClass("bel-space-bottom-xs").appendTo(alertMessageContent);
-		var titleText = $("<h3/>").addClass("bel-typography bel-typography-h3").append(title).appendTo(alertMessageContent);
+		var titleClass = "bel-typography bel-typography-h3";
+		//Valida si el navegador es IE
+		if (navInfo.indexOf('IE') != -1) {titleClass+=" bel-alertMessage-margin-ie9";}
+		var titleText = $("<h3/>").addClass(titleClass).append(title).appendTo(alertMessageContent);
+	}else{
+			if (navInfo.indexOf('IE') != -1){
+				var titleSpace = $("<div/>").addClass("bel-space-bottom-xs").appendTo(alertMessageContent);
+			}
 	}
 
 	if(message != null && message != "") {
 		var messsageTextContainer = $("<div/>").appendTo(alertMessageContent);
-		var messsageText = $("<p/>").addClass("bel-typography bel-typography-p").append(message).appendTo(messsageTextContainer);
+		var messageClass = "bel-typography bel-typography-p";
+		//Valida si el navegador es IE
+		if (navInfo.indexOf('IE') != -1) {messageClass+=" bel-alertMessage-margin-ie9";}
+		var messsageText = $("<p/>").addClass(messageClass).append(message).appendTo(messsageTextContainer);
 	}
-	// Contenido del componente (botón)
+	// Contenido del componente (botÃ³n)
 	if(buttonText != null && buttonText != ""){
 		var alertMessageButton = $("<div/>").addClass("bel-alertMessage_button bel-display-inline").appendTo(alertMessage);
 		var alertMessageButtonContainer = $("<div/>").addClass("bel-display-inline").appendTo(alertMessageButton);
@@ -590,191 +641,17 @@ function getAlertClassByType(alertType){
 	}
 }
 
+var getBrowserInfo = function() {
+    var ua= navigator.userAgent, tem,
+    M= ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+    if(/trident/i.test(M[1])){
+        tem=  /\brv[ :]+(\d+)/g.exec(ua) || [];
+        return 'IE '+(tem[1] || '');
+    }
+    if(M[1]=== 'Chrome'){
+        tem= ua.match(/\b(OPR|Edge)\/(\d+)/);
+        if(tem!= null) return tem.slice(1).join(' ').replace('OPR', 'Opera');
+    }
 
-
-
-$.fn.blueTable = function(properties){
-	
-	var elementId = $(this).attr('id');
-	
-	this.removeClass();
-	
-	 makeCaption(this, properties);
-	
-	 makeHeader(this, properties);
-	 
-	 makeBody(this, properties, elementId);
-	 
-	 makefooter(this, properties);
-	 
-	$(this).addClass("bel-table bel-card");
-	
+    return M.join(' ');
 };
-function makeBody(element, properties){
-	var trCounter = 1;
-	var thCounter = 0;
-	var maxItemsCollapsed = 3;
-	if(properties.extensible && properties.maxItemsCollapsed != undefined){
-		maxItemsCollapsed = properties.maxItemsCollapsed;
-	}
-	$(element).find( 'tbody' ).each(function () {
-		$(this).attr("id", "tbody" + $(element).attr("id") );
-		$(this).find( 'tr' ).each(function () {
-			thCounter = 0;
-			$(this).addClass("bel-table_row");
-			
-			$(this).find( 'td' ).each(function () {
-				if(properties.tdAlign != undefined && properties.tdAlign[thCounter] != undefined ){
-					$(this).css("text-align", properties.tdAlign[thCounter]);
-				}	
-					
-				 $(this).addClass("bel-table_column_default");
-				thCounter++;
-			});
-			if(properties.extensible && trCounter > maxItemsCollapsed){
-				$(this).addClass("bel-hide-element");
-			}
-			trCounter++;
-		});
-		if(properties.extensible && trCounter > maxItemsCollapsed){
-			$(this).append( "<tr id='seTR"+$(element).attr("id")+"'><td colspan='"+thCounter+"' class='bel-extensive-menu_link'><a class='bel-typography bel-typography-link bel-icon-arrow-down-xxs' href='#' onclick='showMoreItems(\""+$(element).attr("id")+"\", "+maxItemsCollapsed+")'>Ver m&aacute;s</a></td></tr>");
-			$(this).append( "<tr id='heTR"+$(element).attr("id")+"' class='bel-hide-element'><td colspan='"+thCounter+"' class='bel-extensive-menu_link'><a class='bel-typography bel-typography-link bel-icon-arrow-up-xxs' href='#' onclick='hideItems(\""+$(element).attr("id")+"\", "+maxItemsCollapsed+")'>Ver menos</a></td></tr>");
-		}
-	});
-
-	if(properties.extensible && maxItemsCollapsed == (trCounter - 1)){
-		$("#seTR"+$(element).attr("id")).remove();
-		$("#heTR"+$(element).attr("id")).remove();
-	}
-
-}
-
-
-
-function showMoreItems(tableId, maxItemsCollapsed){
-	var trCounter = 1;
-	$("#tbody"+tableId).find('tr').each(function () {
-		if(trCounter > maxItemsCollapsed){
-			if($(this).attr("id") != ("heTR"+tableId) && $(this).attr("id") != ("seTR"+tableId)){
-				$(this).show(800);
-				$(this).find('td').each(function () {
-					$(this).show();
-				});
-			}
-		}
-		trCounter++;
-	});
-	
-	$("#seTR"+tableId).hide();
-	$("#heTR"+tableId).show();
-}
-
-
-function hideItems(tableId, maxItemsCollapsed){
-	
-	var trCounter = 1;
-	$("#tbody"+tableId).find('tr').each(function () {
-		if(trCounter > maxItemsCollapsed){
-			if($(this).attr("id") != ("heTR"+tableId) && $(this).attr("id") != ("seTR"+tableId)){
-				$(this).find('td').each(function () {
-					$(this).hide();
-				});
-				$(this).hide(800);
-			}
-		}
-		trCounter++;
-	});
-	$("#heTR"+tableId).hide();
-	$("#seTR"+tableId).show();
-}
-function makefooter(element, properties){
-	
-	$(element).find( 'tfoot' ).each(function () {
-		this.id = "tfoot" + $(element).attr("id");
-		 $(this).addClass("bel-table_tfoot");
-		$(this).find( 'tr' ).each(function () {
-			var thCounter = 0;
-			$(this).find( 'td' ).each(function () {
-				
-				thCounter++;
-			});
-		});
-	});
-}
-function makeHeader(element, properties){
-	
-	$(element).find( 'thead' ).each(function () {
-		$(this).attr("id", "thead" + $(element).attr('id'));
-		$(this).addClass("bel-table_thead");
-		$(this).find( 'tr' ).each(function () {
-			var thCounter = 0;
-			$(this).find( 'th' ).each(function () {
-				if(properties.tdWidth != undefined && properties.tdWidth[thCounter] != undefined ){
-					$(this).css("width", properties.tdWidth[thCounter]+"%");
-				}
-				if(properties.tdAlign != undefined && properties.tdAlign[thCounter] != undefined ){
-					$(this).css("text-align", properties.thAlign[thCounter]);
-				}
-				
-				thCounter++;
-			});
-		});
-	});
-}
-function makeCaption(element, properties){
-	var iconDiv = null; 
-	var headerLeftGrupDiv = null; 
-	var headerRigthtGrupDiv = null;
-
-	$(element).find( 'caption' ).each(function () {
-		headerLeftGrupDiv =  $("<div></div>").addClass("bel-table_caption-group");
-		var caption = this;
-		//revisa si tiene iconos para crear 
-		$(this).children( 'i' ).each(function () {
-			iconDiv = $("<div></div>").addClass("bel-table-icon");
-			$(iconDiv).addClass($(this).attr('class'));
-			$(this).remove();
-			$(headerLeftGrupDiv).append( $(iconDiv));
-		});	
-		$(this).children( 'h2' ).each(function () {
-			$(this).addClass("bel-typography bel-typography-h2"); 
-			$(headerLeftGrupDiv).append( $(this));
-		});
-		
-		$(this).addClass("bel-table_caption");
-		
-		//agrega el grupo de elementos al encabezado
-		$(this).append( $(headerLeftGrupDiv));
-		
-		if(properties.toggleable){
-			$(this).addClass("bel-table-open-icon");
-			$(this).children( 'button' ).each(function () {
-				$(this).remove();
-			});
-			$(caption).on('click', function(){
-				$.each($(element).children().toArray(), function(i, child){
-					if(child != caption){
-						$(child).toggle(500);
-					}
-				})
-				if ($(caption).hasClass('bel-table-open-icon')) {
-					$(caption).removeClass('bel-table-open-icon');
-					$(caption).addClass('bel-table-close-icon');
-				}else{
-					$(caption).addClass('bel-table-open-icon');
-					$(caption).removeClass('bel-table-close-icon');
-				}
-			});
-		}else{
-			$(this).children( 'button' ).each(function () {
-				headerRigthtGrupDiv = $("<div></div>").addClass("bel-table_caption-group bel-table_caption-button");
-				$(this).addClass("bel-btn bel-btn-secondary bel-btn-secondary-active");
-				$(headerRigthtGrupDiv).append($(this));
-			});
-		}
-		
-		if(null != headerRigthtGrupDiv){
-			$(this).append( $(headerRigthtGrupDiv));
-		}
-	});
-}
