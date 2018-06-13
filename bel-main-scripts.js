@@ -62,7 +62,6 @@ function displayBelOption(idList, idLabel) {
 
 function displayDownloadOption(idList, idLabel) {
 	if (document.getElementById("downloadOptions").style.display == "block" ) {
-		$("#" + idList).removeClass("bel-display-list");
 		$("#" + idList).removeClass("bel-download-options");
 		$("#" + idLabel).removeClass("bel-download-open");
 		document.getElementById("downloadOptions").style.display = "none";
@@ -70,14 +69,12 @@ function displayDownloadOption(idList, idLabel) {
 	} else {
 		scrollToElement('#' + idLabel);
 		var allOptions = $(".bel-option-list");
-		allOptions.removeClass('bel-display-list');
 		var allSelectLabels = $(".bel-select");
 		document.getElementById("downloadOptions").style.display = "block";
 		document.getElementById(idList).style.display = "block";
 		if (!$('#' + idLabel).hasClass('bel-select-disabled')) {
 			var allOptions = $("#mySelect").children('li');
 			allOptions.removeClass('selected');
-			$('#' + idList).toggleClass('bel-display-list');
 			$('#' + idList).toggleClass('bel-download-options');
 			$("#" + idLabel).toggleClass("bel-download-open");
 		}
@@ -85,8 +82,7 @@ function displayDownloadOption(idList, idLabel) {
 	$(document).click(function(event) { 
 	    if(event.target.parentElement !== $("#" + idList)[0].parentElement) {
 	        if($('#'+idList).is(":visible")) {
-	        	$("#" + idList).removeClass("bel-display-list");
-				$("#" + idList).removeClass("bel-download-options");
+	        	$("#" + idList).removeClass("bel-download-options");
 				$("#" + idLabel).removeClass("bel-download-open");
 				document.getElementById("downloadOptions").style.display = "none";
 				document.getElementById(idList).style.display = "none";
