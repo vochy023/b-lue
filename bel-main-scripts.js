@@ -2,7 +2,7 @@
 // SP: ----------- CRI-025171
 // DATE: --------- 19-02-2018
 // DESCRIPTION: -- funciones para los elementos: campo de texto, textarea y combo de seleccion
-// AUTHOR: ------- jcastillov, aramirez, earaya (1.0)
+// AUTHOR: ------- jcastillov, aramirez (1.0)
 // WORKTEAM: ----- Codebreakers-Anonymous (1.0)
 // version 1.0
 
@@ -45,7 +45,7 @@ function displayBelOption(idList, idLabel) {
 		$("#" + idLabel).addClass('bel-select-close-icon');
 		$("#" + idList).removeClass("bel-display-list");
 	} else {
-		scrollToElement('#' + idLabel);
+		scrollToGroup("#" + idLabel);
 		var allOptions = $(".bel-option-list");
 		allOptions.removeClass('bel-display-list');
 		var allSelectLabels = $(".bel-select");
@@ -62,7 +62,6 @@ function displayBelOption(idList, idLabel) {
 
 function displayDownloadOption(idList, idLabel) {
 	if (document.getElementById("downloadOptions").style.display == "block" ) {
-		$("#" + idList).removeClass("bel-display-list");
 		$("#" + idList).removeClass("bel-download-options");
 		$("#" + idLabel).removeClass("bel-download-open");
 		document.getElementById("downloadOptions").style.display = "none";
@@ -70,23 +69,37 @@ function displayDownloadOption(idList, idLabel) {
 	} else {
 		scrollToElement('#' + idLabel);
 		var allOptions = $(".bel-option-list");
-		allOptions.removeClass('bel-display-list');
 		var allSelectLabels = $(".bel-select");
 		document.getElementById("downloadOptions").style.display = "block";
 		document.getElementById(idList).style.display = "block";
 		if (!$('#' + idLabel).hasClass('bel-select-disabled')) {
 			var allOptions = $("#mySelect").children('li');
 			allOptions.removeClass('selected');
-			$('#' + idList).toggleClass('bel-display-list');
 			$('#' + idList).toggleClass('bel-download-options');
 			$("#" + idLabel).toggleClass("bel-download-open");
 		}
 	}
+	$(document).click(function(event) { 
+	    if(event.target.parentElement !== $("#" + idList)[0].parentElement) {
+	        if($('#'+idList).is(":visible")) {
+	        	$("#" + idList).removeClass("bel-download-options");
+				$("#" + idLabel).removeClass("bel-download-open");
+				document.getElementById("downloadOptions").style.display = "none";
+				document.getElementById(idList).style.display = "none";
+	        }
+	    }
+	}); 
 }
 
 function scrollToElement(elementID){
 	$('html').animate({
 	    scrollTop: $(elementID).offset().top
+	  }, 1000);
+}
+
+function scrollToGroup(groupId){
+	$('html').animate({
+	    scrollTop: $(groupId).offset().top - 30
 	  }, 1000);
 }
 
@@ -121,32 +134,32 @@ function OnInput(e) {
 //Caga los textos al hacer click en los tabs
 $.fn.makeTabs = function(tabSelected){
 	var tabContiner = this;
-	this.attr('class', 'bel-tab-container');
+	this.attr('class', 'bel-tab');
 	this.find( "div" ).each(function () {
 		$(this).attr('class', 'bel-tab-container__bel-tab-content');
 	});
 	this.find( "ul" ).each(function () {
-		$(this).attr('class', 'bel-tab-container__bel-tab-ul');
+		$(this).attr('class', 'bel-tab-container');
 	});
 	this.find( "ul" ).find( "li" ).each(function () {
 		var tab = $(this).find('a').attr( "href" );
-		$(this).find('a').attr('class', 'bel-tab-container__bel-tab-a');
+		$(this).find('a').attr('class', 'bel-tab-container-element');
 		$(this).click(function(){
 			$(tabContiner).find( "div" ).each(function () {
 				$(this).hide();
 			});
 			$(tabContiner).find( "ul" ).find( "li" ).each(function () {
-				$(this).attr('class', 'bel-tab-container__bel-tab tab-unselected');
+				$(this).attr('class', 'bel-tab-container-link bel-tab-container-element__unselected');
 			});
-			$(this).attr('class', 'bel-tab-container__bel-tab tab-selected');
+			$(this).attr('class', 'bel-tab-container-link bel-tab-container-element__selected');
 			$(tab).show();
 		});
 
 		if("#"+tabSelected == tab){
-			$(this).attr('class', 'bel-tab-container__bel-tab tab-selected');
+			$(this).attr('class', 'bel-tab-container-link bel-tab-container-element__selected');
 			$(this).click();
 		}else{
-			$(this).attr('class', 'bel-tab-container__bel-tab tab-unselected');
+			$(this).attr('class', 'bel-tab-container-link bel-tab-container-element__unselected');
 		}
 
 	});
@@ -245,14 +258,14 @@ $.fn.belCreateWizardProcessStep = function(steps, messagesStep, selectedStep) {
 		animationProgressBar(steps, selectedStep);
 
 	} else {
-		alert("Número de pasos esta por encima de la capacidad de Wizard");
+		alert("NÃºmero de pasos esta por encima de la capacidad de Wizard");
 	}
 }
 
 function animationProgressBar(steps, selectedStep){
 
 	if(selectedStep > steps){
-			alert("El paso actúal elegido es mayor a la cantidad de pasos disponible");
+			alert("El paso actÃºal elegido es mayor a la cantidad de pasos disponible");
 	}else {
 		var barEfect = document.getElementsByClassName("bel-wizard-step-active")[0];
 		var lblEfect = document.getElementsByClassName("bel-wizard-label-active")[selectedStep-1];
@@ -283,52 +296,54 @@ function startAmimationTimer(){
 	}
 
 
-		// Funcion que inicia el contador
-		function belShowMessageTimer() {
-		      $('.bel-timer-cont__circle').css('stroke-dashoffset', 300);
-		    belExecuteCircleTimer();
-		}
-		function belExecuteCircleTimer() {
-		    var time = belRemaingTimeForFinishUserSession;
-		    var timer = $('#belSeconds')[0];
-		    timer.innerHTML = time;
-		    var seconds = Number(timer.innerHTML);
-		    var i = 1;
-		    belSetTimerForFinishTheSession = setTimeout(function() {
-		   // ejecutal el inicio del conteo
-		   // *****************************************
-		        }, belRemaingTimeForFinishUserSession);
-		      belCircleInterval = setInterval(function() {
-		        seconds--;
-		        if (seconds >= 0) {
-		            timer.innerHTML = seconds;
-		            i++;
-		            $('.bel-timer-cont__circle').css('stroke-dashoffset',
-		                    300 + Math.floor((i * 40 / time) + (i * 100 / time)));
-		        }else{
-		     // Finaliza el tiempo
-		     // ***************************
-		        	clearInterval(belCircleInterval);
-		        }
-		    }, 1000);
-		}
-		// Fin funcion animacion contador
+
 }
+
+// Funcion que inicia el contador
+function belShowMessageTimer() {
+    $('.bel-timer-cont__circle').css('stroke-dashoffset', 300);
+	    belExecuteCircleTimer();
+	}
+function belExecuteCircleTimer() {
+    var time = belRemaingTimeForFinishUserSession;
+    var timer = $('#belSeconds')[0];
+    timer.innerHTML = time;
+    var seconds = Number(timer.innerHTML);
+    var i = 1;
+    belSetTimerForFinishTheSession = setTimeout(function() {
+   // ejecutal el inicio del conteo
+   // *****************************************
+        }, belRemaingTimeForFinishUserSession);
+      belCircleInterval = setInterval(function() {
+        seconds--;
+        if (seconds >= 0) {
+            timer.innerHTML = seconds;
+            i++;
+            $('.bel-timer-cont__circle').css('stroke-dashoffset',
+                    300 + Math.floor((i * 40 / time) + (i * 100 / time)));
+        }else{
+     // Finaliza el tiempo
+     // ***************************
+        	clearInterval(belCircleInterval);
+        }
+    }, 1000);
+}
+// Fin funcion animacion contador
 
 
 
 function closeModal(box, modal){
-	document.getElementById(box).classList.remove('bel-box-visible');
-	document.getElementById(modal).classList.remove('bel-modal-visible');
-	document.getElementById(box).classList.add('bel-box-hidden');
-	document.getElementById(modal).classList.add('bel-modal-hidden');
+	$("#"+box).removeClass("bel-box-visible");
+	$("#"+modal).removeClass("bel-modal-visible");
+	$("#"+box).addClass("bel-box-hidden");
+	$("#"+modal).addClass("bel-modal-hidden");
 }
 
 function openModal(box, modal){
-	document.getElementById(box).classList.remove('bel-box-hidden');
-	document.getElementById(modal).classList.remove('bel-modal-hidden');
-	document.getElementById(box).classList.add('bel-box-visible');
-	document.getElementById(modal).classList.add('bel-modal-visible');
+	$("#"+box).removeClass("bel-box-hidden");
+	$("#"+modal).removeClass("bel-modal-hidden");
+	$("#"+box).addClass("bel-box-visible");
+	$("#"+modal).addClass("bel-modal-visible");
 }
 
 //Funcion para esconder o mostrar el resultado de las busquedas
@@ -392,7 +407,7 @@ function belShowResultsContent(myInput, myContent) {
  			$('#'+inputId).addClass('bel-input-error');
  			$('#'+spanId).addClass('el-typography-main bel-typography-label-error');
  			$('#'+spanId).removeClass('bel-hide-element');
- 			$('#'+spanId).text("Formato no válido");
+ 			$('#'+spanId).text("Formato no vÃ¡lido");
  		}
  	}
  	if (cantidad==maxEmails && inputTextAux!="") {
@@ -400,7 +415,7 @@ function belShowResultsContent(myInput, myContent) {
  		$('#'+inputId).addClass('bel-input-error');
  		$("#"+inputId).val("");
  		$('#'+spanId).addClass('el-typography-main bel-typography-label-error');
- 		$('#'+spanId).text("No se pueden agregar más correos");
+ 		$('#'+spanId).text("No se pueden agregar mÃ¡s correos");
  	}
  }
 
@@ -460,7 +475,7 @@ $.fn.blueSelect = function(size){
 
 	var selectedLabel = null;
 
-	var selectDiv = $("<div></div>")
+	var selectDiv = $("<div id='"+ elementId +"Div'></div>");
 
 	var selectList = $('<ul id="'+elementId+'List" class="bel-option-list bel-option-list-'+size+'"></ul>')
 
@@ -489,6 +504,13 @@ $.fn.blueSelect = function(size){
 
 	});
 
+	$(document).click(function(event) { 
+	    if($(event.target.parentElement)[0].id !== selectDiv[0].id) {
+	        if(selectList.is(":visible")) {
+	        	displayBelOption(selectList[0].id, elementId+"Label");
+	        }
+	    }        
+});
 
 	$(selectDiv).append($('<label id="'+elementId+'Label" class="bel-select bel-select-'+size+' bel-select-default bel-select-close-icon"  onclick="displayBelOption(\''+elementId+'List\', \''+elementId+'Label\');">'+selectedLabel+'</label>'));
 	$(selectDiv).append($(selectList));
@@ -498,6 +520,17 @@ $.fn.blueSelect = function(size){
 	this.addClass('bel-box-hidden');
 };
 
+function toggleTable(tableId){
+	$("#tBody"+tableId ).toggle(500);
+	$("#thead"+tableId ).toggle(500);
+	if ($("#caption"+tableId ).hasClass('bel-table-open-icon')) {
+	$("#caption"+tableId ).removeClass('bel-table-open-icon');
+	$("#caption"+tableId ).addClass('bel-table-close-icon');
+	}else{
+		$("#caption"+tableId ).addClass('bel-table-open-icon');
+	$("#caption"+tableId ).removeClass('bel-table-close-icon');
+	}
+}
 
 
 /**
@@ -508,7 +541,7 @@ $.fn.blueInputPasswordType = function(inputId, inputSize, show, hide){
 	 $('#'+inputId).removeClass();
 	 $('#'+inputId).addClass("bel-input--icon bel-input--icon-"+inputSize.toLowerCase()+" bel-input-default");
 	 $('#'+inputId).prop("type", "password");
-	 $('#'+inputId).css("padding: 0px 68px 0 10px;");
+	 $('#'+inputId).css("padding-right", "71px");
 	 var selectDiv = $('<span onclick="validateShowElementLabel(\''+inputId+'\',this,\''+show+'\',\''+hide+'\' )" style="margin-left: -26px;color:#6D6E71; font-size: 14px; cursor:pointer;" class="bel-validation-icon bel-typography bel-typography-label">Mostrar</span>');
 	 $('#'+inputId).after( selectDiv);
 };
@@ -529,6 +562,29 @@ function validateShowElementLabel(inputId, spanObject, show, hide){
  }
 }
 
+/**
+	Funciona que recibe el idioma en que se encuentra la sucursal para cargar el date picker
+*/
+function loadDatePicker(idDatepicker ,languaje){
+
+	var langujesForDatePicker = {};
+	langujesForDatePicker.es = {
+		months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+      	days: ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado']
+	};
+	langujesForDatePicker.en = {
+		months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'Octuber', 'November', 'December'],
+    	days: ['Sunday', 'Monday', 'Tuesdar', 'Wednesday', 'Thrusday', 'Friday', 'Saturday']
+	};
+
+
+	$('#' + idDatepicker).Zebra_DatePicker({
+   		months: langujesForDatePicker[languaje].months,
+   		days: langujesForDatePicker[languaje].days,
+
+   	});
+}
+
 /*
 	Uso de parametros
 	idContainer: id del div donde se inyecta el componente
@@ -536,23 +592,28 @@ function validateShowElementLabel(inputId, spanObject, show, hide){
 	iconClass: Clase del icono
 	title: titulo del mensaje
 	message: Texto del mensaje
-	buttonText: texto del botón
-	buttonUrl: Url del botón
+	buttonText: texto del botÃ³n
+	buttonUrl: Url del botÃ³n
 
-	Nota: En caso de no necesitar botón o título dejar el parametro en null.
+	Nota: En caso de no necesitar botÃ³n o tÃ­tulo dejar el parametro en null.
 */
 
 //Metodo que crea el contenedor de los mensajes con la informacion del mensaje
 function createAlertMessage(idContainer, alertType, iconClass, title, message, buttonText, buttonUrl) {
 	var mainContainer = document.getElementById(idContainer);
+	var navInfo = getBrowserInfo();
+
 	// Estilo del componente (tipo, color, icono)
 	var row = $("<div/>").addClass("bel-grid-row");
 	var column = $("<div/>").addClass("bel-col-12").appendTo(row);
 	var alertMessage = $("<div/>").addClass("bel-alertMessage").appendTo(column);
-	var alertMessagetype = $("<div/>").addClass(getAlertClassByType(alertType)).appendTo(alertMessage);
+	var alertClass = getAlertClassByType(alertType);
+	//Valida si el navegador es IE
+	if (navInfo.indexOf('IE') != -1) {alertClass+="-ie9";}
+	var alertMessagetype = $("<div/>").addClass(alertClass).appendTo(alertMessage);
 	var alertMessageIconContainer = $("<div/>").addClass("bel-alertMessage-icon-container").appendTo(alertMessagetype);
 	var alertMessageIcon = $("<div/>").addClass(iconClass +" bel-alertMessage-icon").appendTo(alertMessageIconContainer);
-	// Contenido del componente (título, texto)
+	// Contenido del componente (tÃ­tulo, texto)
 
 	if(buttonText != null && buttonText != "") {
 		var alertMessageContent = $("<div/>").addClass("bel-display-inline bel-alertMessage_content").appendTo(alertMessage);
@@ -562,14 +623,24 @@ function createAlertMessage(idContainer, alertType, iconClass, title, message, b
 
 	if(title != null && title != "") {
 		var titleSpace = $("<div/>").addClass("bel-space-bottom-xs").appendTo(alertMessageContent);
-		var titleText = $("<h3/>").addClass("bel-typography bel-typography-h3").append(title).appendTo(alertMessageContent);
+		var titleClass = "bel-typography bel-typography-h3";
+		//Valida si el navegador es IE
+		if (navInfo.indexOf('IE') != -1) {titleClass+=" bel-alertMessage-margin-ie9";}
+		var titleText = $("<h3/>").addClass(titleClass).append(title).appendTo(alertMessageContent);
+	}else{
+			if (navInfo.indexOf('IE') != -1){
+				var titleSpace = $("<div/>").addClass("bel-space-bottom-xs").appendTo(alertMessageContent);
+			}
 	}
 
 	if(message != null && message != "") {
 		var messsageTextContainer = $("<div/>").appendTo(alertMessageContent);
-		var messsageText = $("<p/>").addClass("bel-typography bel-typography-p").append(message).appendTo(messsageTextContainer);
+		var messageClass = "bel-typography bel-typography-p";
+		//Valida si el navegador es IE
+		if (navInfo.indexOf('IE') != -1) {messageClass+=" bel-alertMessage-margin-ie9";}
+		var messsageText = $("<p/>").addClass(messageClass).append(message).appendTo(messsageTextContainer);
 	}
-	// Contenido del componente (botón)
+	// Contenido del componente (botÃ³n)
 	if(buttonText != null && buttonText != ""){
 		var alertMessageButton = $("<div/>").addClass("bel-alertMessage_button bel-display-inline").appendTo(alertMessage);
 		var alertMessageButtonContainer = $("<div/>").addClass("bel-display-inline").appendTo(alertMessageButton);
@@ -590,6 +661,20 @@ function getAlertClassByType(alertType){
 	}
 }
 
+var getBrowserInfo = function() {
+    var ua= navigator.userAgent, tem,
+    M= ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+    if(/trident/i.test(M[1])){
+        tem=  /\brv[ :]+(\d+)/g.exec(ua) || [];
+        return 'IE '+(tem[1] || '');
+    }
+    if(M[1]=== 'Chrome'){
+        tem= ua.match(/\b(OPR|Edge)\/(\d+)/);
+        if(tem!= null) return tem.slice(1).join(' ').replace('OPR', 'Opera');
+    }
+
+    return M.join(' ');
+};
 
 
 
