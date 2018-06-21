@@ -7,84 +7,84 @@
 // version 1.0
 
 window.$BLUEJQuery = $.noConflict(true); 
-validateJQuery();
+validateBLUEJQuery();
 
 //input
-$(".bel-input-disabled").prop('disabled', true);
-$(".bel-input-non-editable").prop('disabled', true);
+$BLUEJQuery(".bel-input-disabled").prop('disabled', true);
+$BLUEJQuery(".bel-input-non-editable").prop('disabled', true);
 
-$(".bel-input").on('click', function() {
-	if (!$(this).hasClass('bel-input-error')) {
-		$(this).addClass('bel-input-edit');
+$BLUEJQuery(".bel-input").on('click', function() {
+	if (!$BLUEJQuery(this).hasClass('bel-input-error')) {
+		$BLUEJQuery(this).addClass('bel-input-edit');
 	}
 });
 
-$('.bel-input').blur(function() {
-	$(this).removeClass('bel-input-edit');
-	$(this).addClass('bel-input-filled');
+$BLUEJQuery('.bel-input').blur(function() {
+	$BLUEJQuery(this).removeClass('bel-input-edit');
+	$BLUEJQuery(this).addClass('bel-input-filled');
 });
 
 // select
 function updateBelSelect(id, value, optionText, element) {
 	document.getElementById(id + "Label").innerHTML = optionText;
-	$("#" + id + "Label").addClass("bel-select-filled");
-	$("#" + id + "List").removeClass("bel-display-list");
-	$("#" + id + "Label").removeClass('bel-select-open-icon');
-	$("#" + id + "Label").addClass('bel-select-close-icon');
-	var allOptions = $("#" + id + "List").children('li');
+	$BLUEJQuery("#" + id + "Label").addClass("bel-select-filled");
+	$BLUEJQuery("#" + id + "List").removeClass("bel-display-list");
+	$BLUEJQuery("#" + id + "Label").removeClass('bel-select-open-icon');
+	$BLUEJQuery("#" + id + "Label").addClass('bel-select-close-icon');
+	var allOptions = $BLUEJQuery("#" + id + "List").children('li');
 	allOptions.removeClass('selected');
-	$(element).addClass('selected');
-	$('#'+id+' option:selected').removeAttr("selected");
-	$('#'+id+' option[value="'+value+'"]').attr('selected', 'selected');
-	$("#" + id).trigger("change");
+	$BLUEJQuery(element).addClass('selected');
+	$BLUEJQuery('#'+id+' option:selected').removeAttr("selected");
+	$BLUEJQuery('#'+id+' option[value="'+value+'"]').attr('selected', 'selected');
+	$BLUEJQuery("#" + id).trigger("change");
 }
 
 
 function displayBelOption(idList, idLabel) {
-	if ($('#' + idLabel).hasClass('bel-select-open-icon')) {
-		$("#" + idLabel).removeClass('bel-select-open-icon');
-		$("#" + idLabel).addClass('bel-select-close-icon');
-		$("#" + idList).removeClass("bel-display-list");
+	if ($BLUEJQuery('#' + idLabel).hasClass('bel-select-open-icon')) {
+		$BLUEJQuery("#" + idLabel).removeClass('bel-select-open-icon');
+		$BLUEJQuery("#" + idLabel).addClass('bel-select-close-icon');
+		$BLUEJQuery("#" + idList).removeClass("bel-display-list");
 	} else {
 		scrollToGroup("#" + idLabel);
-		var allOptions = $(".bel-option-list");
+		var allOptions = $BLUEJQuery(".bel-option-list");
 		allOptions.removeClass('bel-display-list');
-		var allSelectLabels = $(".bel-select");
+		var allSelectLabels = $BLUEJQuery(".bel-select");
 		allSelectLabels.removeClass('bel-select-open-icon');
 		allSelectLabels.addClass('bel-select-close-icon');
-		if (!$('#' + idLabel).hasClass('bel-select-disabled')) {
-			var allOptions = $("#mySelect").children('li');
+		if (!$BLUEJQuery('#' + idLabel).hasClass('bel-select-disabled')) {
+			var allOptions = $BLUEJQuery("#mySelect").children('li');
 			allOptions.removeClass('selected');
-			$('#' + idList).toggleClass('bel-display-list');
-			$("#" + idLabel).addClass('bel-select-open-icon');
+			$BLUEJQuery('#' + idList).toggleClass('bel-display-list');
+			$BLUEJQuery("#" + idLabel).addClass('bel-select-open-icon');
 		}
 	}
 }
 
 function displayDownloadOption(idList, idLabel) {
 	if (document.getElementById("downloadOptions").style.display == "block" ) {
-		$("#" + idList).removeClass("bel-download-options");
-		$("#" + idLabel).removeClass("bel-download-open");
+		$BLUEJQuery("#" + idList).removeClass("bel-download-options");
+		$BLUEJQuery("#" + idLabel).removeClass("bel-download-open");
 		document.getElementById("downloadOptions").style.display = "none";
 		document.getElementById(idList).style.display = "none";
 	} else {
 		scrollToElement('#' + idLabel);
-		var allOptions = $(".bel-option-list");
-		var allSelectLabels = $(".bel-select");
+		var allOptions = $BLUEJQuery(".bel-option-list");
+		var allSelectLabels = $BLUEJQuery(".bel-select");
 		document.getElementById("downloadOptions").style.display = "block";
 		document.getElementById(idList).style.display = "block";
-		if (!$('#' + idLabel).hasClass('bel-select-disabled')) {
-			var allOptions = $("#mySelect").children('li');
+		if (!$BLUEJQuery('#' + idLabel).hasClass('bel-select-disabled')) {
+			var allOptions = $BLUEJQuery("#mySelect").children('li');
 			allOptions.removeClass('selected');
-			$('#' + idList).toggleClass('bel-download-options');
-			$("#" + idLabel).toggleClass("bel-download-open");
+			$BLUEJQuery('#' + idList).toggleClass('bel-download-options');
+			$BLUEJQuery("#" + idLabel).toggleClass("bel-download-open");
 		}
 	}
-	$(document).click(function(event) { 
-	    if(event.target.parentElement !== $("#" + idList)[0].parentElement) {
-	        if($('#'+idList).is(":visible")) {
-	        	$("#" + idList).removeClass("bel-download-options");
-				$("#" + idLabel).removeClass("bel-download-open");
+	$BLUEJQuery(document).click(function(event) { 
+	    if(event.target.parentElement !== $BLUEJQuery("#" + idList)[0].parentElement) {
+	        if($BLUEJQuery('#'+idList).is(":visible")) {
+	        	$BLUEJQuery("#" + idList).removeClass("bel-download-options");
+				$BLUEJQuery("#" + idLabel).removeClass("bel-download-open");
 				document.getElementById("downloadOptions").style.display = "none";
 				document.getElementById(idList).style.display = "none";
 	        }
@@ -93,31 +93,31 @@ function displayDownloadOption(idList, idLabel) {
 }
 
 function scrollToElement(elementID){
-	$('html').animate({
-	    scrollTop: $(elementID).offset().top
+	$BLUEJQuery('html').animate({
+	    scrollTop: $BLUEJQuery(elementID).offset().top
 	  }, 1000);
 }
 
 function scrollToGroup(groupId){
-	$('html').animate({
-	    scrollTop: $(groupId).offset().top - 30
+	$BLUEJQuery('html').animate({
+	    scrollTop: $BLUEJQuery(groupId).offset().top - 30
 	  }, 1000);
 }
 
 //obtiene el valor seleccionado del select
 function getSelectedOption(idList) {
-	return $("#" + idList).find(".selected").val();
+	return $BLUEJQuery("#" + idList).find(".selected").val();
 }
 
 //textarea
-$(".bel-textarea").on('click', function(){
-	if(!$(this).hasClass('bel-textarea-error')){
-		$(this).addClass('bel-textarea-edit');
+$BLUEJQuery(".bel-textarea").on('click', function(){
+	if(!$BLUEJQuery(this).hasClass('bel-textarea-error')){
+		$BLUEJQuery(this).addClass('bel-textarea-edit');
 	}
 });
 
-$('.bel-textarea').blur(function(){
-	$(this).removeClass('bel-textarea-edit');
+$BLUEJQuery('.bel-textarea').blur(function(){
+	$BLUEJQuery(this).removeClass('bel-textarea-edit');
 });
 
 var tx = document.getElementsByTagName('textarea');
@@ -133,34 +133,34 @@ function OnInput(e) {
 
 //funcion tab
 //Caga los textos al hacer click en los tabs
-$.fn.makeTabs = function(tabSelected){
+$BLUEJQuery.fn.makeTabs = function(tabSelected){
 	var tabContiner = this;
 	this.attr('class', 'bel-tab');
 	this.find( "div" ).each(function () {
-		$(this).attr('class', 'bel-tab-container__bel-tab-content');
+		$BLUEJQuery(this).attr('class', 'bel-tab-container__bel-tab-content');
 	});
 	this.find( "ul" ).each(function () {
-		$(this).attr('class', 'bel-tab-container');
+		$BLUEJQuery(this).attr('class', 'bel-tab-container');
 	});
 	this.find( "ul" ).find( "li" ).each(function () {
-		var tab = $(this).find('a').attr( "href" );
-		$(this).find('a').attr('class', 'bel-tab-container-element');
-		$(this).click(function(){
-			$(tabContiner).find( "div" ).each(function () {
-				$(this).hide();
+		var tab = $BLUEJQuery(this).find('a').attr( "href" );
+		$BLUEJQuery(this).find('a').attr('class', 'bel-tab-container-element');
+		$BLUEJQuery(this).click(function(){
+			$BLUEJQuery(tabContiner).find( "div" ).each(function () {
+				$BLUEJQuery(this).hide();
 			});
-			$(tabContiner).find( "ul" ).find( "li" ).each(function () {
-				$(this).attr('class', 'bel-tab-container-link bel-tab-container-element__unselected');
+			$BLUEJQuery(tabContiner).find( "ul" ).find( "li" ).each(function () {
+				$BLUEJQuery(this).attr('class', 'bel-tab-container-link bel-tab-container-element__unselected');
 			});
-			$(this).attr('class', 'bel-tab-container-link bel-tab-container-element__selected');
-			$(tab).show();
+			$BLUEJQuery(this).attr('class', 'bel-tab-container-link bel-tab-container-element__selected');
+			$BLUEJQuery(tab).show();
 		});
 
 		if("#"+tabSelected == tab){
-			$(this).attr('class', 'bel-tab-container-link bel-tab-container-element__selected');
-			$(this).click();
+			$BLUEJQuery(this).attr('class', 'bel-tab-container-link bel-tab-container-element__selected');
+			$BLUEJQuery(this).click();
 		}else{
-			$(this).attr('class', 'bel-tab-container-link bel-tab-container-element__unselected');
+			$BLUEJQuery(this).attr('class', 'bel-tab-container-link bel-tab-container-element__unselected');
 		}
 
 	});
@@ -169,38 +169,29 @@ $.fn.makeTabs = function(tabSelected){
 //fin funcion tab
 
 
-function validateJQuery() {
+function validateBLUEJQuery() {
 	// Valida si JQuery esta indefinido
-	if (undefined == $ || 'undefined' == typeof $) {
+	if (undefined == $BLUEJQuery || 'undefined' == typeof $BLUEJQuery) {
 		// En caso de que JQuery se esta ejecutando en la variable gloabal
 		// wIndow lo tome de ahi
 		if (undefined != window.$j) {
-			// Define $ que se ejecuta en window.$j
-			$ = window.$j;
+			// Define $BLUEJQuery que se ejecuta en window.$BLUEJQueryj
+			window.$BLUEJQuery = $.noConflict(true); 
 			// En caso de no tener JQuery cargado se encarga de cargar el
 			// archivo de la vesion 1.7.2
 		} else {
 			// Se crea el tag script con el tipo y la ruta del archivo
 			var jQueryFileScript = document.createElement('script');
 			jQueryFileScript.type = 'text/javascript';
-			jQueryFileScript.src = 'https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js';
+			jQueryFileScript.src = 'https://blue.baccredomatic.com/js/jquery-3.3.1.min.js';
 			jQueryFileScript.async = 1;
 			// Se agrega al body
-			document.getElementsByTagName('body')[0]
-					.appendChild(jQueryFileScript);
-			// Metodo que se encarga de cargar el archivo
-			jQueryFileScript.onload = jQueryFileScript.onreadystatechange = function(
-					_, isAbort) {
-				if (isAbort || !jQueryFileScript.readyState
-						|| /loaded|complete/.test(jQueryFileScript.readyState)) {
-					jQueryFileScript.onload = jQueryFileScript.onreadystatechange = null;
-					jQueryFileScript = undefined;
-					if (!isAbort) {
-						if (callback)
-							callback();
-					}
-				}
-			};
+			//Se agrega al body
+			jQueryFileScript.onload = function() {
+		        window.$BLUEJQuery = $.noConflict(true); 
+		        validateBLUEJQuery();
+		    };
+		    document.getElementsByTagName("head")[0].appendChild(jQueryFileScript);
 		}
 	}
 }
@@ -211,7 +202,7 @@ function validateJQuery() {
 
  * Descripcion de uso
  *
- * $('#contenedorEjemplo').createWizard(steps, mensajesdePasos, mensajeNumeros,
+ * $BLUEJQuery('#contenedorEjemplo').createWizard(steps, mensajesdePasos, mensajeNumeros,
  * selectedStep);
  *
  * Los parametros son los pasos que se debe mostrar, con el texto y el numero
@@ -222,30 +213,30 @@ function validateJQuery() {
  * key="common.label.wizard.step2" />); messagesStep.push(<fmt:message
  * key="common.label.wizard.step3" />);
  *
- * $('#contenedorEjemplo').belCreateWizardProcessStep(3, messagesStep,
+ * $BLUEJQuery('#contenedorEjemplo').belCreateWizardProcessStep(3, messagesStep,
  * messagesNumber, 1);
  */
 // Carga JQuery en caso de que no se este cargando en la pagina
-$.fn.belCreateWizardProcessStep = function(steps, messagesStep, selectedStep) {
+$BLUEJQuery.fn.belCreateWizardProcessStep = function(steps, messagesStep, selectedStep) {
 	if (steps <= 5) {
 
-		var processList = $('<ul class="bel-wizard"></ul>');
+		var processList = $BLUEJQuery('<ul class="bel-wizard"></ul>');
 		for (var i = 0; i < steps; i++) {
-			var step = $('<li class="bel-wizard-li bel-wizard-step-inactive bel-wizard-steps-'
+			var step = $BLUEJQuery('<li class="bel-wizard-li bel-wizard-step-inactive bel-wizard-steps-'
 					+ steps
 					+ '"><label id="step'
 					+ (i + 1)
 					+ '" class="bel-wizard-label bel-wizard-label-inactive">'
 					+ messagesStep[i] + '</label></li>');
 			if ((i + 1) == selectedStep) {
-				step = $('<li class="bel-wizard-li bel-wizard-step-active bel-wizard-steps-'
+				step = $BLUEJQuery('<li class="bel-wizard-li bel-wizard-step-active bel-wizard-steps-'
 						+ steps
 						+ '"><label id="step'
 						+ (i + 1)
 						+ '" class="bel-wizard-label bel-wizard-label-active">'
 						+ messagesStep[i] + '</label></li>');
 			} else if ((i + 1) < selectedStep) {
-				step = $('<li class="bel-wizard-li bel-wizard-step-completed bel-wizard-steps-'
+				step = $BLUEJQuery('<li class="bel-wizard-li bel-wizard-step-completed bel-wizard-steps-'
 						+ steps
 						+ '"><label id="step'
 						+ (i + 1)
@@ -259,14 +250,14 @@ $.fn.belCreateWizardProcessStep = function(steps, messagesStep, selectedStep) {
 		animationProgressBar(steps, selectedStep);
 
 	} else {
-		alert("NÃºmero de pasos esta por encima de la capacidad de Wizard");
+		alert("NÃƒÂºmero de pasos esta por encima de la capacidad de Wizard");
 	}
 }
 
 function animationProgressBar(steps, selectedStep){
 
 	if(selectedStep > steps){
-			alert("El paso actÃºal elegido es mayor a la cantidad de pasos disponible");
+			alert("El paso actÃƒÂºal elegido es mayor a la cantidad de pasos disponible");
 	}else {
 		var barEfect = document.getElementsByClassName("bel-wizard-step-active")[0];
 		var lblEfect = document.getElementsByClassName("bel-wizard-label-active")[selectedStep-1];
@@ -284,7 +275,7 @@ function animationProgressBar(steps, selectedStep){
  *
  */
 function startAmimationTimer(){
-	if ( $( "#belSeconds" ).length ) {
+	if ( $BLUEJQuery( "#belSeconds" ).length ) {
 
 		// Funcion para animacion de Contando
 		var belRemaingTimeForFinishUserSession = 10;
@@ -302,12 +293,12 @@ function startAmimationTimer(){
 
 // Funcion que inicia el contador
 function belShowMessageTimer() {
-    $('.bel-timer-cont__circle').css('stroke-dashoffset', 300);
+    $BLUEJQuery('.bel-timer-cont__circle').css('stroke-dashoffset', 300);
 	    belExecuteCircleTimer();
 	}
 function belExecuteCircleTimer() {
     var time = belRemaingTimeForFinishUserSession;
-    var timer = $('#belSeconds')[0];
+    var timer = $BLUEJQuery('#belSeconds')[0];
     timer.innerHTML = time;
     var seconds = Number(timer.innerHTML);
     var i = 1;
@@ -320,7 +311,7 @@ function belExecuteCircleTimer() {
         if (seconds >= 0) {
             timer.innerHTML = seconds;
             i++;
-            $('.bel-timer-cont__circle').css('stroke-dashoffset',
+            $BLUEJQuery('.bel-timer-cont__circle').css('stroke-dashoffset',
                     300 + Math.floor((i * 40 / time) + (i * 100 / time)));
         }else{
      // Finaliza el tiempo
@@ -334,17 +325,17 @@ function belExecuteCircleTimer() {
 
 
 function closeModal(box, modal){
-	$("#"+box).removeClass("bel-box-visible");
-	$("#"+modal).removeClass("bel-modal-visible");
-	$("#"+box).addClass("bel-box-hidden");
-	$("#"+modal).addClass("bel-modal-hidden");
+	$BLUEJQuery("#"+box).removeClass("bel-box-visible");
+	$BLUEJQuery("#"+modal).removeClass("bel-modal-visible");
+	$BLUEJQuery("#"+box).addClass("bel-box-hidden");
+	$BLUEJQuery("#"+modal).addClass("bel-modal-hidden");
 }
 
 function openModal(box, modal){
-	$("#"+box).removeClass("bel-box-hidden");
-	$("#"+modal).removeClass("bel-modal-hidden");
-	$("#"+box).addClass("bel-box-visible");
-	$("#"+modal).addClass("bel-modal-visible");
+	$BLUEJQuery("#"+box).removeClass("bel-box-hidden");
+	$BLUEJQuery("#"+modal).removeClass("bel-modal-hidden");
+	$BLUEJQuery("#"+box).addClass("bel-box-visible");
+	$BLUEJQuery("#"+modal).addClass("bel-modal-visible");
 }
 
 //Funcion para esconder o mostrar el resultado de las busquedas
@@ -364,18 +355,16 @@ function belShowResultsContent(myInput, myContent) {
  *Funcionalidad para el componente de Notificaciones-email
  *
  */
- (function ($) {
- 	$.fn.delayKeyup = function(callback, ms){
- 		var timer = 0;
- 		$(this).keyup(function(){
- 			clearTimeout (timer);
- 			timer = setTimeout(callback, ms);
- 		});
- 		return $(this);
- 	};
- })(jQuery);
+$BLUEJQuery.fn.delayKeyup = function(callback, ms){
+	var timer = 0;
+	$BLUEJQuery(this).keyup(function(){
+		clearTimeout (timer);
+		timer = setTimeout(callback, ms);
+	});
+	return $BLUEJQuery(this);
+};
 
- $('#belInputEmailId').delayKeyup(function(){
+ $BLUEJQuery('#belInputEmailId').delayKeyup(function(){
  	belValidateEmail('belInputEmailId', 'belInpEmailSpan');
  }, 500);
 
@@ -383,10 +372,10 @@ function belShowResultsContent(myInput, myContent) {
  	var belMoreEmailsContId = document.getElementById(mainContId);
  	var divs = belMoreEmailsContId.querySelectorAll('div');
  	var cantidad = divs.length;
- 	var inputTextAux = $("#"+inputId).val();
+ 	var inputTextAux = $BLUEJQuery("#"+inputId).val();
  	if (maxEmails>cantidad && inputTextAux!="") {
- 		if ($('#'+spanId).hasClass('bel-validation-icon-success-s')) {
- 			$('#'+inputId).removeClass('bel-input-error');
+ 		if ($BLUEJQuery('#'+spanId).hasClass('bel-validation-icon-success-s')) {
+ 			$BLUEJQuery('#'+inputId).removeClass('bel-input-error');
  			var contAux = document.createElement("div");
  			contAux.className = "bel-space-top-xs";
 
@@ -394,7 +383,7 @@ function belShowResultsContent(myInput, myContent) {
  			inputAux.className = "bel-input--icon bel-input--icon-m bel-input-default bel-input-non-editable";
  			inputAux.setAttribute('type','text');
  			inputAux.setAttribute('value', inputTextAux);
- 			$("#"+inputId).val("");
+ 			$BLUEJQuery("#"+inputId).val("");
  			belClearInputMain(spanId,inputId);
 
  			var spanAux = document.createElement("span");
@@ -405,18 +394,18 @@ function belShowResultsContent(myInput, myContent) {
  			contAux.appendChild(spanAux);
  			belMoreEmailsContId.appendChild(contAux);
  		}else{
- 			$('#'+inputId).addClass('bel-input-error');
- 			$('#'+spanId).addClass('el-typography-main bel-typography-label-error');
- 			$('#'+spanId).removeClass('bel-hide-element');
- 			$('#'+spanId).text("Formato no vÃ¡lido");
+ 			$BLUEJQuery('#'+inputId).addClass('bel-input-error');
+ 			$BLUEJQuery('#'+spanId).addClass('el-typography-main bel-typography-label-error');
+ 			$BLUEJQuery('#'+spanId).removeClass('bel-hide-element');
+ 			$BLUEJQuery('#'+spanId).text("Formato no vÃƒÂ¡lido");
  		}
  	}
  	if (cantidad==maxEmails && inputTextAux!="") {
- 		$('#'+spanId).removeClass('bel-validation-icon bel-validation-icon-success-s bel-hide-element');
- 		$('#'+inputId).addClass('bel-input-error');
- 		$("#"+inputId).val("");
- 		$('#'+spanId).addClass('el-typography-main bel-typography-label-error');
- 		$('#'+spanId).text("No se pueden agregar mÃ¡s correos");
+ 		$BLUEJQuery('#'+spanId).removeClass('bel-validation-icon bel-validation-icon-success-s bel-hide-element');
+ 		$BLUEJQuery('#'+inputId).addClass('bel-input-error');
+ 		$BLUEJQuery("#"+inputId).val("");
+ 		$BLUEJQuery('#'+spanId).addClass('el-typography-main bel-typography-label-error');
+ 		$BLUEJQuery('#'+spanId).text("No se pueden agregar mÃƒÂ¡s correos");
  	}
  }
 
@@ -424,47 +413,47 @@ function belShowResultsContent(myInput, myContent) {
  	var belMoreEmailsContId = document.getElementById(mainContId);
  	var divs = belMoreEmailsContId.querySelectorAll('div');
  	var cantidad = divs.length;
- 	if (cantidad==0 && !$('#'+spanId).hasClass('bel-validation-icon-success-s')) {
- 		$('#'+spanId).removeClass('bel-validation-icon bel-validation-icon-success-s bel-hide-element');
- 		$('#'+inputId).addClass('bel-input-error');
- 		$('#'+spanId).addClass('el-typography-main bel-typography-label-error');
- 		$('#'+spanId).text("Campo requerido");
+ 	if (cantidad==0 && !$BLUEJQuery('#'+spanId).hasClass('bel-validation-icon-success-s')) {
+ 		$BLUEJQuery('#'+spanId).removeClass('bel-validation-icon bel-validation-icon-success-s bel-hide-element');
+ 		$BLUEJQuery('#'+inputId).addClass('bel-input-error');
+ 		$BLUEJQuery('#'+spanId).addClass('el-typography-main bel-typography-label-error');
+ 		$BLUEJQuery('#'+spanId).text("Campo requerido");
  	}
  }
 
  function belDeleteEmailCont(element){
- 	$( element ).parent(".bel-col-7").remove();
- 	$( element ).parent(".bel-space-top-xs").remove();
+ 	$BLUEJQuery( element ).parent(".bel-col-7").remove();
+ 	$BLUEJQuery( element ).parent(".bel-space-top-xs").remove();
  }
 
  function belValidateEmail(inputId, spanId) {
- 	var email = $('#'+inputId).val();
+ 	var email = $BLUEJQuery('#'+inputId).val();
  	if (email!="") {
- 		var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
- 		$("#"+spanId).removeClass('bel-hide-element');
- 		$("#"+spanId).text('');
+ 		var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$BLUEJQuery/;
+ 		$BLUEJQuery("#"+spanId).removeClass('bel-hide-element');
+ 		$BLUEJQuery("#"+spanId).text('');
  		if (re.test(String(email).toLowerCase())) {
- 			$("#"+spanId).removeClass('el-typography-main bel-typography-label-error');
- 			$("#"+spanId).text('');
- 			$("#"+inputId).removeClass('bel-input-error');
- 			$("#"+spanId).addClass('bel-validation-icon bel-validation-icon-success-s');
+ 			$BLUEJQuery("#"+spanId).removeClass('el-typography-main bel-typography-label-error');
+ 			$BLUEJQuery("#"+spanId).text('');
+ 			$BLUEJQuery("#"+inputId).removeClass('bel-input-error');
+ 			$BLUEJQuery("#"+spanId).addClass('bel-validation-icon bel-validation-icon-success-s');
  		}else{
- 			$("#"+spanId).removeClass('bel-validation-icon bel-validation-icon-success-s');
+ 			$BLUEJQuery("#"+spanId).removeClass('bel-validation-icon bel-validation-icon-success-s');
  		}
  	}else{
- 		$("#"+spanId).addClass('bel-hide-element');
+ 		$BLUEJQuery("#"+spanId).addClass('bel-hide-element');
  	}
  }
 
  function belClearInputMain(spanId, inputId){
- 	$('#'+inputId).val('');
- 	$("#"+spanId).removeClass();
- 	$("#"+spanId).addClass('bel-hide-element');
- 	$("#"+spanId).unbind( "click" );
+ 	$BLUEJQuery('#'+inputId).val('');
+ 	$BLUEJQuery("#"+spanId).removeClass();
+ 	$BLUEJQuery("#"+spanId).addClass('bel-hide-element');
+ 	$BLUEJQuery("#"+spanId).unbind( "click" );
  }
 
 
-$.fn.blueSelect = function(size){
+$BLUEJQuery.fn.blueSelect = function(size){
 	if(this.attr('id') == undefined){
 		this.attr('id', this.attr('name'));
 	}
@@ -476,45 +465,45 @@ $.fn.blueSelect = function(size){
 
 	var selectedLabel = null;
 
-	var selectDiv = $("<div id='"+ elementId +"Div'></div>");
+	var selectDiv = $BLUEJQuery("<div id='"+ elementId +"Div'></div>");
 
-	var selectList = $('<ul id="'+elementId+'List" class="bel-option-list bel-option-list-'+size+'"></ul>')
+	var selectList = $BLUEJQuery('<ul id="'+elementId+'List" class="bel-option-list bel-option-list-'+size+'"></ul>')
 
-	$(this).children( 'option' ).each(function () {
-		if($(this).prop('disabled')){
-			if($(this).attr('value') != '-1'){
-				$(selectList).append($('<li class="bel-option-disabled">'+$(this).text()+'</li>'));
+	$BLUEJQuery(this).children( 'option' ).each(function () {
+		if($BLUEJQuery(this).prop('disabled')){
+			if($BLUEJQuery(this).attr('value') != '-1'){
+				$BLUEJQuery(selectList).append($BLUEJQuery('<li class="bel-option-disabled">'+$BLUEJQuery(this).text()+'</li>'));
 			}
 		}else{
-			$(selectList).append($('<li class="bel-option" onclick="updateBelSelect(\''+elementId+'\', \''+$(this).attr('value')+'\', this.innerHTML, this);">'+$(this).text()+'</li>'));
+			$BLUEJQuery(selectList).append($BLUEJQuery('<li class="bel-option" onclick="updateBelSelect(\''+elementId+'\', \''+$BLUEJQuery(this).attr('value')+'\', this.innerHTML, this);">'+$BLUEJQuery(this).text()+'</li>'));
 		}
-		if($(this).prop('selected')){
-			selectedLabel = $(this).text();
+		if($BLUEJQuery(this).prop('selected')){
+			selectedLabel = $BLUEJQuery(this).text();
 		}
 	});
 	this.find( 'optgroup' ).each(function () {
 		hasCategory = true;
-		$(selectList).append($('<li class="bel-option-disabled">'+$(this).attr("label")+'</li>'));
+		$BLUEJQuery(selectList).append($BLUEJQuery('<li class="bel-option-disabled">'+$BLUEJQuery(this).attr("label")+'</li>'));
 
-		$(this).find( 'option' ).each(function () {
-			$(selectList).append($('<li class="bel-option" onclick="updateBelSelect(\''+elementId+'\', \''+$(this).attr('value')+'\', this.innerHTML, this);">'+$(this).text()+'</li>'));
-			if($(this).prop('selected')){
-				selectedLabel = $(this).text();
+		$BLUEJQuery(this).find( 'option' ).each(function () {
+			$BLUEJQuery(selectList).append($BLUEJQuery('<li class="bel-option" onclick="updateBelSelect(\''+elementId+'\', \''+$BLUEJQuery(this).attr('value')+'\', this.innerHTML, this);">'+$BLUEJQuery(this).text()+'</li>'));
+			if($BLUEJQuery(this).prop('selected')){
+				selectedLabel = $BLUEJQuery(this).text();
 			}
 		});
 
 	});
 
-	$(document).click(function(event) { 
-	    if($(event.target.parentElement)[0].id !== selectDiv[0].id) {
+	$BLUEJQuery(document).click(function(event) { 
+	    if($BLUEJQuery(event.target.parentElement)[0].id !== selectDiv[0].id) {
 	        if(selectList.is(":visible")) {
 	        	displayBelOption(selectList[0].id, elementId+"Label");
 	        }
 	    }        
 });
 
-	$(selectDiv).append($('<label id="'+elementId+'Label" class="bel-select bel-select-'+size+' bel-select-default bel-select-close-icon"  onclick="displayBelOption(\''+elementId+'List\', \''+elementId+'Label\');">'+selectedLabel+'</label>'));
-	$(selectDiv).append($(selectList));
+	$BLUEJQuery(selectDiv).append($BLUEJQuery('<label id="'+elementId+'Label" class="bel-select bel-select-'+size+' bel-select-default bel-select-close-icon"  onclick="displayBelOption(\''+elementId+'List\', \''+elementId+'Label\');">'+selectedLabel+'</label>'));
+	$BLUEJQuery(selectDiv).append($BLUEJQuery(selectList));
 
 	this.before( selectDiv);
 
@@ -522,15 +511,25 @@ $.fn.blueSelect = function(size){
 };
 
 function toggleTable(tableId){
-	$("#tBody"+tableId ).toggle(500);
-	$("#thead"+tableId ).toggle(500);
-	if ($("#caption"+tableId ).hasClass('bel-table-open-icon')) {
-	$("#caption"+tableId ).removeClass('bel-table-open-icon');
-	$("#caption"+tableId ).addClass('bel-table-close-icon');
+	$BLUEJQuery("#tBody"+tableId ).toggle(500);
+	$BLUEJQuery("#thead"+tableId ).toggle(500);
+	if ($BLUEJQuery("#caption"+tableId ).hasClass('bel-table-open-icon')) {
+	$BLUEJQuery("#caption"+tableId ).removeClass('bel-table-open-icon');
+	$BLUEJQuery("#caption"+tableId ).addClass('bel-table-close-icon');
 	}else{
-		$("#caption"+tableId ).addClass('bel-table-open-icon');
-	$("#caption"+tableId ).removeClass('bel-table-close-icon');
+		$BLUEJQuery("#caption"+tableId ).addClass('bel-table-open-icon');
+	$BLUEJQuery("#caption"+tableId ).removeClass('bel-table-close-icon');
 	}
+}
+function toggleInfoBox(elementID){	
+	$BLUEJQuery("#toggleInfo"+elementID).slideToggle(500);
+	if ($BLUEJQuery("#toggleArrow"+elementID).hasClass('bel-icon-arrow-down-xxs')) {
+		$BLUEJQuery("#toggleArrow"+elementID).removeClass('bel-icon-arrow-down-xxs');
+		$BLUEJQuery("#toggleArrow"+elementID ).addClass('bel-icon-arrow-up-xxs');
+	}else{
+		$BLUEJQuery("#toggleArrow"+elementID).addClass('bel-icon-arrow-down-xxs');
+		$BLUEJQuery("#toggleArrow"+elementID).removeClass('bel-icon-arrow-up-xxs');
+	} 
 }
 
 
@@ -538,27 +537,27 @@ function toggleTable(tableId){
  *Funcionalidad para el componente input Mostrar - Ocultar
  *
  */
-$.fn.blueInputPasswordType = function(inputId, inputSize, show, hide){
-	 $('#'+inputId).removeClass();
-	 $('#'+inputId).addClass("bel-input--icon bel-input--icon-"+inputSize.toLowerCase()+" bel-input-default");
-	 $('#'+inputId).prop("type", "password");
-	 $('#'+inputId).css("padding-right", "71px");
-	 var selectDiv = $('<span onclick="validateShowElementLabel(\''+inputId+'\',this,\''+show+'\',\''+hide+'\' )" style="margin-left: -26px;color:#6D6E71; font-size: 14px; cursor:pointer;" class="bel-validation-icon bel-typography bel-typography-label">Mostrar</span>');
-	 $('#'+inputId).after( selectDiv);
+$BLUEJQuery.fn.blueInputPasswordType = function(inputId, inputSize, show, hide){
+	 $BLUEJQuery('#'+inputId).removeClass();
+	 $BLUEJQuery('#'+inputId).addClass("bel-input--icon bel-input--icon-"+inputSize.toLowerCase()+" bel-input-default");
+	 $BLUEJQuery('#'+inputId).prop("type", "password");
+	 $BLUEJQuery('#'+inputId).css("padding-right", "71px");
+	 var selectDiv = $BLUEJQuery('<span onclick="validateShowElementLabel(\''+inputId+'\',this,\''+show+'\',\''+hide+'\' )" style="margin-left: -26px;color:#6D6E71; font-size: 14px; cursor:pointer;" class="bel-validation-icon bel-typography bel-typography-label">Mostrar</span>');
+	 $BLUEJQuery('#'+inputId).after( selectDiv);
 };
 
 
 function validateShowElementLabel(inputId, spanObject, show, hide){
- if ($('#'+inputId).val()!="") {
-	 if ( $('#'+inputId).is('input:text')) {
-		 $('#'+inputId).removeAttr("type", "text");
-		 $('#'+inputId).prop("type", "password");
-		 $(spanObject).text(show);
+ if ($BLUEJQuery('#'+inputId).val()!="") {
+	 if ( $BLUEJQuery('#'+inputId).is('input:text')) {
+		 $BLUEJQuery('#'+inputId).removeAttr("type", "text");
+		 $BLUEJQuery('#'+inputId).prop("type", "password");
+		 $BLUEJQuery(spanObject).text(show);
 	 }else{
-		 $('#'+inputId).removeAttr("type", "password");
-		 $('#'+inputId).prop("type", "text");
-		 $('#'+inputId).prop("type", "text");
-		 $(spanObject).text(hide);
+		 $BLUEJQuery('#'+inputId).removeAttr("type", "password");
+		 $BLUEJQuery('#'+inputId).prop("type", "text");
+		 $BLUEJQuery('#'+inputId).prop("type", "text");
+		 $BLUEJQuery(spanObject).text(hide);
 	 }
  }
 }
@@ -579,7 +578,7 @@ function loadDatePicker(idDatepicker ,languaje){
 	};
 
 
-	$('#' + idDatepicker).Zebra_DatePicker({
+	$BLUEJQuery('#' + idDatepicker).Zebra_DatePicker({
    		months: langujesForDatePicker[languaje].months,
    		days: langujesForDatePicker[languaje].days,
 
@@ -593,10 +592,10 @@ function loadDatePicker(idDatepicker ,languaje){
 	iconClass: Clase del icono
 	title: titulo del mensaje
 	message: Texto del mensaje
-	buttonText: texto del botÃ³n
-	buttonUrl: Url del botÃ³n
+	buttonText: texto del botÃƒÂ³n
+	buttonUrl: Url del botÃƒÂ³n
 
-	Nota: En caso de no necesitar botÃ³n o tÃ­tulo dejar el parametro en null.
+	Nota: En caso de no necesitar botÃƒÂ³n o tÃƒÂ­tulo dejar el parametro en null.
 */
 
 //Metodo que crea el contenedor de los mensajes con la informacion del mensaje
@@ -605,47 +604,47 @@ function createAlertMessage(idContainer, alertType, iconClass, title, message, b
 	var navInfo = getBrowserInfo();
 
 	// Estilo del componente (tipo, color, icono)
-	var row = $("<div/>").addClass("bel-grid-row");
-	var column = $("<div/>").addClass("bel-col-12").appendTo(row);
-	var alertMessage = $("<div/>").addClass("bel-alertMessage").appendTo(column);
+	var row = $BLUEJQuery("<div/>").addClass("bel-grid-row");
+	var column = $BLUEJQuery("<div/>").addClass("bel-col-12").appendTo(row);
+	var alertMessage = $BLUEJQuery("<div/>").addClass("bel-alertMessage").appendTo(column);
 	var alertClass = getAlertClassByType(alertType);
 	//Valida si el navegador es IE
 	if (navInfo.indexOf('IE') != -1) {alertClass+="-ie9";}
-	var alertMessagetype = $("<div/>").addClass(alertClass).appendTo(alertMessage);
-	var alertMessageIconContainer = $("<div/>").addClass("bel-alertMessage-icon-container").appendTo(alertMessagetype);
-	var alertMessageIcon = $("<div/>").addClass(iconClass +" bel-alertMessage-icon").appendTo(alertMessageIconContainer);
-	// Contenido del componente (tÃ­tulo, texto)
+	var alertMessagetype = $BLUEJQuery("<div/>").addClass(alertClass).appendTo(alertMessage);
+	var alertMessageIconContainer = $BLUEJQuery("<div/>").addClass("bel-alertMessage-icon-container").appendTo(alertMessagetype);
+	var alertMessageIcon = $BLUEJQuery("<div/>").addClass(iconClass +" bel-alertMessage-icon").appendTo(alertMessageIconContainer);
+	// Contenido del componente (tÃƒÂ­tulo, texto)
 
 	if(buttonText != null && buttonText != "") {
-		var alertMessageContent = $("<div/>").addClass("bel-display-inline bel-alertMessage_content").appendTo(alertMessage);
+		var alertMessageContent = $BLUEJQuery("<div/>").addClass("bel-display-inline bel-alertMessage_content").appendTo(alertMessage);
 	}else{
-		var alertMessageContent = $("<div/>").addClass("bel-display-inline bel-alertMessage_content-full").appendTo(alertMessage);
+		var alertMessageContent = $BLUEJQuery("<div/>").addClass("bel-display-inline bel-alertMessage_content-full").appendTo(alertMessage);
 	}
 
 	if(title != null && title != "") {
-		var titleSpace = $("<div/>").addClass("bel-space-bottom-xs").appendTo(alertMessageContent);
+		var titleSpace = $BLUEJQuery("<div/>").addClass("bel-space-bottom-xs").appendTo(alertMessageContent);
 		var titleClass = "bel-typography bel-typography-h3";
 		//Valida si el navegador es IE
 		if (navInfo.indexOf('IE') != -1) {titleClass+=" bel-alertMessage-margin-ie9";}
-		var titleText = $("<h3/>").addClass(titleClass).append(title).appendTo(alertMessageContent);
+		var titleText = $BLUEJQuery("<h3/>").addClass(titleClass).append(title).appendTo(alertMessageContent);
 	}else{
 			if (navInfo.indexOf('IE') != -1){
-				var titleSpace = $("<div/>").addClass("bel-space-bottom-xs").appendTo(alertMessageContent);
+				var titleSpace = $BLUEJQuery("<div/>").addClass("bel-space-bottom-xs").appendTo(alertMessageContent);
 			}
 	}
 
 	if(message != null && message != "") {
-		var messsageTextContainer = $("<div/>").appendTo(alertMessageContent);
+		var messsageTextContainer = $BLUEJQuery("<div/>").appendTo(alertMessageContent);
 		var messageClass = "bel-typography bel-typography-p";
 		//Valida si el navegador es IE
 		if (navInfo.indexOf('IE') != -1) {messageClass+=" bel-alertMessage-margin-ie9";}
-		var messsageText = $("<p/>").addClass(messageClass).append(message).appendTo(messsageTextContainer);
+		var messsageText = $BLUEJQuery("<p/>").addClass(messageClass).append(message).appendTo(messsageTextContainer);
 	}
-	// Contenido del componente (botÃ³n)
+	// Contenido del componente (botÃƒÂ³n)
 	if(buttonText != null && buttonText != ""){
-		var alertMessageButton = $("<div/>").addClass("bel-alertMessage_button bel-display-inline").appendTo(alertMessage);
-		var alertMessageButtonContainer = $("<div/>").addClass("bel-display-inline").appendTo(alertMessageButton);
-		var button = $("<button/>").addClass("bel-btn bel-btn-secondary bel-btn-secondary-active").append(buttonText).appendTo(alertMessageButtonContainer);
+		var alertMessageButton = $BLUEJQuery("<div/>").addClass("bel-alertMessage_button bel-display-inline").appendTo(alertMessage);
+		var alertMessageButtonContainer = $BLUEJQuery("<div/>").addClass("bel-display-inline").appendTo(alertMessageButton);
+		var button = $BLUEJQuery("<button/>").addClass("bel-btn bel-btn-secondary bel-btn-secondary-active").append(buttonText).appendTo(alertMessageButtonContainer);
 		button.click(function(){window.location.href=buttonUrl;});
 	}
 	row.appendTo(mainContainer);
@@ -677,11 +676,9 @@ var getBrowserInfo = function() {
     return M.join(' ');
 };
 
-
-
-$.fn.blueTable = function(properties){
+$BLUEJQuery.fn.blueTable = function(properties){
 	
-	var elementId = $(this).attr('id');
+	var elementId = $BLUEJQuery(this).attr('id');
 	
 	this.removeClass();
 	
@@ -693,7 +690,13 @@ $.fn.blueTable = function(properties){
 	 
 	 makefooter(this, properties);
 	 
-	$(this).addClass("bel-table bel-card");
+	$BLUEJQuery(this).addClass("bel-table");
+	
+	if(undefined != properties.cssClass){
+		$BLUEJQuery.each(properties.cssClass, function(i, cssClass){
+			$BLUEJQuery('#' + elementId).addClass(cssClass);
+		});
+	}
 	
 };
 function makeBody(element, properties){
@@ -713,34 +716,34 @@ function makeBody(element, properties){
 	if(properties.extensible && properties.maxItemsCollapsed != undefined){
 		maxItemsCollapsed = properties.maxItemsCollapsed;
 	}
-	$(element).find( 'tbody' ).each(function () {
-		$(this).attr("id", "tbody" + $(element).attr("id") );
-		$(this).find( 'tr' ).each(function () {
+	$BLUEJQuery(element).find( 'tbody' ).each(function () {
+		$BLUEJQuery(this).attr("id", "tbody" + $BLUEJQuery(element).attr("id") );
+		$BLUEJQuery(this).find( 'tr' ).each(function () {
 			thCounter = 0;
-			$(this).addClass("bel-table_row");
+			$BLUEJQuery(this).addClass("bel-table_row");
 			
-			$(this).find( 'td' ).each(function () {
+			$BLUEJQuery(this).find( 'td' ).each(function () {
 				if(properties.tdAlign != undefined && properties.tdAlign[thCounter] != undefined ){
-					$(this).css("text-align", properties.tdAlign[thCounter]);
+					$BLUEJQuery(this).css("text-align", properties.tdAlign[thCounter]);
 				}	
 					
-				 $(this).addClass("bel-table_column_default");
+				 $BLUEJQuery(this).addClass("bel-table_column_default");
 				thCounter++;
 			});
 			if(properties.extensible && trCounter > maxItemsCollapsed){
-				$(this).addClass("bel-hide-element");
+				$BLUEJQuery(this).addClass("bel-hide-element");
 			}
 			trCounter++;
 		});
 		if(properties.extensible && trCounter > maxItemsCollapsed){
-			$(this).append( "<tr id='seTR"+$(element).attr("id")+"'><td colspan='"+thCounter+"' class='bel-extensive-menu_link'><a class='bel-typography bel-typography-link bel-icon-arrow-down-xxs' href='#' onclick='showMoreItems(\""+$(element).attr("id")+"\", "+maxItemsCollapsed+")'>"+extensibleLabel+"</a></td></tr>");
-			$(this).append( "<tr id='heTR"+$(element).attr("id")+"' class='bel-hide-element'><td colspan='"+thCounter+"' class='bel-extensive-menu_link'><a class='bel-typography bel-typography-link bel-icon-arrow-up-xxs' href='#' onclick='hideItems(\""+$(element).attr("id")+"\", "+maxItemsCollapsed+")'>"+collapseLabel+"</a></td></tr>");
+			$BLUEJQuery(this).append( "<tr id='seTR"+$BLUEJQuery(element).attr("id")+"'><td colspan='"+thCounter+"' class='bel-extensive-menu_link'><a class='bel-typography bel-typography-link bel-icon-arrow-down-xxs' href='javascript:void(0)' onclick='showMoreItems(\""+$BLUEJQuery(element).attr("id")+"\", "+maxItemsCollapsed+")'>"+extensibleLabel+"</a></td></tr>");
+			$BLUEJQuery(this).append( "<tr id='heTR"+$BLUEJQuery(element).attr("id")+"' class='bel-hide-element'><td colspan='"+thCounter+"' class='bel-extensive-menu_link'><a class='bel-typography bel-typography-link bel-icon-arrow-up-xxs' href='javascript:void(0)' onclick='hideItems(\""+$BLUEJQuery(element).attr("id")+"\", "+maxItemsCollapsed+")'>"+collapseLabel+"</a></td></tr>");
 		}
 	});
 
 	if(properties.extensible && maxItemsCollapsed == (trCounter - 1)){
-		$("#seTR"+$(element).attr("id")).remove();
-		$("#heTR"+$(element).attr("id")).remove();
+		$BLUEJQuery("#seTR"+$BLUEJQuery(element).attr("id")).remove();
+		$BLUEJQuery("#heTR"+$BLUEJQuery(element).attr("id")).remove();
 	}
 
 }
@@ -749,49 +752,54 @@ function makeBody(element, properties){
 
 function showMoreItems(tableId, maxItemsCollapsed){
 	var trCounter = 1;
-	$("#tbody"+tableId).find('tr').each(function () {
+	$BLUEJQuery("#tbody"+tableId).find('tr').each(function () {
 		if(trCounter > maxItemsCollapsed){
-			if($(this).attr("id") != ("heTR"+tableId) && $(this).attr("id") != ("seTR"+tableId)){
-				$(this).show(800);
-				$(this).find('td').each(function () {
-					$(this).show();
+			if($BLUEJQuery(this).attr("id") != ("heTR"+tableId) && $BLUEJQuery(this).attr("id") != ("seTR"+tableId)){
+				$BLUEJQuery(this).show(800);
+				$BLUEJQuery(this).find('td').each(function () {
+					$BLUEJQuery(this).show();
 				});
 			}
 		}
 		trCounter++;
 	});
 	
-	$("#seTR"+tableId).hide();
-	$("#heTR"+tableId).show();
+	$BLUEJQuery("#seTR"+tableId).hide();
+	$BLUEJQuery("#heTR"+tableId).show();
 }
 
 
 function hideItems(tableId, maxItemsCollapsed){
 	
 	var trCounter = 1;
-	$("#tbody"+tableId).find('tr').each(function () {
+	$BLUEJQuery("#tbody"+tableId).find('tr').each(function () {
 		if(trCounter > maxItemsCollapsed){
-			if($(this).attr("id") != ("heTR"+tableId) && $(this).attr("id") != ("seTR"+tableId)){
-				$(this).find('td').each(function () {
-					$(this).hide();
+			if($BLUEJQuery(this).attr("id") != ("heTR"+tableId) && $BLUEJQuery(this).attr("id") != ("seTR"+tableId)){
+				$BLUEJQuery(this).find('td').each(function () {
+					$BLUEJQuery(this).hide();
 				});
-				$(this).hide(800);
+				$BLUEJQuery(this).hide(800);
 			}
 		}
 		trCounter++;
 	});
-	$("#heTR"+tableId).hide();
-	$("#seTR"+tableId).show();
+	$BLUEJQuery("#heTR"+tableId).hide();
+	$BLUEJQuery("#seTR"+tableId).show();
 }
 function makefooter(element, properties){
 	
-	$(element).find( 'tfoot' ).each(function () {
-		this.id = "tfoot" + $(element).attr("id");
-		 $(this).addClass("bel-table_tfoot");
-		$(this).find( 'tr' ).each(function () {
+	$BLUEJQuery(element).find( 'tfoot' ).each(function () {
+		this.id = "tfoot" + $BLUEJQuery(element).attr("id");
+		 $BLUEJQuery(this).addClass("bel-table_tfoot");
+		$BLUEJQuery(this).find( 'tr' ).each(function () {
 			var thCounter = 0;
-			$(this).find( 'td' ).each(function () {
-				
+			$BLUEJQuery(this).find( 'td' ).each(function () {
+				if(properties.tdFooterWidth != undefined && properties.tdFooterWidth[thCounter] != undefined ){
+					$BLUEJQuery(this).css("width", properties.tdFooterWidth[thCounter]+"%");
+				}
+				if(properties.tfAlign != undefined && properties.tfAlign[thCounter] != undefined ){
+					$BLUEJQuery(this).css("text-align", properties.tfAlign[thCounter]);
+				}
 				thCounter++;
 			});
 		});
@@ -799,17 +807,17 @@ function makefooter(element, properties){
 }
 function makeHeader(element, properties){
 	
-	$(element).find( 'thead' ).each(function () {
-		$(this).attr("id", "thead" + $(element).attr('id'));
-		$(this).addClass("bel-table_thead");
-		$(this).find( 'tr' ).each(function () {
+	$BLUEJQuery(element).find( 'thead' ).each(function () {
+		$BLUEJQuery(this).attr("id", "thead" + $BLUEJQuery(element).attr('id'));
+		$BLUEJQuery(this).addClass("bel-table_thead");
+		$BLUEJQuery(this).find( 'tr' ).each(function () {
 			var thCounter = 0;
-			$(this).find( 'th' ).each(function () {
+			$BLUEJQuery(this).find( 'th' ).each(function () {
 				if(properties.tdWidth != undefined && properties.tdWidth[thCounter] != undefined ){
-					$(this).css("width", properties.tdWidth[thCounter]+"%");
+					$BLUEJQuery(this).css("width", properties.tdWidth[thCounter]+"%");
 				}
 				if(properties.tdAlign != undefined && properties.tdAlign[thCounter] != undefined ){
-					$(this).css("text-align", properties.thAlign[thCounter]);
+					$BLUEJQuery(this).css("text-align", properties.thAlign[thCounter]);
 				}
 				
 				thCounter++;
@@ -822,59 +830,58 @@ function makeCaption(element, properties){
 	var headerLeftGrupDiv = null; 
 	var headerRigthtGrupDiv = null;
 
-	$(element).find( 'caption' ).each(function () {
-		headerLeftGrupDiv =  $("<div></div>").addClass("bel-table_caption-group");
+	$BLUEJQuery(element).find( 'caption' ).each(function () {
+		headerLeftGrupDiv =  $BLUEJQuery("<div></div>").addClass("bel-table_caption-group");
 		var caption = this;
 		//revisa si tiene iconos para crear 
-		$(this).children( 'i' ).each(function () {
-			iconDiv = $("<div></div>").addClass("bel-table-icon");
-			$(iconDiv).addClass($(this).attr('class'));
-			$(this).remove();
-			$(headerLeftGrupDiv).append( $(iconDiv));
+		$BLUEJQuery(this).children( 'i' ).each(function () {
+			iconDiv = $BLUEJQuery("<div></div>").addClass("bel-table-icon");
+			$BLUEJQuery(iconDiv).addClass($BLUEJQuery(this).attr('class'));
+			$BLUEJQuery(this).remove();
+			$BLUEJQuery(headerLeftGrupDiv).append( $BLUEJQuery(iconDiv));
 		});	
-		$(this).children( 'h2' ).each(function () {
-			$(this).addClass("bel-typography bel-typography-h2"); 
-			$(headerLeftGrupDiv).append( $(this));
+		$BLUEJQuery(this).children( 'h2' ).each(function () {
+			$BLUEJQuery(this).addClass("bel-typography bel-typography-h2"); 
+			$BLUEJQuery(headerLeftGrupDiv).append( $BLUEJQuery(this));
 		});
 		
-		$(this).addClass("bel-table_caption");
+		$BLUEJQuery(this).addClass("bel-table_caption");
 		
 		//agrega el grupo de elementos al encabezado
-		$(this).append( $(headerLeftGrupDiv));
+		$BLUEJQuery(this).append( $BLUEJQuery(headerLeftGrupDiv));
 		
 		if(properties.toggleable){
-			$(this).addClass("bel-table-open-icon");
-			$(this).children( 'button' ).each(function () {
-				$(this).remove();
+			$BLUEJQuery(this).addClass("bel-table-open-icon");
+			$BLUEJQuery(this).children( 'button' ).each(function () {
+				$BLUEJQuery(this).remove();
 			});
-			$(caption).on('click', function(){
-				$.each($(element).children().toArray(), function(i, child){
+			$BLUEJQuery(caption).on('click', function(){
+				$BLUEJQuery.each($BLUEJQuery(element).children().toArray(), function(i, child){
 					if(child != caption){
-						$(child).toggle(500);
+						$BLUEJQuery(child).toggle(500);
 					}
 				})
-				if ($(caption).hasClass('bel-table-open-icon')) {
-					$(caption).removeClass('bel-table-open-icon');
-					$(caption).addClass('bel-table-close-icon');
+				if ($BLUEJQuery(caption).hasClass('bel-table-open-icon')) {
+					$BLUEJQuery(caption).removeClass('bel-table-open-icon');
+					$BLUEJQuery(caption).addClass('bel-table-close-icon');
 				}else{
-					$(caption).addClass('bel-table-open-icon');
-					$(caption).removeClass('bel-table-close-icon');
+					$BLUEJQuery(caption).addClass('bel-table-open-icon');
+					$BLUEJQuery(caption).removeClass('bel-table-close-icon');
 				}
 			});
 		}else{
-			$(this).children( 'button' ).each(function () {
-				headerRigthtGrupDiv = $("<div></div>").addClass("bel-table_caption-group bel-table_caption-button");
-				$(this).addClass("bel-btn bel-btn-secondary bel-btn-secondary-active");
-				$(headerRigthtGrupDiv).append($(this));
+			$BLUEJQuery(this).children( 'button' ).each(function () {
+				headerRigthtGrupDiv = $BLUEJQuery("<div></div>").addClass("bel-table_caption-group bel-table_caption-button");
+				$BLUEJQuery(this).addClass("bel-btn bel-btn-secondary bel-btn-secondary-active");
+				$BLUEJQuery(headerRigthtGrupDiv).append($BLUEJQuery(this));
 			});
 		}
 		
 		if(null != headerRigthtGrupDiv){
-			$(this).append( $(headerRigthtGrupDiv));
+			$BLUEJQuery(this).append( $BLUEJQuery(headerRigthtGrupDiv));
 		}
 	});
 }
-
 
 //Comparative Menu
 function checkedComparativeMenu() {
@@ -989,5 +996,3 @@ $BLUEJQuery.fn.comparativeMenu = function(){
 		}
 	});
 };
-
-
