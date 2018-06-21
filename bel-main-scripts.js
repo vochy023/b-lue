@@ -6,6 +6,7 @@
 // WORKTEAM: ----- Codebreakers-Anonymous (1.0)
 // version 1.0
 
+window.$BLUEJQuery = $.noConflict(true); 
 validateJQuery();
 
 //input
