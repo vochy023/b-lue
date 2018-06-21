@@ -873,3 +873,120 @@ function makeCaption(element, properties){
 		}
 	});
 }
+
+
+//Comparative Menu
+function checkedComparativeMenu() {
+	$BLUEJQuery(".bel-comparative-menu").each(isChecked)
+}
+
+function isChecked() {
+  var checked = $BLUEJQuery(this).find(".bel-radio-button").is(":checked")
+  $BLUEJQuery(this).toggleClass("bel-comparative-menu-active", checked)
+}
+function permuteTextContend(elementId, permutableTextElement1, permutableTextElement2){
+	if($('#'+elementId).text() == permutableTextElement1){
+		$('#'+elementId).text(permutableTextElement2);
+	}else{
+		$('#'+elementId).text(permutableTextElement1);
+	}
+	
+}
+
+
+$BLUEJQuery.fn.comparativeMenu = function(){
+	var itemsCount = 0;
+	var comparativeMenuClass = "bel-comparative-menu";
+	$BLUEJQuery(this).css("list-style-type", "none");
+	$BLUEJQuery(this).find( 'li' ).each(function () {
+		itemsCount++;
+	});
+	if(itemsCount < 3){
+		comparativeMenuClass = "bel-comparative-menu_large";
+	}
+	itemsCount = 1;
+	$BLUEJQuery(this).find( 'li' ).each(function () {
+		if(itemsCount > 4){
+			$BLUEJQuery(this).remove();
+		}else{
+			$BLUEJQuery(this).css("float", "left");
+			var comparativeMenuItem = $BLUEJQuery('<div class="'+comparativeMenuClass+'"></div>');
+			var inputRadio;
+			var inputRadioLabel;
+			$BLUEJQuery(this).children( 'input' ).each(function () {
+				inputRadio = $BLUEJQuery(this);
+			});
+			$BLUEJQuery(this).children( 'label' ).each(function () {
+				inputRadioLabel = $BLUEJQuery(this);
+			});
+			
+			var sectionHeader = $BLUEJQuery('<div id="comparativeMenuHead" class="bel-comparative-menu-default bel-comparative-menu__head">' +
+		            '<div class="bel-selection-input">' +
+		            '<input class="bel-radio-button" type="radio" id="an-id'+itemsCount+'" name="'+$BLUEJQuery(inputRadio).attr('name')+'" value="'+$BLUEJQuery(inputRadio).attr('value')+'" onclick="checkedComparativeMenu()"> ' +
+		            '<label class="bel-radio-button-icon" for="an-id'+itemsCount+'"></label> ' +
+		            '<label class="bel-radio-button-text" for="an-id'+itemsCount+'">'+$BLUEJQuery(inputRadioLabel).text()+'</label>' +
+	            '</div>' +
+			'</div>');
+			
+			var sectionBody = $BLUEJQuery('<div id="comparativeMenuContent" class="bel-comparative-menu-default bel-comparative-menu__content"></div>');
+			var sectionBodyImage;
+			var bodyArticle = $BLUEJQuery('<div class="bel-comparative-menu__content__information  bel-border-top"></div>');
+			var bodyArticleTitle = $BLUEJQuery('<div class="bel-space-left-s bel-space-top-s bel-space-bottom-s"></div>');
+			var bodyArticleContend = $BLUEJQuery('<div class="bel-space-left-s bel-space-bottom-s"></div>');
+			
+			var bodyDetails = $BLUEJQuery('<div class="bel-comparative-menu__content__footer bel-border-top"></div>');
+			
+			$BLUEJQuery(this).children( 'section' ).each(function () {
+				$BLUEJQuery(this).children( 'img' ).each(function () {
+					sectionBodyImage = $BLUEJQuery('<div class="bel-comparative-menu__content__image bel-space-bottom-s"> <img src="'+$BLUEJQuery(this).attr('src')+'" alt="'+$BLUEJQuery(this).attr('alt')+'" height="100" width="'+$BLUEJQuery(this).attr('width')+'"/> </div>');
+					sectionBody.append(sectionBodyImage);
+				});
+				$BLUEJQuery(this).children( 'h4' ).each(function () {
+					$BLUEJQuery(this).addClass("bel-typography bel-typography-h4");
+					$BLUEJQuery(bodyArticleTitle).append($BLUEJQuery(this));
+					$BLUEJQuery(bodyArticle).append(bodyArticleTitle);
+					
+				});
+				$BLUEJQuery(this).children( 'article' ).each(function () {
+					bodyArticle.append($BLUEJQuery(this).html());
+					$BLUEJQuery(sectionBody).append(bodyArticle);
+				});
+				$BLUEJQuery(this).children( 'details' ).each(function () {
+					var detailsArticle = $BLUEJQuery('<div id="toggleInfo'+itemsCount+'" class="bel-space-top-s bel-display-none" ></div>');
+					$BLUEJQuery(this).children( 'article' ).each(function () {
+						$BLUEJQuery(detailsArticle).append($BLUEJQuery(this).html());
+					});
+					
+					
+					$BLUEJQuery(bodyDetails).append(detailsArticle);
+					
+					var showDetailsLabel;
+					var hideDetailsLabel;
+					$BLUEJQuery(this).children( 'summary' ).each(function () {
+						showDetailsLabel = $BLUEJQuery(this).text().substr(0,$BLUEJQuery(this).text().indexOf("|"));
+						hideDetailsLabel = $BLUEJQuery(this).text().substr($BLUEJQuery(this).text().indexOf("|")+1,$BLUEJQuery(this).text().length);
+					});
+					
+					
+					
+					var detailsOption = $BLUEJQuery('<div onclick="toggleInfoBox('+itemsCount+'); permuteTextContend(\'toggleArrow'+itemsCount+'\', \''+showDetailsLabel+'\', \''+hideDetailsLabel+'\');" class="bel-space-top-s bel-space-bottom-m bel-position-right">' + 
+		                '<a id="toggleArrow'+itemsCount+'"  class="bel-typography-link bel-icon-arrow-down-xxs" href="#">'+showDetailsLabel+'</a>' + 
+		            '</div>');
+					
+					$BLUEJQuery(bodyDetails).append($BLUEJQuery(detailsOption));
+					$BLUEJQuery(sectionBody).append($BLUEJQuery(bodyDetails));
+					
+				});
+			});
+			
+			
+			
+	        comparativeMenuItem.append(sectionHeader);
+	        comparativeMenuItem.append(sectionBody);
+			$BLUEJQuery(this).html(comparativeMenuItem);
+	        itemsCount++;
+		}
+	});
+};
+
+
