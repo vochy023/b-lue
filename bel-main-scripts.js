@@ -7,6 +7,7 @@
 // version 1.0
 
 window.$BLUEJQuery = $.noConflict(true); 
+jQuery = $BLUEJQuery;
 validateBLUEJQuery();
 
 //input
@@ -177,6 +178,7 @@ function validateBLUEJQuery() {
 		if (undefined != window.$j) {
 			// Define $BLUEJQuery que se ejecuta en window.$BLUEJQueryj
 			window.$BLUEJQuery = $.noConflict(true); 
+			window.JQuery = $.noConflict(true);
 			// En caso de no tener JQuery cargado se encarga de cargar el
 			// archivo de la vesion 1.7.2
 		} else {
@@ -189,6 +191,7 @@ function validateBLUEJQuery() {
 			//Se agrega al body
 			jQueryFileScript.onload = function() {
 		        window.$BLUEJQuery = $.noConflict(true); 
+		        window.JQuery = $.noConflict(true);
 		        validateBLUEJQuery();
 		    };
 		    document.getElementsByTagName("head")[0].appendChild(jQueryFileScript);
@@ -686,17 +689,11 @@ $BLUEJQuery.fn.blueTable = function(properties){
 	
 	 makeHeader(this, properties);
 	 
-	 makeBody(this, properties, elementId);
+	 makeBody(this, properties);
 	 
 	 makefooter(this, properties);
 	 
 	$BLUEJQuery(this).addClass("bel-table");
-	
-	if(undefined != properties.cssClass){
-		$BLUEJQuery.each(properties.cssClass, function(i, cssClass){
-			$BLUEJQuery('#' + elementId).addClass(cssClass);
-		});
-	}
 	
 };
 function makeBody(element, properties){
@@ -748,22 +745,8 @@ function makeBody(element, properties){
 
 }
 
-
-
 function showMoreItems(tableId, maxItemsCollapsed){
-	var trCounter = 1;
-	$BLUEJQuery("#tbody"+tableId).find('tr').each(function () {
-		if(trCounter > maxItemsCollapsed){
-			if($BLUEJQuery(this).attr("id") != ("heTR"+tableId) && $BLUEJQuery(this).attr("id") != ("seTR"+tableId)){
-				$BLUEJQuery(this).show(800);
-				$BLUEJQuery(this).find('td').each(function () {
-					$BLUEJQuery(this).show();
-				});
-			}
-		}
-		trCounter++;
-	});
-	
+	$BLUEJQuery('#' + tableId + ' .bel-table_row.bel-hide-element').show(800);
 	$BLUEJQuery("#seTR"+tableId).hide();
 	$BLUEJQuery("#heTR"+tableId).show();
 }
@@ -771,21 +754,12 @@ function showMoreItems(tableId, maxItemsCollapsed){
 
 function hideItems(tableId, maxItemsCollapsed){
 	
-	var trCounter = 1;
-	$BLUEJQuery("#tbody"+tableId).find('tr').each(function () {
-		if(trCounter > maxItemsCollapsed){
-			if($BLUEJQuery(this).attr("id") != ("heTR"+tableId) && $BLUEJQuery(this).attr("id") != ("seTR"+tableId)){
-				$BLUEJQuery(this).find('td').each(function () {
-					$BLUEJQuery(this).hide();
-				});
-				$BLUEJQuery(this).hide(800);
-			}
-		}
-		trCounter++;
-	});
+	$BLUEJQuery('#' + tableId + ' .bel-table_row.bel-hide-element').hide(800);
+	
 	$BLUEJQuery("#heTR"+tableId).hide();
 	$BLUEJQuery("#seTR"+tableId).show();
 }
+
 function makefooter(element, properties){
 	
 	$BLUEJQuery(element).find( 'tfoot' ).each(function () {
@@ -834,8 +808,12 @@ function makeCaption(element, properties){
 		headerLeftGrupDiv =  $BLUEJQuery("<div></div>").addClass("bel-table_caption-group");
 		var caption = this;
 		//revisa si tiene iconos para crear 
-		$BLUEJQuery(this).children( 'i' ).each(function () {
-			iconDiv = $BLUEJQuery("<div></div>").addClass("bel-table-icon");
+		$BLUEJQuery(this).children( 'i' ).each(function () {			
+			if(properties.bigIcon){
+				iconDiv = $BLUEJQuery("<div></div>").addClass("bel-table-icon__line-height-m");
+			}else{
+				iconDiv = $BLUEJQuery("<div></div>").addClass("bel-table-icon");
+			}
 			$BLUEJQuery(iconDiv).addClass($BLUEJQuery(this).attr('class'));
 			$BLUEJQuery(this).remove();
 			$BLUEJQuery(headerLeftGrupDiv).append( $BLUEJQuery(iconDiv));
@@ -843,6 +821,11 @@ function makeCaption(element, properties){
 		$BLUEJQuery(this).children( 'h2' ).each(function () {
 			$BLUEJQuery(this).addClass("bel-typography bel-typography-h2"); 
 			$BLUEJQuery(headerLeftGrupDiv).append( $BLUEJQuery(this));
+			
+			$BLUEJQuery(this).children( 'span' ).each(function () {
+				$BLUEJQuery(this).addClass("bel-space-top-xs bel-typography bel-typography-h5"); 
+				$BLUEJQuery(headerLeftGrupDiv).append( $BLUEJQuery(this));
+			});
 		});
 		
 		$BLUEJQuery(this).addClass("bel-table_caption");
@@ -996,3 +979,19 @@ $BLUEJQuery.fn.comparativeMenu = function(){
 		}
 	});
 };
+
+/**
+ * Funcion que se encarga de realizar la animacion para cambiar si la flecha muestra informacion o se encuentra escondida
+ * @param blueElement
+ */
+function openOrCloseArrow(blueElement){
+	var arrowElement = $BLUEJQuery(blueElement);
+	
+	if (arrowElement.hasClass('bel-icon-subaccount-open')) {
+		arrowElement.removeClass('bel-icon-subaccount-open');
+		arrowElement.addClass('bel-icon-subaccount-close');
+	} else {
+		arrowElement.removeClass('bel-icon-subaccount-close');
+		arrowElement.addClass('bel-icon-subaccount-open');
+	}
+}
