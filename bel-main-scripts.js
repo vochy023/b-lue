@@ -6,7 +6,7 @@
 // WORKTEAM: ----- Codebreakers-Anonymous (1.0)
 // version 1.0
 
-window.$BLUEJQuery = $.noConflict(true); 
+window.$BLUEJQuery = $.noConflict(true);
 jQuery = $BLUEJQuery;
 validateBLUEJQuery();
 
@@ -81,7 +81,7 @@ function displayDownloadOption(idList, idLabel) {
 			$BLUEJQuery("#" + idLabel).toggleClass("bel-download-open");
 		}
 	}
-	$BLUEJQuery(document).click(function(event) { 
+	$BLUEJQuery(document).click(function(event) {
 	    if(event.target.parentElement !== $BLUEJQuery("#" + idList)[0].parentElement) {
 	        if($BLUEJQuery('#'+idList).is(":visible")) {
 	        	$BLUEJQuery("#" + idList).removeClass("bel-download-options");
@@ -90,7 +90,7 @@ function displayDownloadOption(idList, idLabel) {
 				document.getElementById(idList).style.display = "none";
 	        }
 	    }
-	}); 
+	});
 }
 
 function scrollToElement(elementID){
@@ -177,7 +177,7 @@ function validateBLUEJQuery() {
 		// wIndow lo tome de ahi
 		if (undefined != window.$j) {
 			// Define $BLUEJQuery que se ejecuta en window.$BLUEJQueryj
-			window.$BLUEJQuery = $.noConflict(true); 
+			window.$BLUEJQuery = $.noConflict(true);
 			window.JQuery = $.noConflict(true);
 			// En caso de no tener JQuery cargado se encarga de cargar el
 			// archivo de la vesion 1.7.2
@@ -190,7 +190,7 @@ function validateBLUEJQuery() {
 			// Se agrega al body
 			//Se agrega al body
 			jQueryFileScript.onload = function() {
-		        window.$BLUEJQuery = $.noConflict(true); 
+		        window.$BLUEJQuery = $.noConflict(true);
 		        window.JQuery = $.noConflict(true);
 		        validateBLUEJQuery();
 		    };
@@ -497,12 +497,12 @@ $BLUEJQuery.fn.blueSelect = function(size){
 
 	});
 
-	$BLUEJQuery(document).click(function(event) { 
+	$BLUEJQuery(document).click(function(event) {
 	    if($BLUEJQuery(event.target.parentElement)[0].id !== selectDiv[0].id) {
 	        if(selectList.is(":visible")) {
 	        	displayBelOption(selectList[0].id, elementId+"Label");
 	        }
-	    }        
+	    }
 });
 
 	$BLUEJQuery(selectDiv).append($BLUEJQuery('<label id="'+elementId+'Label" class="bel-select bel-select-'+size+' bel-select-default bel-select-close-icon"  onclick="displayBelOption(\''+elementId+'List\', \''+elementId+'Label\');">'+selectedLabel+'</label>'));
@@ -524,7 +524,7 @@ function toggleTable(tableId){
 	$BLUEJQuery("#caption"+tableId ).removeClass('bel-table-close-icon');
 	}
 }
-function toggleInfoBox(elementID){	
+function toggleInfoBox(elementID){
 	$BLUEJQuery("#toggleInfo"+elementID).slideToggle(500);
 	if ($BLUEJQuery("#toggleArrow"+elementID).hasClass('bel-icon-arrow-down-xxs')) {
 		$BLUEJQuery("#toggleArrow"+elementID).removeClass('bel-icon-arrow-down-xxs');
@@ -532,7 +532,7 @@ function toggleInfoBox(elementID){
 	}else{
 		$BLUEJQuery("#toggleArrow"+elementID).addClass('bel-icon-arrow-down-xxs');
 		$BLUEJQuery("#toggleArrow"+elementID).removeClass('bel-icon-arrow-up-xxs');
-	} 
+	}
 }
 
 
@@ -683,39 +683,36 @@ var getBrowserInfo = function() {
 };
 
 $BLUEJQuery.fn.blueTable = function(properties){
-	
+
 	var elementId = $BLUEJQuery(this).attr('id');
 
 	this.removeClass();
-	$BLUEJQuery(this).addClass("bel-hide-element");
-	
+
 	 makeCaption(this, properties);
-	
+
 	 makeHeader(this, properties);
-	 
+
 	 makeBody(this, properties);
-	 
+
 	 makefooter(this, properties);
-	 
+
 	$BLUEJQuery(this).addClass("bel-table");
-	$BLUEJQuery(this).removeClass("bel-hide-element");
-	$BLUEJQuery(this).addClass("bel-display-block");
-	
+
 };
 function makeBody(element, properties){
 	var trCounter = 1;
 	var thCounter = 0;
 	var maxItemsCollapsed = 3;
-	
-	
-	var extensibleLabel = 'Ver m&aacute;s'; 
+
+
+	var extensibleLabel = 'Ver m&aacute;s';
 	var collapseLabel = 'Ver menos';
 	if(properties.extensible && properties.extensibleLabel != undefined){
 		extensibleLabel = properties.extensibleLabel;
 	}if(properties.extensible && properties.collapseLabel != undefined){
 		collapseLabel = properties.collapseLabel;
 	}
-	
+
 	if(properties.extensible && properties.maxItemsCollapsed != undefined){
 		maxItemsCollapsed = properties.maxItemsCollapsed;
 	}
@@ -731,8 +728,8 @@ function makeBody(element, properties){
 			$BLUEJQuery(this).find( 'td' ).each(function () {
 				if(properties.tdAlign != undefined && properties.tdAlign[thCounter] != undefined ){
 					$BLUEJQuery(this).css("text-align", properties.tdAlign[thCounter]);
-				}	
-					
+				}
+
 				 $BLUEJQuery(this).addClass("bel-table_column_default");
 				thCounter++;
 			});
@@ -762,14 +759,14 @@ function showMoreItems(tableId, maxItemsCollapsed){
 
 
 function hideItems(tableId, maxItemsCollapsed){
-	
+
 	$BLUEJQuery('#' + tableId + ' .bel-table_row.bel-hide-element').hide(800);
-	
+
 	$BLUEJQuery("#heTR"+tableId).hide();
 	$BLUEJQuery("#seTR"+tableId).show();
 }
 function makefooter(element, properties){
-	
+
 	$BLUEJQuery(element).find( 'tfoot' ).each(function () {
 		this.id = "tfoot" + $BLUEJQuery(element).attr("id");
 		 $BLUEJQuery(this).addClass("bel-table_tfoot");
@@ -788,7 +785,7 @@ function makefooter(element, properties){
 	});
 }
 function makeHeader(element, properties){
-	
+
 	$BLUEJQuery(element).find( 'thead' ).each(function () {
 		$BLUEJQuery(this).attr("id", "thead" + $BLUEJQuery(element).attr('id'));
 		$BLUEJQuery(this).addClass("bel-table_thead");
@@ -801,22 +798,22 @@ function makeHeader(element, properties){
 				if(properties.tdAlign != undefined && properties.tdAlign[thCounter] != undefined ){
 					$BLUEJQuery(this).css("text-align", properties.thAlign[thCounter]);
 				}
-				
+
 				thCounter++;
 			});
 		});
 	});
 }
 function makeCaption(element, properties){
-	var iconDiv = null; 
-	var headerLeftGrupDiv = null; 
+	var iconDiv = null;
+	var headerLeftGrupDiv = null;
 	var headerRigthtGrupDiv = null;
 
 	$BLUEJQuery(element).find( 'caption' ).each(function () {
 		headerLeftGrupDiv =  $BLUEJQuery("<div></div>").addClass("bel-table_caption-group");
 		var caption = this;
-		//revisa si tiene iconos para crear 
-		$BLUEJQuery(this).children( 'i' ).each(function () {			
+		//revisa si tiene iconos para crear
+		$BLUEJQuery(this).children( 'i' ).each(function () {
 			if(properties.bigIcon){
 				iconDiv = $BLUEJQuery("<div></div>").addClass("bel-table-icon__line-height-m");
 			}else{
@@ -825,22 +822,22 @@ function makeCaption(element, properties){
 			$BLUEJQuery(iconDiv).addClass($BLUEJQuery(this).attr('class'));
 			$BLUEJQuery(this).remove();
 			$BLUEJQuery(headerLeftGrupDiv).append( $BLUEJQuery(iconDiv));
-		});	
+		});
 		$BLUEJQuery(this).children( 'h2' ).each(function () {
-			$BLUEJQuery(this).addClass("bel-typography bel-typography-h2"); 
+			$BLUEJQuery(this).addClass("bel-typography bel-typography-h2");
 			$BLUEJQuery(headerLeftGrupDiv).append( $BLUEJQuery(this));
-			
+
 			$BLUEJQuery(this).children( 'span' ).each(function () {
-				$BLUEJQuery(this).addClass("bel-space-top-xs bel-typography bel-typography-h5"); 
+				$BLUEJQuery(this).addClass("bel-space-top-xs bel-typography bel-typography-h5");
 				$BLUEJQuery(headerLeftGrupDiv).append( $BLUEJQuery(this));
 			});
 		});
-		
+
 		$BLUEJQuery(this).addClass("bel-table_caption");
-		
+
 		//agrega el grupo de elementos al encabezado
 		$BLUEJQuery(this).append( $BLUEJQuery(headerLeftGrupDiv));
-		
+
 		if(properties.toggleable){
 			$BLUEJQuery(this).addClass("bel-table-open-icon");
 			$BLUEJQuery(this).children( 'button' ).each(function () {
@@ -870,10 +867,10 @@ function makeCaption(element, properties){
 				headerRigthtGrupDiv = $BLUEJQuery("<div></div>").addClass("bel-table_caption-group bel-table_caption-select bel-position-right");
 				$BLUEJQuery(headerRigthtGrupDiv).append( $BLUEJQuery(this));
 			});
-			
-			
+
+
 		}
-		
+
 		if(null != headerRigthtGrupDiv){
 			$BLUEJQuery(this).append( $BLUEJQuery(headerRigthtGrupDiv));
 		}
@@ -895,7 +892,7 @@ function permuteTextContend(elementId, permutableTextElement1, permutableTextEle
 	}else{
 		$('#'+elementId).text(permutableTextElement1);
 	}
-	
+
 }
 
 
@@ -924,7 +921,7 @@ $BLUEJQuery.fn.comparativeMenu = function(){
 			$BLUEJQuery(this).children( 'label' ).each(function () {
 				inputRadioLabel = $BLUEJQuery(this);
 			});
-			
+
 			var sectionHeader = $BLUEJQuery('<div id="comparativeMenuHead" class="bel-comparative-menu-default bel-comparative-menu__head">' +
 		            '<div class="bel-selection-input">' +
 		            '<input class="bel-radio-button" type="radio" id="an-id'+itemsCount+'" name="'+$BLUEJQuery(inputRadio).attr('name')+'" value="'+$BLUEJQuery(inputRadio).attr('value')+'" onclick="checkedComparativeMenu()"> ' +
@@ -932,15 +929,15 @@ $BLUEJQuery.fn.comparativeMenu = function(){
 		            '<label class="bel-radio-button-text" for="an-id'+itemsCount+'">'+$BLUEJQuery(inputRadioLabel).text()+'</label>' +
 	            '</div>' +
 			'</div>');
-			
+
 			var sectionBody = $BLUEJQuery('<div id="comparativeMenuContent" class="bel-comparative-menu-default bel-comparative-menu__content"></div>');
 			var sectionBodyImage;
 			var bodyArticle = $BLUEJQuery('<div class="bel-comparative-menu__content__information  bel-border-top"></div>');
 			var bodyArticleTitle = $BLUEJQuery('<div class="bel-space-left-s bel-space-top-s bel-space-bottom-s"></div>');
 			var bodyArticleContend = $BLUEJQuery('<div class="bel-space-left-s bel-space-bottom-s"></div>');
-			
+
 			var bodyDetails = $BLUEJQuery('<div class="bel-comparative-menu__content__footer bel-border-top"></div>');
-			
+
 			$BLUEJQuery(this).children( 'section' ).each(function () {
 				$BLUEJQuery(this).children( 'img' ).each(function () {
 					sectionBodyImage = $BLUEJQuery('<div class="bel-comparative-menu__content__image bel-space-bottom-s"> <img src="'+$BLUEJQuery(this).attr('src')+'" alt="'+$BLUEJQuery(this).attr('alt')+'" height="100" width="'+$BLUEJQuery(this).attr('width')+'"/> </div>');
@@ -950,7 +947,7 @@ $BLUEJQuery.fn.comparativeMenu = function(){
 					$BLUEJQuery(this).addClass("bel-typography bel-typography-h4");
 					$BLUEJQuery(bodyArticleTitle).append($BLUEJQuery(this));
 					$BLUEJQuery(bodyArticle).append(bodyArticleTitle);
-					
+
 				});
 				$BLUEJQuery(this).children( 'article' ).each(function () {
 					bodyArticle.append($BLUEJQuery(this).html());
@@ -961,26 +958,26 @@ $BLUEJQuery.fn.comparativeMenu = function(){
 					$BLUEJQuery(this).children( 'article' ).each(function () {
 						$BLUEJQuery(detailsArticle).append($BLUEJQuery(this).html());
 					});
-					
-					
+
+
 					$BLUEJQuery(bodyDetails).append(detailsArticle);
-					
+
 					var showDetailsLabel;
 					var hideDetailsLabel;
 					$BLUEJQuery(this).children( 'summary' ).each(function () {
 						showDetailsLabel = $BLUEJQuery(this).text().substr(0,$BLUEJQuery(this).text().indexOf("|"));
 						hideDetailsLabel = $BLUEJQuery(this).text().substr($BLUEJQuery(this).text().indexOf("|")+1,$BLUEJQuery(this).text().length);
 					});
-					
-					
-					
-					var detailsOption = $BLUEJQuery('<div onclick="toggleInfoBox('+itemsCount+'); permuteTextContend(\'toggleArrow'+itemsCount+'\', \''+showDetailsLabel+'\', \''+hideDetailsLabel+'\');" class="bel-space-top-s bel-space-bottom-m bel-position-right">' + 
-		                '<a id="toggleArrow'+itemsCount+'"  class="bel-typography-link bel-icon-arrow-down-xxs">'+showDetailsLabel+'</a>' + 
+
+
+
+					var detailsOption = $BLUEJQuery('<div onclick="toggleInfoBox('+itemsCount+'); permuteTextContend(\'toggleArrow'+itemsCount+'\', \''+showDetailsLabel+'\', \''+hideDetailsLabel+'\');" class="bel-space-top-s bel-space-bottom-m bel-position-right">' +
+		                '<a id="toggleArrow'+itemsCount+'"  class="bel-typography-link bel-icon-arrow-down-xxs">'+showDetailsLabel+'</a>' +
 		            '</div>');
-					
+
 					$BLUEJQuery(bodyDetails).append($BLUEJQuery(detailsOption));
 					$BLUEJQuery(sectionBody).append($BLUEJQuery(bodyDetails));
-					
+
 				});
 			});
 	        comparativeMenuItem.append(sectionHeader);
@@ -997,7 +994,7 @@ $BLUEJQuery.fn.comparativeMenu = function(){
  */
 function openOrCloseArrow(blueElement){
 	var arrowElement = $BLUEJQuery(blueElement);
-	
+
 	if (arrowElement.hasClass('bel-icon-subaccount-open')) {
 		arrowElement.removeClass('bel-icon-subaccount-open');
 		arrowElement.addClass('bel-icon-subaccount-close');
@@ -1005,4 +1002,110 @@ function openOrCloseArrow(blueElement){
 		arrowElement.removeClass('bel-icon-subaccount-close');
 		arrowElement.addClass('bel-icon-subaccount-open');
 	}
+}
+
+/**
+ * Función que se encarga de enviar a la función de "ver más" o "ver menos" dependiendo del estado actual del menú
+ * @param idMenu : id del ul del menú
+ * @param idSeemoreLink : id del link de ver más propio del menú
+ * @param maxItemsToShow : máximo de items a mostrar en el menu cuando está contraido
+ */
+function seeMoreOrLessMenuItems(idMenu, idSeemoreLink, maxItemsToShow){
+    if($BLUEJQuery("#" + idSeemoreLink).hasClass("bel-seemore-link-flag")){
+        seeMoreMenuItems(idMenu, idSeemoreLink);
+    }else{
+        seeLessItems(idMenu, idSeemoreLink, maxItemsToShow);
+    }
+}
+
+
+/**
+ * Función que se encarga de ocultar los items del menú según el máximo a contrar establecido
+ * @param idMenu : id del ul del menú
+ * @param idSeemoreLink : id del link de ver más propio del menú
+ * @param maxItemsToShow : máximo de items a mostrar en el menu cuando está contraido
+ * @param hideSpeedCustom : velocidad del efecto al ocultar los items
+ */
+function seeLessItems(idMenu, idSeemoreLink, maxItemsToShow, hideSpeedCustom) {
+    var liCounter = 0;
+    var hideSpeed = 300;
+
+    if (hideSpeedCustom!=null) {
+    hideSpeed=hideSpeedCustom;
+    }
+
+   $BLUEJQuery("#" + idMenu).find('li').each(function () {
+    if(liCounter >= maxItemsToShow){
+       $BLUEJQuery(this).hide(hideSpeed);
+     }
+
+     if(!$BLUEJQuery(this).hasClass("bel-menu-hide-item")){
+       liCounter++;
+     }
+   }
+ );
+
+   if(liCounter <= (maxItemsToShow)){
+     $BLUEJQuery("#" + idSeemoreLink).hide(0);
+   }else{
+            $BLUEJQuery("#" + idSeemoreLink).removeClass("bel-icon-arrow-up-before-xxs");
+            $BLUEJQuery("#" + idSeemoreLink).addClass("bel-icon-arrow-down-before-xxs");
+            $BLUEJQuery("#" + idSeemoreLink).show(0);
+   }
+        $BLUEJQuery("#" + idSeemoreLink).addClass("bel-seemore-link-flag");
+        $BLUEJQuery("#" + idSeemoreLink).text("  "+seeMoreLinkLabel);
+}
+
+/**
+ * Función que se encarga de mostrar todos items del menú
+ * @param idMenu : id del ul del menú
+ * @param idSeemoreLink : id del link de ver más propio del menú
+ */
+ function seeMoreMenuItems(idMenu, idSeemoreLink){
+   $BLUEJQuery("#" + idMenu).find('li').each(function () {
+     if(!$BLUEJQuery(this).hasClass("bel-menu-hide-item")){
+       $BLUEJQuery(this).show(300);
+     }
+   });
+
+        $BLUEJQuery("#" + idSeemoreLink).removeClass("bel-seemore-link-flag");
+        $BLUEJQuery("#" + idSeemoreLink).removeClass("bel-icon-arrow-down-before-xxs");
+        $BLUEJQuery("#" + idSeemoreLink).addClass("bel-icon-arrow-up-before-xxs");
+        $BLUEJQuery("#" + idSeemoreLink).text("  "+seeLessLinkLabel);
+}
+
+ /**
+  * Función que se encarga de crear el encabezado del menú según los parametros enviados
+  * @param idMenu : id del ul del menú
+  * @param iconClass : clase del icono que se quiere mostrar (se puede mantener en blanco si no se requiere icono)
+  * @param line : clase de la línea divisoria (se puede mantener en blanco si no se requiere la línea)
+  * @param auxContent : contenido auxiliar en formato html que se requiera en el encabezado
+  */
+function createMenuHead(menuId, iconClass, menuTitle, line, auxContent){
+	var menuHeader = '';
+	menuHeader += '<div class="'+line+'">';
+		menuHeader += '<div class="bel-table-icon bel-menu__head-title '+iconClass+'"'+'>';
+			menuHeader += '<h2 class="bel-typography bel-typography-h2">'+' '+menuTitle+'</h2>';
+		menuHeader += '</div>';
+		menuHeader += '<div class="bel-menu__head-aux">'+auxContent+'</div>';
+	menuHeader += '</div>';
+	$BLUEJQuery("#" + menuId).html(menuHeader);
+}
+
+/**
+ * Función que se encarga de ocultar o mostrar el menú
+ * @param idMenu : id del ul del menú
+ * @param divId : id del contenedor que se quiere ocultar o mostrar
+ */
+function toggleMenu(menuId, divId){
+
+	if ($BLUEJQuery("#"  + menuId).hasClass('bel-table-open-icon')) {
+        $BLUEJQuery("#"  + menuId).removeClass('bel-table-open-icon');
+        $BLUEJQuery("#"  + menuId).addClass('bel-table-close-icon');
+        $BLUEJQuery("#"  + divId).toggle(500);
+    }else{
+        $BLUEJQuery("#"  + menuId).addClass('bel-table-open-icon');
+        $BLUEJQuery("#"  + menuId).removeClass('bel-table-close-icon');
+        $BLUEJQuery("#"  + divId).toggle(500);
+    }
 }
