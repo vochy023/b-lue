@@ -888,7 +888,6 @@ function checkedComparativeMenu() {
 function isChecked() {
   var checked = $BLUEJQuery(this).find(".bel-radio-button").is(":checked")
   $BLUEJQuery(this).toggleClass("bel-comparative-menu-active", checked)
-  $BLUEJQuery(this).removeClass("bel-comparative-menu-default")
 }
 function permuteTextContend(elementId, permutableTextElement1, permutableTextElement2){
 	if($('#'+elementId).text() == permutableTextElement1){
@@ -936,78 +935,34 @@ $BLUEJQuery.fn.comparativeMenu = function(){
 			
 			var sectionBody = $BLUEJQuery('<div id="comparativeMenuContent" class="bel-comparative-menu-default bel-comparative-menu__content"></div>');
 			var sectionBodyImage;
-			var bodyArticle = $BLUEJQuery('<div class="bel-comparative-menu__content__information  bel-border-top bel-padding-s"></div>');
-			var bodyAside = $BLUEJQuery('<div class="bel-comparative-menu__content__information"></div>');
-			var bodyAsideDetails = $BLUEJQuery('<div class="bel-comparative-menu__content__information"></div>');
-			var bodyArticleTitle = $BLUEJQuery('<div class="bel-padding-s"></div>');
+			var bodyArticle = $BLUEJQuery('<div class="bel-comparative-menu__content__information  bel-border-top"></div>');
+			var bodyArticleTitle = $BLUEJQuery('<div class="bel-space-left-s bel-space-top-s bel-space-bottom-s"></div>');
 			var bodyArticleContend = $BLUEJQuery('<div class="bel-space-left-s bel-space-bottom-s"></div>');
-			var bodyArticleTitleDetails = $BLUEJQuery('<div class="bel-padding-horizontal-s bel-space-top-s"></div>');
-			var bodyArticleContendDetails = $BLUEJQuery('<div class="bel-padding-s"></div>');
-			var copy = $BLUEJQuery('<div class="bel-padding-s"></div>');
 			
 			var bodyDetails = $BLUEJQuery('<div class="bel-comparative-menu__content__footer bel-border-top"></div>');
 			
 			$BLUEJQuery(this).children( 'section' ).each(function () {
 				$BLUEJQuery(this).children( 'img' ).each(function () {
-					sectionBodyImage = $BLUEJQuery('<div class="bel-comparative-menu__content__image  bel-border-bottom"> <img src="'+$BLUEJQuery(this).attr('src')+'" alt="'+$BLUEJQuery(this).attr('alt')+'" height="90" width="'+$BLUEJQuery(this).attr('width')+'"/> </div>');
+					sectionBodyImage = $BLUEJQuery('<div class="bel-comparative-menu__content__image bel-space-bottom-s"> <img src="'+$BLUEJQuery(this).attr('src')+'" alt="'+$BLUEJQuery(this).attr('alt')+'" height="100" width="'+$BLUEJQuery(this).attr('width')+'"/> </div>');
 					sectionBody.append(sectionBodyImage);
 				});
-				
-				$BLUEJQuery(this).children( 'aside' ).each(function () {
-					bodyAside.append($BLUEJQuery(this).html());
-					$BLUEJQuery(sectionBody).append(bodyAside);
+				$BLUEJQuery(this).children( 'h4' ).each(function () {
+					$BLUEJQuery(this).addClass("bel-typography bel-typography-h4");
+					$BLUEJQuery(bodyArticleTitle).append($BLUEJQuery(this));
+					$BLUEJQuery(bodyArticle).append(bodyArticleTitle);
+					
 				});
-				
 				$BLUEJQuery(this).children( 'article' ).each(function () {
-					
-					
-					$BLUEJQuery(this).children( 'h4' ).each(function () {
-						$BLUEJQuery(this).addClass("bel-typography bel-typography-h4");
-						$BLUEJQuery(bodyArticleTitle).append($BLUEJQuery(this));
-						$BLUEJQuery(bodyArticle).append(bodyArticleTitle);
-						
-					});
-					
-					$BLUEJQuery(this).children( 'h5' ).each(function () {
-						$BLUEJQuery(this).addClass("bel-typography bel-typography-h5");
-					});
-					$BLUEJQuery(sectionBody).append(bodyArticle);
 					bodyArticle.append($BLUEJQuery(this).html());
+					$BLUEJQuery(sectionBody).append(bodyArticle);
 				});
-				
-				
-				
-				
 				$BLUEJQuery(this).children( 'details' ).each(function () {
 					var detailsArticle = $BLUEJQuery('<div id="toggleInfo'+itemsCount+'" class="bel-space-top-s bel-display-none" ></div>');
-					
-					$BLUEJQuery(this).children( 'aside' ).each(function () {
-						bodyAsideDetails.append($BLUEJQuery(this).html());
-						$BLUEJQuery(detailsArticle).append(bodyAsideDetails);
-					});
-					
 					$BLUEJQuery(this).children( 'article' ).each(function () {
-						
-						
-						$BLUEJQuery(this).children( 'h4' ).each(function () {
-							$BLUEJQuery(this).addClass("bel-typography bel-typography-h4");
-							$BLUEJQuery(bodyArticleTitleDetails).append($BLUEJQuery(this));
-							$BLUEJQuery(detailsArticle).append(bodyArticleTitleDetails);
-							
-						});
-						
-						$BLUEJQuery(this).children( 'h5' ).each(function () {
-							$BLUEJQuery(this).addClass("bel-typography bel-typography-h5");
-							$BLUEJQuery(bodyArticleContendDetails).append($BLUEJQuery(this));
-							$BLUEJQuery(detailsArticle).append(bodyArticleContendDetails);
-						});
-						
 						$BLUEJQuery(detailsArticle).append($BLUEJQuery(this).html());
-	
 					});
-						
 					
-
+					
 					$BLUEJQuery(bodyDetails).append(detailsArticle);
 					
 					var showDetailsLabel;
