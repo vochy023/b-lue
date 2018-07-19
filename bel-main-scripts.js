@@ -545,7 +545,7 @@ $BLUEJQuery.fn.blueInputPasswordType = function(inputId, inputSize, show, hide){
 	 $BLUEJQuery('#'+inputId).addClass("bel-input--icon bel-input--icon-"+inputSize.toLowerCase()+" bel-input-default");
 	 $BLUEJQuery('#'+inputId).prop("type", "password");
 	 $BLUEJQuery('#'+inputId).css("padding-right", "71px");
-	 var selectDiv = $BLUEJQuery('<span onclick="validateShowElementLabel(\''+inputId+'\',this,\''+show+'\',\''+hide+'\' )" style="margin-left: -26px;color:#6D6E71; font-size: 14px; cursor:pointer;" class="bel-validation-icon bel-typography bel-typography-label">Mostrar</span>');
+	 var selectDiv = $BLUEJQuery('<span onclick="validateShowElementLabel(\''+inputId+'\',this,\''+show+'\',\''+hide+'\' )" style="margin-left: -26px;color:#6D6E71; font-size: 14px; cursor:pointer;" class="bel-validation-icon bel-typography bel-typography-label">'+show+'</span>');
 	 $BLUEJQuery('#'+inputId).after( selectDiv);
 };
 
@@ -1048,8 +1048,8 @@ function seeLessItems(idMenu, idSeemoreLink, maxItemsToShow, hideSpeedCustom) {
    if(liCounter <= (maxItemsToShow)){
      $BLUEJQuery("#" + idSeemoreLink).hide(0);
    }else{
-            $BLUEJQuery("#" + idSeemoreLink).removeClass("bel-icon-arrow-up-before-xxs");
-            $BLUEJQuery("#" + idSeemoreLink).addClass("bel-icon-arrow-down-before-xxs");
+            $BLUEJQuery("#" + idSeemoreLink).removeClass("bel-icon-arrow-up-xxs");
+            $BLUEJQuery("#" + idSeemoreLink).addClass("bel-icon-arrow-down-xxs");
             $BLUEJQuery("#" + idSeemoreLink).show(0);
    }
         $BLUEJQuery("#" + idSeemoreLink).addClass("bel-seemore-link-flag");
@@ -1069,8 +1069,8 @@ function seeLessItems(idMenu, idSeemoreLink, maxItemsToShow, hideSpeedCustom) {
    });
 
         $BLUEJQuery("#" + idSeemoreLink).removeClass("bel-seemore-link-flag");
-        $BLUEJQuery("#" + idSeemoreLink).removeClass("bel-icon-arrow-down-before-xxs");
-        $BLUEJQuery("#" + idSeemoreLink).addClass("bel-icon-arrow-up-before-xxs");
+        $BLUEJQuery("#" + idSeemoreLink).removeClass("bel-icon-arrow-down-xxs");
+        $BLUEJQuery("#" + idSeemoreLink).addClass("bel-icon-arrow-up-xxs");
         $BLUEJQuery("#" + idSeemoreLink).text("  "+seeLessLinkLabel);
 }
 
@@ -1081,11 +1081,12 @@ function seeLessItems(idMenu, idSeemoreLink, maxItemsToShow, hideSpeedCustom) {
   * @param line : clase de la línea divisoria (se puede mantener en blanco si no se requiere la línea)
   * @param auxContent : contenido auxiliar en formato html que se requiera en el encabezado
   */
-function createMenuHead(menuId, iconClass, menuTitle, line, auxContent){
+function createMenuHead(menuId, iconClass, menuTitle, subtitle, line, auxContent){
 	var menuHeader = '';
-	menuHeader += '<div class="'+line+'">';
-		menuHeader += '<div class="bel-table-icon bel-menu__head-title '+iconClass+'"'+'>';
-			menuHeader += '<h2 class="bel-typography bel-typography-h2">'+' '+menuTitle+'</h2>';
+	menuHeader += '<div class="bel-menu_head '+line+'">';
+		menuHeader += '<div class="bel-menu__head-title">';
+			menuHeader += '<div class="bel-table-icon '+iconClass+'"><h2 class="bel-typography bel-typography-h2">'+' '+menuTitle+'</h2></div>';
+			menuHeader += '<div><h5 class="bel-typography bel-typography-h5">'+' '+subtitle+'</h5></div>';
 		menuHeader += '</div>';
 		menuHeader += '<div class="bel-menu__head-aux">'+auxContent+'</div>';
 	menuHeader += '</div>';
