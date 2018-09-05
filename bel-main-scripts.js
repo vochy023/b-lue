@@ -70,8 +70,6 @@ function displayDownloadOption(idList, idLabel) {
 		document.getElementById(idList).style.display = "none";
 	} else {
 		scrollToElement('#' + idLabel);
-		var allOptions = $BLUEJQuery(".bel-option-list");
-		var allSelectLabels = $BLUEJQuery(".bel-select");
 		document.getElementById("downloadOptions").style.display = "block";
 		document.getElementById(idList).style.display = "block";
 		if (!$BLUEJQuery('#' + idLabel).hasClass('bel-select-disabled')) {
@@ -281,7 +279,7 @@ function startAmimationTimer(){
 	if ( $BLUEJQuery( "#belSeconds" ).length ) {
 
 		// Funcion para animacion de Contando
-		var belRemaingTimeForFinishUserSession = 10;
+		
 		var startLoadingTime = 1000;
 		var belShowMessageTimeout = null;
 		var belSetTimerForFinishTheSession = null;
@@ -300,6 +298,7 @@ function belShowMessageTimer() {
 	    belExecuteCircleTimer();
 	}
 function belExecuteCircleTimer() {
+	var belRemaingTimeForFinishUserSession = 10;
     var time = belRemaingTimeForFinishUserSession;
     var timer = $BLUEJQuery('#belSeconds')[0];
     timer.innerHTML = time;
@@ -658,11 +657,16 @@ function createAlertMessage(idContainer, alertType, iconClass, title, message, b
 
 function getAlertClassByType(alertType){
 	switch (alertType) {
-		case 1: return "bel-alertMessage_grayIcon"; break;
-		case 2: return "bel-alertMessage_greenIcon"; break;
-		case 3: return "bel-alertMessage_redIcon"; break;
-		case 4: return "bel-alertMessage_orangeIcon"; break;
-		default: return "bel-alertMessage_grayIcon"; break;
+		case 1: return "bel-alertMessage_grayIcon";
+				break;
+		case 2: return "bel-alertMessage_greenIcon"; 
+				break;
+		case 3: return "bel-alertMessage_redIcon"; 
+				break;
+		case 4: return "bel-alertMessage_orangeIcon"; 
+				break;
+		default: return "bel-alertMessage_grayIcon"; 
+				 break;
 
 	}
 }
@@ -684,22 +688,20 @@ var getBrowserInfo = function() {
 
 $BLUEJQuery.fn.blueTable = function(properties){
 
-	var elementId = $BLUEJQuery(this).attr('id');
-
 	this.removeClass();
 
 	 makeCaption(this, properties);
 
 	 makeHeader(this, properties);
 
-	 makeBody(this, properties,elementId);
+	 makeBody(this, properties);
 
 	 makefooter(this, properties);
 
 	$BLUEJQuery(this).addClass("bel-table");
 
 };
-function makeBody(element, properties,elementId){
+function makeBody(element, properties){
 	var trCounter = 1;
 	var thCounter = 0;
 	var maxItemsCollapsed = 3;
@@ -740,10 +742,9 @@ function makeBody(element, properties,elementId){
 			}
 			trCounter++;
 		});
-		$BLUEJQuery("#" + elementId + ' tr.bel-table_row.bel-generic-hover.bel-table_border-column:visible:last').removeClass("bel-table_border-column");
 		if(properties.extensible && trCounter > maxItemsCollapsed){
-			$BLUEJQuery(this).append( "<tr id='seTR"+$BLUEJQuery(element).attr("id")+"'><td colspan='"+thCounter+"' class='bel-extensive-menu_link'><a class='bel-typography bel-typography-link bel-icon-arrow-down-xxs' href='javascript:void(0)' onclick='showMoreItems(\""+$BLUEJQuery(element).attr("id")+"\", "+maxItemsCollapsed+")'>"+extensibleLabel+"</a></td></tr>");
-			$BLUEJQuery(this).append( "<tr id='heTR"+$BLUEJQuery(element).attr("id")+"' class='bel-hide-element'><td colspan='"+thCounter+"' class='bel-extensive-menu_link'><a class='bel-typography bel-typography-link bel-icon-arrow-up-xxs' href='javascript:void(0)' onclick='hideItems(\""+$BLUEJQuery(element).attr("id")+"\", "+maxItemsCollapsed+")'>"+collapseLabel+"</a></td></tr>");
+			$BLUEJQuery(this).append( "<tr id='seTR"+$BLUEJQuery(element).attr("id")+"'><td colspan='"+thCounter+"' class='bel-extensive-menu_link'><a class='bel-typography bel-typography-link bel-icon-arrow-down-xxs' href='javascript:void(0)' onclick='showMoreItems(\""+$BLUEJQuery(element).attr("id")+"\")'>"+extensibleLabel+"</a></td></tr>");
+			$BLUEJQuery(this).append( "<tr id='heTR"+$BLUEJQuery(element).attr("id")+"' class='bel-hide-element'><td colspan='"+thCounter+"' class='bel-extensive-menu_link'><a class='bel-typography bel-typography-link bel-icon-arrow-up-xxs' href='javascript:void(0)' onclick='hideItems(\""+$BLUEJQuery(element).attr("id")+"\")'>"+collapseLabel+"</a></td></tr>");
 		}
 	});
 
@@ -754,21 +755,18 @@ function makeBody(element, properties,elementId){
 
 }
 
-function showMoreItems(tableId, maxItemsCollapsed){
-	$BLUEJQuery('#' + tableId + ' .bel-table_row').addClass("bel-table_border-column");
-	$BLUEJQuery('#' + tableId + ' tr.bel-table_row:last').removeClass("bel-table_border-column");
+function showMoreItems(tableId){
 	$BLUEJQuery('#' + tableId + ' .bel-table_row.bel-hide-element').show(800);
 	$BLUEJQuery("#seTR"+tableId).hide();
 	$BLUEJQuery("#heTR"+tableId).show();
 }
 
 
-function hideItems(tableId, maxItemsCollapsed){
-
-	$BLUEJQuery('#' + tableId + ' .bel-table_row.bel-hide-element').hide(800);	
-	$BLUEJQuery("#heTR"+tableId).hide();
+function hideItems(tableId){
+	$BLUEJQuery('#' + tableId + ' .bel-table_row.bel-hide-element').hide(800);
+    $BLUEJQuery("#heTR"+tableId).hide();
 	$BLUEJQuery("#seTR"+tableId).show();
-	$BLUEJQuery('#' + tableId + ' tr.bel-table_row.bel-generic-hover.bel-table_border-column:visible:last').removeClass("bel-table_border-column");
+	
 }
 function makefooter(element, properties){
 
@@ -910,9 +908,6 @@ $BLUEJQuery.fn.comparativeMenu = function(selectedRadio){
 	$BLUEJQuery(this).find( 'li' ).each(function () {
 		itemsCount++;
 	});
-	if(itemsCount < 3){
-		comparativeMenuClass = "bel-comparative-menu_large";
-	}
 	itemsCount = 1;
 	$BLUEJQuery(this).find( 'li' ).each(function () {
 		if(itemsCount > 4){
@@ -922,7 +917,6 @@ $BLUEJQuery.fn.comparativeMenu = function(selectedRadio){
 			var comparativeMenuItem = $BLUEJQuery('<div class="'+comparativeMenuClass+'"></div>');
 			var inputRadio;
 			var inputRadioLabel;
-			var checked;
 			$BLUEJQuery(this).children( 'input' ).each(function () {
 				inputRadio = $BLUEJQuery(this);
 			});
@@ -967,10 +961,8 @@ $BLUEJQuery.fn.comparativeMenu = function(selectedRadio){
 					
 					
 					var showDetailsLabel;
-					var hideDetailsLabel;
 					$BLUEJQuery(this).children( 'summary' ).each(function () {
 						showDetailsLabel = $BLUEJQuery(this).text().substr(0,$BLUEJQuery(this).text().indexOf("|"));
-						hideDetailsLabel = $BLUEJQuery(this).text().substr($BLUEJQuery(this).text().indexOf("|")+1,$BLUEJQuery(this).text().length);
 					});
 					
 					
@@ -1091,7 +1083,7 @@ function createMenuHead(menuId, iconClass, menuTitle, subtitle, line, auxContent
 	var menuHeader = '';
 	menuHeader += '<div class="bel-menu_head '+line+'">';
 		menuHeader += '<div class="bel-menu__head-title">';
-			menuHeader += '<div class="bel-table-icon '+iconClass+'"><h2 class="bel-typography bel-typography-h2">'+' '+menuTitle+'</h2></div>';
+			menuHeader += '<div class="bel-table-icon '+iconClass+'"><h2 class="bel-typography bel-typography-h2 bel-display-inline">'+' '+menuTitle+'</h2></div>';
 			menuHeader += '<div><h5 class="bel-typography bel-typography-h5">'+' '+subtitle+'</h5></div>';
 		menuHeader += '</div>';
 		menuHeader += '<div class="bel-menu__head-aux">'+auxContent+'</div>';
@@ -1116,3 +1108,4 @@ function toggleMenu(menuId, divId){
         $BLUEJQuery("#"  + divId).toggle(500);
     }
 }
+
