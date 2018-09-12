@@ -145,7 +145,7 @@ $BLUEJQuery.fn.makeTabs = function(tabSelected){
 		$BLUEJQuery(this).click(function(){
 			$BLUEJQuery(tabContiner).find( "div" ).each(function () {
 				$BLUEJQuery(this).hide();
-			});		
+			});
 			$BLUEJQuery(tabContiner).find( "ul" ).find( "li" ).each(function () {
 				$BLUEJQuery(this).attr('class', 'bel-tab-container-link bel-tab-container-element__unselected');
 			});
@@ -154,7 +154,7 @@ $BLUEJQuery.fn.makeTabs = function(tabSelected){
 			$BLUEJQuery(tab).find( "div" ).each(function () {
 				$BLUEJQuery(this).removeAttr('style');
 			});
-								
+
 		});
 
 		if("#"+tabSelected == tab){
@@ -281,7 +281,7 @@ function startAmimationTimer(){
 	if ( $BLUEJQuery( "#belSeconds" ).length ) {
 
 		// Funcion para animacion de Contando
-		
+
 		var startLoadingTime = 1000;
 		var belShowMessageTimeout = null;
 		var belSetTimerForFinishTheSession = null;
@@ -661,13 +661,13 @@ function getAlertClassByType(alertType){
 	switch (alertType) {
 		case 1: return "bel-alertMessage_grayIcon";
 				break;
-		case 2: return "bel-alertMessage_greenIcon"; 
+		case 2: return "bel-alertMessage_greenIcon";
 				break;
-		case 3: return "bel-alertMessage_redIcon"; 
+		case 3: return "bel-alertMessage_redIcon";
 				break;
-		case 4: return "bel-alertMessage_orangeIcon"; 
+		case 4: return "bel-alertMessage_orangeIcon";
 				break;
-		default: return "bel-alertMessage_grayIcon"; 
+		default: return "bel-alertMessage_grayIcon";
 				 break;
 
 	}
@@ -739,8 +739,8 @@ function makeBody(element, properties){
 			});
 			if(properties.extensible && trCounter > maxItemsCollapsed){
 				$BLUEJQuery(this).addClass("bel-hide-element");
-				
-				
+
+
 			}
 			trCounter++;
 		});
@@ -768,7 +768,7 @@ function hideItems(tableId){
 	$BLUEJQuery('#' + tableId + ' .bel-table_row.bel-hide-element').hide(800);
     $BLUEJQuery("#heTR"+tableId).hide();
 	$BLUEJQuery("#seTR"+tableId).show();
-	
+
 }
 function makefooter(element, properties){
 
@@ -886,7 +886,6 @@ function makeCaption(element, properties){
 //Comparative Menu
 function checkedComparativeMenu() {
   $BLUEJQuery(".bel-comparative-menu").each(isChecked);
-	$BLUEJQuery(".bel-comparative-menu").each(isChecked);
 }
 
 function normalizeHeightComparativeMenu(id) {
@@ -937,7 +936,7 @@ $BLUEJQuery.fn.comparativeMenu = function(selectedRadio){
 			$BLUEJQuery(this).children( 'label' ).each(function () {
 				inputRadioLabel = $BLUEJQuery(this);
 			});
-			
+
 			var sectionHeader = $BLUEJQuery('<div id="comparativeMenuHead" class="bel-comparative-menu-default bel-comparative-menu__head">' +
 			'<div class="bel-selection-input">' +
 			'<input class="bel-radio-button" type="radio" id="an-id' + itemsIdCount + '" name="' + $BLUEJQuery(inputRadio).attr('name') + '" value="' + $BLUEJQuery(inputRadio).attr('value') + '" onclick="checkedComparativeMenu()"> ' +
@@ -945,17 +944,17 @@ $BLUEJQuery.fn.comparativeMenu = function(selectedRadio){
 			'<label class="bel-radio-button-text" for="an-id' + itemsIdCount + '">' + $BLUEJQuery(inputRadioLabel).text() + '</label>' +
 			'</div>' +
 			'</div>');
-			
+
 			var sectionBody = $BLUEJQuery('<div id="comparativeMenuContent" class="bel-comparative-menu-default bel-comparative-menu__content"></div>');
 			var sectionBodyImage;
 			var img;
-			var bodySection = $BLUEJQuery('<div class="bel-comparative-menu__content__information"></div>');		
+			var bodySection = $BLUEJQuery('<div class="bel-comparative-menu__content__information"></div>');
 			var bodyDetails = $BLUEJQuery('<div class="bel-comparative-menu__content__footer bel-border-top"></div>');
 			var sectionBodyContent = $BLUEJQuery('<div class="bel-comparative-menu__content__info"></div>');
-			
+
 			$BLUEJQuery(sectionBody).append(sectionBodyContent);
-			$BLUEJQuery(this).children( 'section' ).each(function () {			
-			bodySection.append($BLUEJQuery(this));				
+			$BLUEJQuery(this).children( 'section' ).each(function () {
+			bodySection.append($BLUEJQuery(this));
 
 				$BLUEJQuery(this).children( 'img' ).each(function () {
 					img = $BLUEJQuery(this).detach();
@@ -964,24 +963,24 @@ $BLUEJQuery.fn.comparativeMenu = function(selectedRadio){
 					sectionBodyContent.append(sectionBodyImage);
 				});
 			$BLUEJQuery(sectionBodyContent).append(bodySection);
-			
+
 			$BLUEJQuery(this).children( 'details' ).each(function () {
 				var detailsArticle = $BLUEJQuery('<div id="toggleInfo' + itemsIdCount + '" class="bel-space-top-s bel-display-none" ></div>');
 				$BLUEJQuery(detailsArticle).append($BLUEJQuery(this).html());
-				$BLUEJQuery(bodyDetails).append(detailsArticle);		
+				$BLUEJQuery(bodyDetails).append(detailsArticle);
 				var showDetailsLabel;
 				var hideDetailsLabel;
-				
+
 				$BLUEJQuery(this).children( 'summary' ).each(function () {
 					showDetailsLabel = $BLUEJQuery(this).text().substr(0,$BLUEJQuery(this).text().indexOf("|"));
 					hideDetailsLabel = $BLUEJQuery(this).text().substr($BLUEJQuery(this).text().indexOf("|") + 1, $BLUEJQuery(this).text().length);
 				});
-					
+
 
 				var detailsOption = $BLUEJQuery('<div onclick="toggleInfoBox(' + itemsIdCount + '); " class="bel-space-top-s bel-space-bottom-m bel-position-right">' +
 						'<a id="toggleArrow' + itemsIdCount + '"  class="bel-typography-link bel-icon-arrow-down-xxs">' + showDetailsLabel + '</a>' +
 		            	'</div>');
-					
+
 					$BLUEJQuery(bodyDetails).append($BLUEJQuery(detailsOption));
 					$BLUEJQuery(sectionBody).append($BLUEJQuery(bodyDetails));
 					$BLUEJQuery(this).remove();
@@ -997,7 +996,7 @@ $BLUEJQuery.fn.comparativeMenu = function(selectedRadio){
     $BLUEJQuery(this).addClass( "bel-menu");
     normalizeHeightComparativeMenu(this);
     $BLUEJQuery("#belComparativeMenuID").removeClass( "bel-display-none");
-    
+
 };
 
 /**
@@ -1009,7 +1008,7 @@ function setComparativeItemsHeight(menu) {
     var $item = menu.children('li').children(".bel-comparative-menu");
     var update = setInterval($BLUEJQuery.proxy(function () {
         if($menu.hasClass("bel-menu")){
-            clearInterval(update); 
+            clearInterval(update);
             var $infoHeight = 0;
               $item.each(function() {
                 var $thisHeight = $BLUEJQuery(this).children('.bel-comparative-menu__content').children('.bel-comparative-menu__content__info').outerHeight(true);
@@ -1145,3 +1144,49 @@ function toggleMenu(menuId, divId){
     }
 }
 
+/**
+ * Función que se encarga de mostrar la información del componente destacado por medio de un onclick
+ * @param dotCntId : id del elemento
+ * @param duration : tiempo que se mantiene visible la información del destacado
+ * @param waitTime : tiempo de espera antes de hacer visible la información del destacado
+ */
+function showFeactureDotOnClick(dotCntId, duration, waitTime){
+	/* Muestra y oculta la información del destacado */
+	setTimeout(function(){$BLUEJQuery("#" + dotCntId).addClass('dot_sonar__auto')}, waitTime);
+	setTimeout(function(){$BLUEJQuery("#" + dotCntId).removeClass('dot_sona__auto')}, duration+waitTime);
+}
+
+/**
+ * Función que se encarga de mostrar la información del componente de manera automatica
+ * Función que se encarga de establecer la animación de ciclos en el componente destacado
+ * @param dotCntId : id del elemento
+ * @param duration : tiempo que se mantiene visible la información del destacado
+ * @param waitTime : tiempo de espera antes de hacer visible la información del destacado
+ * @param intervalTime : tiempo de espera antes de reiniciar la animación de ciclos
+ * @param animationClass : clase que establece la cantidad de ciclos del componente
+ */
+function showFeactureDot(dotCntId, duration, waitTime, intervalTime, animationClass) {
+	/* Muestra y oculta la información del destacado */
+	setTimeout(function(){$BLUEJQuery("#" + dotCntId).addClass('dot_sonar__auto')}, waitTime);
+	setTimeout(function(){$BLUEJQuery("#" + dotCntId).removeClass('dot_sonar__auto')}, duration+waitTime);
+
+	$BLUEJQuery("#" + dotCntId).addClass(animationClass);
+
+	var cliclesCount = 0;
+	switch (animationClass) {
+		case 'dot_animation__s':  cliclesCount = 4000; break;
+		case 'dot_animation__m':  cliclesCount = 6000; break;
+		case 'dot_animation__l':  cliclesCount = 10000; break;
+		default: 0;
+	}
+
+	var clear = false;
+  var update = setInterval(function () {
+		if(cliclesCount > 0){
+			$BLUEJQuery("#" + dotCntId).removeClass(animationClass);
+			setTimeout(function(){$BLUEJQuery("#" + dotCntId).addClass(animationClass)}, 500);
+		}
+
+		if(clear){clearInterval(update);}
+	}, cliclesCount+intervalTime);
+}
