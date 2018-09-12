@@ -1153,7 +1153,7 @@ function toggleMenu(menuId, divId){
 function showFeactureDotOnClick(dotCntId, duration, waitTime){
 	/* Muestra y oculta la información del destacado */
 	setTimeout(function(){$BLUEJQuery("#" + dotCntId).addClass('dot_sonar__auto')}, waitTime);
-	setTimeout(function(){$BLUEJQuery("#" + dotCntId).removeClass('dot_sona__auto')}, duration+waitTime);
+	setTimeout(function(){$BLUEJQuery("#" + dotCntId).removeClass('dot_sonar__auto')}, duration+waitTime);
 }
 
 /**
