@@ -470,7 +470,7 @@ $BLUEJQuery.fn.blueSelect = function(size){
 	var selectedLabel = null;
 	
 	if(this.prop('disabled')){
-	    selectDiv = $BLUEJQuery("<div id='"+ elementId +"Div' class='bel-disable-click'></div>");
+	    selectDiv = $BLUEJQuery("<div id='"+ elementId +"Div' class='bel-click-disable'></div>");
 	}else{
 		selectDiv = $BLUEJQuery("<div id='"+ elementId +"Div'></div>");
 	}
