@@ -272,55 +272,37 @@ function animationProgressBar(steps, selectedStep){
 /**
  *Codigo para la animacion de contandor.
  *
- **
- **
- **
+ **@param belDurationTime número en segundos de la duración del contador
  *
  */
-function startAmimationTimer(){
+function startAmimationTimer(belDurationTime){
 	if ( $BLUEJQuery( "#belSeconds" ).length ) {
-
-		// Funcion para animacion de Contando
-
-		var startLoadingTime = 1000;
-		var belShowMessageTimeout = null;
-		var belSetTimerForFinishTheSession = null;
-		var belCircleInterval = null;
-
-		belShowMessageTimeout = setTimeout(belShowMessageTimer, startLoadingTime);
+	belShowMessageTimeout = setTimeout(belExecuteCircleTimer(belDurationTime), 1000);
 	}
-
-
-
 }
 
-// Funcion que inicia el contador
-function belShowMessageTimer() {
-    $BLUEJQuery('.bel-timer-cont__circle').css('stroke-dashoffset', 300);
-	    belExecuteCircleTimer();
-	}
-function belExecuteCircleTimer() {
-	var belRemaingTimeForFinishUserSession = 10;
-    var time = belRemaingTimeForFinishUserSession;
+
+function belExecuteCircleTimer(belDurationTime) {
+    var time = belDurationTime;
     var timer = $BLUEJQuery('#belSeconds')[0];
     timer.innerHTML = time;
     var seconds = Number(timer.innerHTML);
-    var i = 1;
+    var pixelInterval = 312;
     belSetTimerForFinishTheSession = setTimeout(function() {
    // ejecutal el inicio del conteo
    // *****************************************
-        }, belRemaingTimeForFinishUserSession);
+        }, belDurationTime);
       belCircleInterval = setInterval(function() {
         seconds--;
         if (seconds >= 0) {
+        	pixelInterval= pixelInterval + (120/time);
             timer.innerHTML = seconds;
-            i++;
-            $BLUEJQuery('.bel-timer-cont__circle').css('stroke-dashoffset',
-                    300 + Math.floor((i * 40 / time) + (i * 100 / time)));
+            $BLUEJQuery('.bel-timer-cont__circle').css('stroke-dashoffset', pixelInterval);
         }else{
      // Finaliza el tiempo
      // ***************************
         	clearInterval(belCircleInterval);
+        	$BLUEJQuery('.bel-timer-cont__circle').css('stroke-dashoffset', 434);
         }
     }, 1000);
 }
@@ -716,7 +698,7 @@ function makeBody(element, properties){
 	var trCounter = 1;
 	var thCounter = 0;
 	var maxItemsCollapsed = 3;
-
+	var thFlag = false;
 
 	var extensibleLabel = 'Ver m&aacute;s';
 	var collapseLabel = 'Ver menos';
@@ -729,6 +711,9 @@ function makeBody(element, properties){
 	if(properties.extensible && properties.maxItemsCollapsed != undefined){
 		maxItemsCollapsed = properties.maxItemsCollapsed;
 	}
+	if($BLUEJQuery(element).has( "thead" ).length===0){
+		thFlag=true;
+	}
 	$BLUEJQuery(element).find( 'tbody' ).each(function () {
 		$BLUEJQuery(this).attr("id", "tbody" + $BLUEJQuery(element).attr("id") );
 		$BLUEJQuery(this).find( 'tr' ).each(function () {
@@ -736,19 +721,21 @@ function makeBody(element, properties){
 			$BLUEJQuery(this).addClass("bel-table_row bel-table_border-column");
 			if(properties.rowHover ){
 				$BLUEJQuery(this).addClass("bel-generic-hover");
-			}
-
+			}		
 			$BLUEJQuery(this).find( 'td' ).each(function () {
+				if(thFlag){
+					if(properties.tdWidth != undefined && properties.tdWidth[thCounter] != undefined ){
+						$BLUEJQuery(this).css("width", properties.tdWidth[thCounter]+"%");
+					}
+				}
 				if(properties.tdAlign != undefined && properties.tdAlign[thCounter] != undefined ){
 					$BLUEJQuery(this).css("text-align", properties.tdAlign[thCounter]);
 				}
-
 				 $BLUEJQuery(this).addClass("bel-table_column_default");
 				thCounter++;
 			});
 			if(properties.extensible && trCounter > maxItemsCollapsed){
 				$BLUEJQuery(this).addClass("bel-hide-element");
-
 
 			}
 			trCounter++;
@@ -817,6 +804,8 @@ function makeHeader(element, properties){
 				thCounter++;
 			});
 		});
+		
+		
 	});
 }
 function makeCaption(element, properties){
