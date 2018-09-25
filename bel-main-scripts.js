@@ -54,7 +54,7 @@ function displayBelOption(idList, idLabel) {
 		allSelectLabels.removeClass('bel-select-open-icon');
 		allSelectLabels.addClass('bel-select-close-icon');
 		if (!$BLUEJQuery('#' + idLabel).hasClass('bel-select-disabled')) {
-			var allOptions = $BLUEJQuery("#mySelect").children('li');
+		    allOptions = $BLUEJQuery("#mySelect").children('li');
 			allOptions.removeClass('selected');
 			$BLUEJQuery('#' + idList).toggleClass('bel-display-list');
 			$BLUEJQuery("#" + idLabel).addClass('bel-select-open-icon');
@@ -80,13 +80,11 @@ function displayDownloadOption(idList, idLabel) {
 		}
 	}
 	$BLUEJQuery(document).click(function(event) {
-	    if(event.target.parentElement !== $BLUEJQuery("#" + idList)[0].parentElement) {
-	        if($BLUEJQuery('#'+idList).is(":visible")) {
+	    if(event.target.parentElement !== $BLUEJQuery("#" + idList)[0].parentElement && $BLUEJQuery('#'+idList).is(":visible")) {
 	        	$BLUEJQuery("#" + idList).removeClass("bel-download-options");
 				$BLUEJQuery("#" + idLabel).removeClass("bel-download-open");
 				document.getElementById("downloadOptions").style.display = "none";
 				document.getElementById(idList).style.display = "none";
-	        }
 	    }
 	});
 }
@@ -125,7 +123,7 @@ for (var i = 0; i < tx.length; i++) {
   tx[i].addEventListener("input", OnInput, false);
 }
 
-function OnInput(e) {
+function OnInput(){
   this.style.height = 'auto';
   this.style.height = (this.scrollHeight) + 'px';
 }
@@ -277,7 +275,7 @@ function animationProgressBar(steps, selectedStep){
  */
 function startAmimationTimer(belDurationTime){
 	if ( $BLUEJQuery( "#belSeconds" ).length ) {
-	belShowMessageTimeout = setTimeout(belExecuteCircleTimer(belDurationTime), 1000);
+	setTimeout(belExecuteCircleTimer(belDurationTime), 1000);
 	}
 }
 
@@ -288,11 +286,11 @@ function belExecuteCircleTimer(belDurationTime) {
     timer.innerHTML = time;
     var seconds = Number(timer.innerHTML);
     var pixelInterval = 312;
-    belSetTimerForFinishTheSession = setTimeout(function() {
+    setTimeout(function() {
    // ejecutal el inicio del conteo
    // *****************************************
         }, belDurationTime);
-      belCircleInterval = setInterval(function() {
+      var belCircleInterval = setInterval(function() {
         seconds--;
         if (seconds >= 0) {
         	pixelInterval= pixelInterval + (120/time);
@@ -446,7 +444,7 @@ $BLUEJQuery.fn.blueSelect = function(size){
 	var elementId = this.attr('id');
 	this.removeClass();
 	this.removeAttr( 'style' );
-	var hasCategory = false;
+	
 	$BLUEJQuery( "#"+elementId+"Div").remove();
 	var selectDiv;
 	var selectedLabel = null;
@@ -472,7 +470,7 @@ $BLUEJQuery.fn.blueSelect = function(size){
 		}
 	});
 	this.find( 'optgroup' ).each(function () {
-		hasCategory = true;
+		
 		$BLUEJQuery(selectList).append($BLUEJQuery('<li class="bel-option-disabled">'+$BLUEJQuery(this).attr("label")+'</li>'));
   
 		$BLUEJQuery(this).find( 'option' ).each(function () {
@@ -485,10 +483,8 @@ $BLUEJQuery.fn.blueSelect = function(size){
 	});
 
 	$BLUEJQuery(document).click(function(event) {
-	    if($BLUEJQuery(event.target.parentElement)[0].id !== selectDiv[0].id) {
-	        if(selectList.is(":visible")) {
+	    if($BLUEJQuery(event.target.parentElement)[0].id !== selectDiv[0].id && selectList.is(":visible")) {
 	        	displayBelOption(selectList[0].id, elementId+"Label");
-	        }
 	    }
 });
 	if(this.prop('disabled')){
@@ -516,14 +512,18 @@ function toggleTable(tableId){
 	$BLUEJQuery("#caption"+tableId ).removeClass('bel-table-close-icon');
 	}
 }
-function toggleInfoBox(elementID){
+
+function toggleInfoBox(elementID, showDetailsLabel, hideDetailsLabel){
 	$BLUEJQuery("#toggleInfo"+elementID).slideToggle(500);
 	if ($BLUEJQuery("#toggleArrow"+elementID).hasClass('bel-icon-arrow-down-xxs')) {
 		$BLUEJQuery("#toggleArrow"+elementID).removeClass('bel-icon-arrow-down-xxs');
 		$BLUEJQuery("#toggleArrow"+elementID ).addClass('bel-icon-arrow-up-xxs');
+		
+		$BLUEJQuery("#toggleArrow"+elementID ).text(hideDetailsLabel);
 	}else{
 		$BLUEJQuery("#toggleArrow"+elementID).addClass('bel-icon-arrow-down-xxs');
 		$BLUEJQuery("#toggleArrow"+elementID).removeClass('bel-icon-arrow-up-xxs');
+		$BLUEJQuery("#toggleArrow"+elementID ).text(showDetailsLabel);
 	}
 }
 
@@ -583,19 +583,35 @@ function loadDatePicker(idDatepicker ,languaje, offsetDatePicker){
 	);
 }
 
+
+var getBrowserInfo = function() {
+    var ua= navigator.userAgent, tem,
+    M= ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+    if(/trident/i.test(M[1])){
+        tem=  /\brv[ :]+(\d+)/g.exec(ua) || [];
+        return 'IE '+(tem[1] || '');
+    }
+    if(M[1]=== 'Chrome'){
+        tem= ua.match(/\b(OPR|Edge)\/(\d+)/);
+        if(tem!= null) return tem.slice(1).join(' ').replace('OPR', 'Opera');
+    }
+
+    return M.join(' ');
+};
+
 /*
-	Uso de parametros
-	idContainer: id del div donde se inyecta el componente
-	alertType: tipo de alerta (1:informativo, 2:correcto, 3:error, 4:alerta)
-	iconClass: Clase del icono
-	title: titulo del mensaje
-	message: Texto del mensaje
-	buttonText: texto del botÃƒÂ³n
-	buttonUrl: Url del botÃƒÂ³n
+Uso de parametros
+idContainer: id del div donde se inyecta el componente
+alertType: tipo de alerta (1:informativo, 2:correcto, 3:error, 4:alerta)
+iconClass: Clase del icono
+title: titulo del mensaje
+message: Texto del mensaje
+buttonText: texto del botÃƒÂ³n
+buttonUrl: Url del botÃƒÂ³n
 
-	Nota: En caso de no necesitar botÃƒÂ³n o tÃƒÂ­tulo dejar el parametro en null.
+
+Nota: En caso de no necesitar botÃƒÂ³n o tÃƒÂ­tulo dejar el parametro en null.
 */
-
 //Metodo que crea el contenedor de los mensajes con la informacion del mensaje
 function createAlertMessage(idContainer, alertType, iconClass, title, message, buttonText, buttonUrl) {
 	var mainContainer = document.getElementById(idContainer);
@@ -609,25 +625,25 @@ function createAlertMessage(idContainer, alertType, iconClass, title, message, b
 	//Valida si el navegador es IE
 	if (navInfo.indexOf('IE') != -1) {alertClass+="-ie9";}
 	var alertMessagetype = $BLUEJQuery("<div/>").addClass(alertClass).appendTo(alertMessage);
-	var alertMessageIconContainer = $BLUEJQuery("<div/>").addClass("bel-alertMessage-icon-container").appendTo(alertMessagetype);
-	var alertMessageIcon = $BLUEJQuery("<div/>").addClass(iconClass +" bel-alertMessage-icon").appendTo(alertMessageIconContainer);
-	// Contenido del componente (tÃƒÂ­tulo, texto)
 
+	$BLUEJQuery("<div/>").addClass(iconClass +" bel-alertMessage-icon").appendTo($BLUEJQuery("<div/>").addClass("bel-alertMessage-icon-container").appendTo(alertMessagetype));
+	// Contenido del componente (tÃƒÂ­tulo, texto)
+	var alertMessageContent;
 	if(buttonText != null && buttonText != "") {
-		var alertMessageContent = $BLUEJQuery("<div/>").addClass("bel-display-inline bel-alertMessage_content").appendTo(alertMessage);
+		 alertMessageContent = $BLUEJQuery("<div/>").addClass("bel-display-inline bel-alertMessage_content").appendTo(alertMessage);
 	}else{
-		var alertMessageContent = $BLUEJQuery("<div/>").addClass("bel-display-inline bel-alertMessage_content-full").appendTo(alertMessage);
+		alertMessageContent = $BLUEJQuery("<div/>").addClass("bel-display-inline bel-alertMessage_content-full").appendTo(alertMessage);
 	}
 
 	if(title != null && title != "") {
-		var titleSpace = $BLUEJQuery("<div/>").addClass("bel-space-bottom-xs").appendTo(alertMessageContent);
+		$BLUEJQuery("<div/>").addClass("bel-space-bottom-xs").appendTo(alertMessageContent);
 		var titleClass = "bel-typography bel-typography-h3";
 		//Valida si el navegador es IE
 		if (navInfo.indexOf('IE') != -1) {titleClass+=" bel-alertMessage-margin-ie9";}
-		var titleText = $BLUEJQuery("<h3/>").addClass(titleClass).append(title).appendTo(alertMessageContent);
+		$BLUEJQuery("<h3/>").addClass(titleClass).append(title).appendTo(alertMessageContent);
 	}else{
 			if (navInfo.indexOf('IE') != -1){
-				var titleSpace = $BLUEJQuery("<div/>").addClass("bel-space-bottom-xs").appendTo(alertMessageContent);
+				$BLUEJQuery("<div/>").addClass("bel-space-bottom-xs").appendTo(alertMessageContent);
 			}
 	}
 
@@ -636,7 +652,7 @@ function createAlertMessage(idContainer, alertType, iconClass, title, message, b
 		var messageClass = "bel-typography bel-typography-p";
 		//Valida si el navegador es IE
 		if (navInfo.indexOf('IE') != -1) {messageClass+=" bel-alertMessage-margin-ie9";}
-		var messsageText = $BLUEJQuery("<p/>").addClass(messageClass).append(message).appendTo(messsageTextContainer);
+		$BLUEJQuery("<p/>").addClass(messageClass).append(message).appendTo(messsageTextContainer);
 	}
 	// Contenido del componente (botÃƒÂ³n)
 	if(buttonText != null && buttonText != ""){
@@ -664,20 +680,7 @@ function getAlertClassByType(alertType){
 	}
 }
 
-var getBrowserInfo = function() {
-    var ua= navigator.userAgent, tem,
-    M= ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
-    if(/trident/i.test(M[1])){
-        tem=  /\brv[ :]+(\d+)/g.exec(ua) || [];
-        return 'IE '+(tem[1] || '');
-    }
-    if(M[1]=== 'Chrome'){
-        tem= ua.match(/\b(OPR|Edge)\/(\d+)/);
-        if(tem!= null) return tem.slice(1).join(' ').replace('OPR', 'Opera');
-    }
 
-    return M.join(' ');
-};
 
 $BLUEJQuery.fn.blueTable = function(properties){
 
@@ -723,10 +726,9 @@ function makeBody(element, properties){
 				$BLUEJQuery(this).addClass("bel-generic-hover");
 			}		
 			$BLUEJQuery(this).find( 'td' ).each(function () {
-				if(thFlag){
-					if(properties.tdWidth != undefined && properties.tdWidth[thCounter] != undefined ){
+				if(thFlag && properties.tdWidth != undefined && properties.tdWidth[thCounter] != undefined ){
+
 						$BLUEJQuery(this).css("width", properties.tdWidth[thCounter]+"%");
-					}
 				}
 				if(properties.tdAlign != undefined && properties.tdAlign[thCounter] != undefined ){
 					$BLUEJQuery(this).css("text-align", properties.tdAlign[thCounter]);
@@ -975,7 +977,7 @@ $BLUEJQuery.fn.comparativeMenu = function(selectedRadio){
 				});
 
 
-				var detailsOption = $BLUEJQuery('<div onclick="toggleInfoBox(' + itemsIdCount + '); " class="bel-space-top-s bel-space-bottom-m bel-position-right">' +
+				var detailsOption = $BLUEJQuery('<div onclick="toggleInfoBox(' + itemsIdCount + ',\'' + showDetailsLabel + '\',\'' + hideDetailsLabel + '\'); " class="bel-space-top-s bel-space-bottom-m bel-position-right">' +
 						'<a id="toggleArrow' + itemsIdCount + '"  class="bel-typography-link bel-icon-arrow-down-xxs">' + showDetailsLabel + '</a>' +
 		            	'</div>');
 
@@ -1186,10 +1188,14 @@ function showFeactureDot(dotCntId, duration, waitTime, intervalTime, animationCl
 
 	var ciclesCount = 0;
 	switch (animationClass) {
-		case 'dot_animation__s':  ciclesCount = 4000; break;
-		case 'dot_animation__m':  ciclesCount = 6000; break;
-		case 'dot_animation__l':  ciclesCount = 10000; break;
-		default: 0;
+		case 'dot_animation__s':  ciclesCount = 4000;
+			break;
+		case 'dot_animation__m':  ciclesCount = 6000;
+			break;
+		case 'dot_animation__l':  ciclesCount = 10000;
+			break;
+		default: 
+			break;
 	}
 
 	var clear = false;
@@ -1202,3 +1208,38 @@ function showFeactureDot(dotCntId, duration, waitTime, intervalTime, animationCl
 		if(clear){clearInterval(update);}
 	}, ciclesCount+intervalTime);
 }
+
+$BLUEJQuery.fn.createTextContiner = function (maxHeight) {
+	$BLUEJQuery(this).find('*').attr('style', 'display:block');
+	var elementId = this.attr('id');
+	$BLUEJQuery( '#positionDiV' + elementId).remove();
+	var data= this.html();
+    var elementHeight=this.height();
+	$BLUEJQuery(this).find('*').attr('style', 'display:none');
+	 $BLUEJQuery("#"+elementId).append($BLUEJQuery('<div id="positionDiV'+elementId+'"class="bel-position-relative"> </div>'));
+	    if(elementHeight> maxHeight && maxHeight > 200){
+	    	$BLUEJQuery("#positionDiV"+elementId).append($BLUEJQuery('<div id="positionShadow'+elementId+'" class="bel-scroll-shadow-after "> </div>'));
+	    	$BLUEJQuery("#positionShadow"+elementId).append($BLUEJQuery('<div id="scrollDiv'+elementId+'" class="bel-scroll-continer bel-scroll-auto bel-cursor_ns-esize">'+ data+'</div>').scroll(function() {
+	    		if($BLUEJQuery(this).scrollTop()>5){
+	    			$BLUEJQuery('#scrollDiv'+elementId).addClass('bel-scroll-shadow-before');
+				}else{
+					$BLUEJQuery('#scrollDiv'+elementId).removeClass('bel-scroll-shadow-before');
+				} 
+	    		if($BLUEJQuery(this).scrollTop()+$BLUEJQuery(this).height() > $BLUEJQuery(this).prop('scrollHeight')-5){
+    				$BLUEJQuery('#positionShadow'+elementId).removeClass('bel-scroll-shadow-after');
+				}else{
+					$BLUEJQuery('#positionShadow'+elementId).addClass('bel-scroll-shadow-after');
+				} 
+	    	}));
+    	    $BLUEJQuery("#"+elementId).find( '#scrollDiv'+elementId).attr('style', 'max-height: '+ maxHeight+'px');
+      
+    	      }
+         else{
+        	 $BLUEJQuery("#positionDiV"+elementId).append($BLUEJQuery('<div id="positionShadow'+elementId+'" class="bel-scroll-shadow-after"> </div>'));
+        	 $BLUEJQuery("#positionShadow"+elementId).append($BLUEJQuery('<div id="scrollDiv'+elementId+'" class="bel-scroll-continer">'+ data+'</div>'));
+         }
+}
+
+
+
+
