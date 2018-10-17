@@ -27,7 +27,7 @@ $BLUEJQuery('.bel-input').blur(function() {
 
 // select
 function updateBelSelect(id, value, optionText, element) {
-	document.getElementById(id + "Label").innerHTML = optionText;
+	document.getElementById(id + "Label").innerHTML = '<p class="bel-truncate-text bel-display-inline bel-space-reset" style="max-width: calc(100% - 25px)">' +optionText+'</p>';
 	$BLUEJQuery("#" + id + "Label").addClass("bel-select-filled");
 	$BLUEJQuery("#" + id + "List").removeClass("bel-display-list");
 	$BLUEJQuery("#" + id + "Label").removeClass('bel-select-open-icon');
@@ -466,7 +466,7 @@ $BLUEJQuery.fn.blueSelect = function(size){
 			$BLUEJQuery(selectList).append($BLUEJQuery('<li class="bel-option" onclick="updateBelSelect(\''+elementId+'\', \''+$BLUEJQuery(this).attr('value')+'\', this.innerHTML, this);">'+$BLUEJQuery(this).text()+'</li>'));
 		}
 		if($BLUEJQuery(this).prop('selected')){
-			selectedLabel = $BLUEJQuery(this).text();
+			selectedLabel= '<p class="bel-truncate-text bel-display-inline bel-space-reset" style="max-width: calc(100% - 25px);">' +$BLUEJQuery(this).text()+'</p>';
 		}
 	});
 	this.find( 'optgroup' ).each(function () {
@@ -476,7 +476,7 @@ $BLUEJQuery.fn.blueSelect = function(size){
 		$BLUEJQuery(this).find( 'option' ).each(function () {
 			$BLUEJQuery(selectList).append($BLUEJQuery('<li class="bel-option" onclick="updateBelSelect(\''+elementId+'\', \''+$BLUEJQuery(this).attr('value')+'\', this.innerHTML, this);">'+$BLUEJQuery(this).text()+'</li>'));
 			if($BLUEJQuery(this).prop('selected')){
-				selectedLabel = $BLUEJQuery(this).text();
+				selectedLabel = '<p class="bel-truncate-text bel-display-inline bel-space-reset" style="max-width: calc(100% - 25px);">' +$BLUEJQuery(this).text()+'</p>';
 			}
 		});
 
