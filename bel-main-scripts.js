@@ -251,7 +251,7 @@ $BLUEJQuery.fn.belCreateWizardProcessStep = function(steps, messagesStep, select
 		animationProgressBar(steps, selectedStep);
 
 	} else {
-		alert("NÃƒÂºmero de pasos esta por encima de la capacidad de Wizard");
+		alert("Número de pasos esta por encima de la capacidad de Wizard");
 	}
 }
 
@@ -352,16 +352,20 @@ $BLUEJQuery.fn.delayKeyup = function(callback, ms){
  	belValidateEmail('belInputEmailId', 'belInpEmailSpan');
  }, 500);
 
+
+ var emailAddCount = 0;
  function belAddNewEmail(inputId, mainContId, spanId, maxEmails){
  	var belMoreEmailsContId = document.getElementById(mainContId);
  	var divs = belMoreEmailsContId.querySelectorAll('div');
  	var cantidad = divs.length;
  	var inputTextAux = $BLUEJQuery("#"+inputId).val();
+
  	if (maxEmails>cantidad && inputTextAux!="") {
  		if ($BLUEJQuery('#'+spanId).hasClass('bel-validation-icon-success-s')) {
  			$BLUEJQuery('#'+inputId).removeClass('bel-input-error');
  			var contAux = document.createElement("div");
  			contAux.className = "bel-space-top-xs";
+ 			contAux.id = "idToRemove"+emailAddCount;
 
  			var inputAux = document.createElement("input");
  			inputAux.className = "bel-input--icon bel-input--icon-m bel-input-default bel-input-non-editable";
@@ -373,15 +377,19 @@ $BLUEJQuery.fn.delayKeyup = function(callback, ms){
  			var spanAux = document.createElement("span");
  			spanAux.className = "bel-error-validation bel-error-validation-item";
  			spanAux.setAttribute('onclick','belDeleteEmailCont(this)');
+ 			spanAux.id = "idToRemove"+emailAddCount;
 
  			contAux.appendChild(inputAux);
  			contAux.appendChild(spanAux);
  			belMoreEmailsContId.appendChild(contAux);
+
+			emailAddCount++;
+
  		}else{
  			$BLUEJQuery('#'+inputId).addClass('bel-input-error');
  			$BLUEJQuery('#'+spanId).addClass('el-typography-main bel-typography-label-error');
  			$BLUEJQuery('#'+spanId).removeClass('bel-hide-element');
- 			$BLUEJQuery('#'+spanId).text("Formato no vÃƒÂ¡lido");
+ 			$BLUEJQuery('#'+spanId).text("Formato no válido");
  		}
  	}
  	if (cantidad==maxEmails && inputTextAux!="") {
@@ -389,7 +397,7 @@ $BLUEJQuery.fn.delayKeyup = function(callback, ms){
  		$BLUEJQuery('#'+inputId).addClass('bel-input-error');
  		$BLUEJQuery("#"+inputId).val("");
  		$BLUEJQuery('#'+spanId).addClass('el-typography-main bel-typography-label-error');
- 		$BLUEJQuery('#'+spanId).text("No se pueden agregar mÃƒÂ¡s correos");
+ 		$BLUEJQuery('#'+spanId).text("No se pueden agregar más correos");
  	}
  }
 
@@ -406,14 +414,16 @@ $BLUEJQuery.fn.delayKeyup = function(callback, ms){
  }
 
  function belDeleteEmailCont(element){
+
+	$BLUEJQuery(document.getElementById(element.id)).remove();
  	$BLUEJQuery( element ).parent(".bel-col-7").remove();
- 	$BLUEJQuery( element ).parent(".bel-space-top-xs").remove();
+ 	$BLUEJQuery( element ).parent(".bel-space-top-xs").remove(); 	
  }
 
  function belValidateEmail(inputId, spanId) {
  	var email = $BLUEJQuery('#'+inputId).val();
  	if (email!="") {
- 		var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$BLUEJQuery/;
+ 		var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
  		$BLUEJQuery("#"+spanId).removeClass('bel-hide-element');
  		$BLUEJQuery("#"+spanId).text('');
  		if (re.test(String(email).toLowerCase())) {
@@ -1213,8 +1223,14 @@ $BLUEJQuery.fn.createTextContiner = function (maxHeight) {
 	$BLUEJQuery(this).find('*').attr('style', 'display:block');
 	var elementId = this.attr('id');
 	$BLUEJQuery( '#positionDiV' + elementId).remove();
+
+	$BLUEJQuery(this).find('*').removeAttr('style');
+
 	var data= this.html();
     var elementHeight=this.height();
+
+
+
 	$BLUEJQuery(this).find('*').attr('style', 'display:none');
 	 $BLUEJQuery("#"+elementId).append($BLUEJQuery('<div id="positionDiV'+elementId+'"class="bel-position-relative"> </div>'));
 	    if(elementHeight> maxHeight && maxHeight > 200){
