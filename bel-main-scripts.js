@@ -389,7 +389,7 @@ $BLUEJQuery.fn.delayKeyup = function(callback, ms){
  			$BLUEJQuery('#'+inputId).addClass('bel-input-error');
  			$BLUEJQuery('#'+spanId).addClass('el-typography-main bel-typography-label-error');
  			$BLUEJQuery('#'+spanId).removeClass('bel-hide-element');
- 			$BLUEJQuery('#'+spanId).text("Formato no válido");
+ 			$BLUEJQuery('#'+spanId).text("Por favor digite un correo válido");
  		}
  	}
  	if (cantidad==maxEmails && inputTextAux!="") {
@@ -417,7 +417,7 @@ $BLUEJQuery.fn.delayKeyup = function(callback, ms){
 
 	$BLUEJQuery(document.getElementById(element.id)).remove();
  	$BLUEJQuery( element ).parent(".bel-col-7").remove();
- 	$BLUEJQuery( element ).parent(".bel-space-top-xs").remove(); 	
+ 	$BLUEJQuery( element ).parent(".bel-space-top-xs").remove();
  }
 
  function belValidateEmail(inputId, spanId) {
@@ -454,17 +454,17 @@ $BLUEJQuery.fn.blueSelect = function(size){
 	var elementId = this.attr('id');
 	this.removeClass();
 	this.removeAttr( 'style' );
-	
+
 	$BLUEJQuery( "#"+elementId+"Div").remove();
 	var selectDiv;
 	var selectedLabel = null;
-	
+
 	if(this.prop('disabled')){
 	    selectDiv = $BLUEJQuery("<div id='"+ elementId +"Div' class='bel-click-disable'></div>");
 	}else{
 		selectDiv = $BLUEJQuery("<div id='"+ elementId +"Div'></div>");
 	}
-	
+
 	var selectList = $BLUEJQuery('<ul id="'+elementId+'List" class="bel-option-list bel-option-list-'+size+'"></ul>')
 
 	$BLUEJQuery(this).children( 'option' ).each(function () {
@@ -480,9 +480,9 @@ $BLUEJQuery.fn.blueSelect = function(size){
 		}
 	});
 	this.find( 'optgroup' ).each(function () {
-		
+
 		$BLUEJQuery(selectList).append($BLUEJQuery('<li class="bel-option-disabled">'+$BLUEJQuery(this).attr("label")+'</li>'));
-  
+
 		$BLUEJQuery(this).find( 'option' ).each(function () {
 			$BLUEJQuery(selectList).append($BLUEJQuery('<li class="bel-option" onclick="updateBelSelect(\''+elementId+'\', \''+$BLUEJQuery(this).attr('value')+'\', this.innerHTML, this);">'+$BLUEJQuery(this).text()+'</li>'));
 			if($BLUEJQuery(this).prop('selected')){
@@ -502,8 +502,8 @@ $BLUEJQuery.fn.blueSelect = function(size){
 	}else{
 		$BLUEJQuery(selectDiv).append($BLUEJQuery('<label id="'+elementId+'Label" class="bel-select bel-select-'+size+' bel-select-default bel-select-close-icon" onclick="displayBelOption(\''+elementId+'List\', \''+elementId+'Label\');">'+selectedLabel+'</label>'));
 		}
-	
-	
+
+
 	$BLUEJQuery(selectDiv).append($BLUEJQuery(selectList));
 
 	this.before( selectDiv);
@@ -528,7 +528,7 @@ function toggleInfoBox(elementID, showDetailsLabel, hideDetailsLabel){
 	if ($BLUEJQuery("#toggleArrow"+elementID).hasClass('bel-icon-arrow-down-xxs')) {
 		$BLUEJQuery("#toggleArrow"+elementID).removeClass('bel-icon-arrow-down-xxs');
 		$BLUEJQuery("#toggleArrow"+elementID ).addClass('bel-icon-arrow-up-xxs');
-		
+
 		$BLUEJQuery("#toggleArrow"+elementID ).text(hideDetailsLabel);
 	}else{
 		$BLUEJQuery("#toggleArrow"+elementID).addClass('bel-icon-arrow-down-xxs');
@@ -646,19 +646,15 @@ function createAlertMessage(idContainer, alertType, iconClass, title, message, b
 	}
 
 	if(title != null && title != "") {
-		$BLUEJQuery("<div/>").addClass("bel-space-bottom-xs").appendTo(alertMessageContent);
 		var titleClass = "bel-typography bel-typography-h3";
 		//Valida si el navegador es IE
 		if (navInfo.indexOf('IE') != -1) {titleClass+=" bel-alertMessage-margin-ie9";}
-		$BLUEJQuery("<h3/>").addClass(titleClass).append(title).appendTo(alertMessageContent);
-	}else{
-			if (navInfo.indexOf('IE') != -1){
-				$BLUEJQuery("<div/>").addClass("bel-space-bottom-xs").appendTo(alertMessageContent);
-			}
+		var alertTitleContent = $BLUEJQuery("<div/>").addClass("messageTitleDisplay").appendTo(alertMessageContent);
+		$BLUEJQuery("<h3/>").addClass(titleClass).append(title).appendTo(alertTitleContent);
 	}
 
 	if(message != null && message != "") {
-		var messsageTextContainer = $BLUEJQuery("<div/>").appendTo(alertMessageContent);
+		var messsageTextContainer = $BLUEJQuery("<div/>").addClass('bel-alertMessage-textCnt').appendTo(alertMessageContent);
 		var messageClass = "bel-typography bel-typography-p";
 		//Valida si el navegador es IE
 		if (navInfo.indexOf('IE') != -1) {messageClass+=" bel-alertMessage-margin-ie9";}
@@ -734,7 +730,7 @@ function makeBody(element, properties){
 			$BLUEJQuery(this).addClass("bel-table_row bel-table_border-column");
 			if(properties.rowHover ){
 				$BLUEJQuery(this).addClass("bel-generic-hover");
-			}		
+			}
 			$BLUEJQuery(this).find( 'td' ).each(function () {
 				if(thFlag && properties.tdWidth != undefined && properties.tdWidth[thCounter] != undefined ){
 
@@ -816,8 +812,8 @@ function makeHeader(element, properties){
 				thCounter++;
 			});
 		});
-		
-		
+
+
 	});
 }
 function makeCaption(element, properties){
@@ -1077,7 +1073,7 @@ function seeLessItems(idMenu, idSeemoreLink, maxItemsToShow, hideSpeedCustom) {
     if (hideSpeedCustom!=null) {
     hideSpeed=hideSpeedCustom;
     }
-    
+
     //muestra los destacados siempre que no sobrepase el limite: maxItemsToShow
     $BLUEJQuery("#" + idMenu).find('li').each(function () {
 	    var found = $BLUEJQuery(this).find(".isHighlightedFlag");
@@ -1087,7 +1083,7 @@ function seeLessItems(idMenu, idSeemoreLink, maxItemsToShow, hideSpeedCustom) {
 	    	liCounter++;
 	    }
     });
-    
+
     //muestra los no destacados siempre que no sobrepase el limite: maxItemsToShow
    $BLUEJQuery("#" + idMenu).find('li').each(function () {
     	var found = $BLUEJQuery(this).find(".isHighlightedFlag");
@@ -1168,6 +1164,31 @@ function toggleMenu(menuId, divId){
     }
 }
 
+
+/**
+ * Función que se encarga de ocultar o mostrar el contenido del cintillo
+ * @param directMessageId : id del cintillo
+ * @param idMenu : id del contenido que se oculta/muestra
+  * @param arrowIconId : id del icono de flecha
+ */
+function toggleDirectMessage(directMessageId, menuId, arrowIconId){
+
+	if ($BLUEJQuery("#"  + directMessageId).hasClass('directMessage-expanded')) {
+		$BLUEJQuery("#"  + directMessageId).removeClass('directMessage-expanded');
+		$BLUEJQuery("#"  + menuId).slideUp(300);
+	}else{
+		$BLUEJQuery("#"  + directMessageId).addClass('directMessage-expanded');
+		$BLUEJQuery("#"  + menuId).slideDown(300);
+	}
+
+	if ($BLUEJQuery("#"  + arrowIconId).hasClass('bel-directMessage-arrowIcon-rotate')) {
+		$BLUEJQuery("#"  + arrowIconId).removeClass('bel-directMessage-arrowIcon-rotate');
+	}else{
+		$BLUEJQuery("#"  + arrowIconId).addClass('bel-directMessage-arrowIcon-rotate');
+	}
+
+}
+
 /**
  * Función que se encarga de mostrar la información del componente destacado por medio de un onclick
  * @param dotCntId : id del elemento
@@ -1204,7 +1225,7 @@ function showFeactureDot(dotCntId, duration, waitTime, intervalTime, animationCl
 			break;
 		case 'dot_animation__l':  ciclesCount = 10000;
 			break;
-		default: 
+		default:
 			break;
 	}
 
@@ -1240,22 +1261,18 @@ $BLUEJQuery.fn.createTextContiner = function (maxHeight) {
 	    			$BLUEJQuery('#scrollDiv'+elementId).addClass('bel-scroll-shadow-before');
 				}else{
 					$BLUEJQuery('#scrollDiv'+elementId).removeClass('bel-scroll-shadow-before');
-				} 
+				}
 	    		if($BLUEJQuery(this).scrollTop()+$BLUEJQuery(this).height() > $BLUEJQuery(this).prop('scrollHeight')-5){
     				$BLUEJQuery('#positionShadow'+elementId).removeClass('bel-scroll-shadow-after');
 				}else{
 					$BLUEJQuery('#positionShadow'+elementId).addClass('bel-scroll-shadow-after');
-				} 
+				}
 	    	}));
     	    $BLUEJQuery("#"+elementId).find( '#scrollDiv'+elementId).attr('style', 'max-height: '+ maxHeight+'px');
-      
+
     	      }
          else{
         	 $BLUEJQuery("#positionDiV"+elementId).append($BLUEJQuery('<div id="positionShadow'+elementId+'" class="bel-scroll-shadow-after"> </div>'));
         	 $BLUEJQuery("#positionShadow"+elementId).append($BLUEJQuery('<div id="scrollDiv'+elementId+'" class="bel-scroll-continer">'+ data+'</div>'));
          }
 }
-
-
-
-
