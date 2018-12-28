@@ -35,7 +35,7 @@ function updateBelSelect(id, value, optionText, element) {
 	var allOptions = $BLUEJQuery("#" + id + "List").children('li');
 	allOptions.removeClass('selected');
 	$BLUEJQuery(element).addClass('selected');
-	$BLUEJQuery('#'+id+' option:selected').removeAttr("selected");
+	$BLUEJQuery('#'+id+' option').removeAttr("selected");
 	$BLUEJQuery('#'+id+' option[value="'+value+'"]').attr('selected', 'selected');
 	$BLUEJQuery("#" + id).trigger("change");
 }
@@ -246,25 +246,23 @@ $BLUEJQuery.fn.belCreateWizardProcessStep = function(steps, messagesStep, select
 			}
 			processList.append(step);
 		}
-		;
+
 		this.append(processList);
 		animationProgressBar(steps, selectedStep);
 
-	} else {
-		alert("Número de pasos esta por encima de la capacidad de Wizard");
 	}
+	/*IMPORTANTE: El numero de pasos no debe estar por encima de la capacidad de Wizard*/
 }
 
 function animationProgressBar(steps, selectedStep){
 
-	if(selectedStep > steps){
-			alert("El paso actÃƒÂºal elegido es mayor a la cantidad de pasos disponible");
-	}else {
+	if(selectedStep <= steps){
 		var barEfect = document.getElementsByClassName("bel-wizard-step-active")[0];
 		var lblEfect = document.getElementsByClassName("bel-wizard-label-active")[selectedStep-1];
 		barEfect.className += " bel-wizard-step-actual";
 		lblEfect.className += " bel-wizard-label-actual";
 	}
+	/*IMPORTANTE: El numero de pasos no debe estar por encima de la capacidad de Wizard*/
 }
 
 /**
@@ -639,13 +637,13 @@ function createAlertMessage(idContainer, alertType, iconClass, title, message, b
 	$BLUEJQuery("<div/>").addClass(iconClass +" bel-alertMessage-icon").appendTo($BLUEJQuery("<div/>").addClass("bel-alertMessage-icon-container").appendTo(alertMessagetype));
 	// Contenido del componente (tÃƒÂ­tulo, texto)
 	var alertMessageContent;
-	if(buttonText != null && buttonText != "") {
+	if(isNotNullOrEmpty(buttonText)) {
 		 alertMessageContent = $BLUEJQuery("<div/>").addClass("bel-display-inline bel-alertMessage_content").appendTo(alertMessage);
 	}else{
 		alertMessageContent = $BLUEJQuery("<div/>").addClass("bel-display-inline bel-alertMessage_content-full").appendTo(alertMessage);
 	}
 
-	if(title != null && title != "") {
+	if(isNotNullOrEmpty(title)) {
 		var titleClass = "bel-typography bel-typography-h3";
 		//Valida si el navegador es IE
 		if (navInfo.indexOf('IE') != -1) {titleClass+=" bel-alertMessage-margin-ie9";}
@@ -653,7 +651,7 @@ function createAlertMessage(idContainer, alertType, iconClass, title, message, b
 		$BLUEJQuery("<h3/>").addClass(titleClass).append(title).appendTo(alertTitleContent);
 	}
 
-	if(message != null && message != "") {
+	if(isNotNullOrEmpty(message)) {
 		var messsageTextContainer = $BLUEJQuery("<div/>").addClass('bel-alertMessage-textCnt').appendTo(alertMessageContent);
 		var messageClass = "bel-typography bel-typography-p";
 		//Valida si el navegador es IE
@@ -661,7 +659,7 @@ function createAlertMessage(idContainer, alertType, iconClass, title, message, b
 		$BLUEJQuery("<p/>").addClass(messageClass).append(message).appendTo(messsageTextContainer);
 	}
 	// Contenido del componente (botÃƒÂ³n)
-	if(buttonText != null && buttonText != ""){
+	if(isNotNullOrEmpty(buttonText)){
 		var alertMessageButton = $BLUEJQuery("<div/>").addClass("bel-alertMessage_button bel-display-inline").appendTo(alertMessage);
 		var alertMessageButtonContainer = $BLUEJQuery("<div/>").addClass("bel-display-inline").appendTo(alertMessageButton);
 		var button = $BLUEJQuery("<button/>").addClass("bel-btn bel-btn-secondary bel-btn-secondary-active").append(buttonText).appendTo(alertMessageButtonContainer);
@@ -670,6 +668,20 @@ function createAlertMessage(idContainer, alertType, iconClass, title, message, b
 	row.appendTo(mainContainer);
 }
 
+/*
+* Comprueba que el dato no este vacio ni sea nulo
+*/
+function isNotNullOrEmpty(data){
+	if(data != null && data != ""){
+		return true;
+	}
+	return false;
+}
+
+
+/*
+* Obtiene la clase correspondientes segun el tipo de alerta
+*/
 function getAlertClassByType(alertType){
 	switch (alertType) {
 		case 1: return "bel-alertMessage_grayIcon";
@@ -935,7 +947,6 @@ $BLUEJQuery.fn.comparativeMenu = function(selectedRadio){
 			var comparativeMenuItem = $BLUEJQuery('<div class="'+comparativeMenuClass+'"></div>');
 			var inputRadio;
 			var inputRadioLabel;
-			var checked;
 			$BLUEJQuery(this).children( 'input' ).each(function () {
 				inputRadio = $BLUEJQuery(this);
 			});
@@ -1281,7 +1292,8 @@ $BLUEJQuery.fn.createTextContiner = function (maxHeight) {
 /* Funciones para la barra de progreso ------------------------------- Inicio */
 
 // the semi-colon before function invocation is a safety net against concatenated scripts and/or other plugins which may not be closed properly.
-;(function($BLUEJQuery, window, document, undefined) {
+
+;(function() {
 
   "use strict";
 
@@ -1298,7 +1310,7 @@ $BLUEJQuery.fn.createTextContiner = function (maxHeight) {
     loadingPercentClass = 'bel-loading__percent bel-option-horizontal bel-space-left-xs bel-position-center',
     loadingTxtClass = 'bel-loading__status bel-option-horizontal bel-space-left-s',
     defaults = {
-      color: 'blue',
+      color: 'e',
       percent: true,
       loadingText: true,
       txt: '',
@@ -1307,8 +1319,9 @@ $BLUEJQuery.fn.createTextContiner = function (maxHeight) {
       max: 100,
       minBarWidthPercent: 100,
       animation: true,
-      animationTime: 50,
-      intervalRunning: false
+      animationTime: 100,
+      intervalRunning: false,
+			step: 1
     };
 
   // The actual plugin constructor
@@ -1360,19 +1373,96 @@ $BLUEJQuery.fn.createTextContiner = function (maxHeight) {
       this.unbind();
       this.$element = null;
     },
+
+		/**
+		 * Funcion que valida el valor minimo de la barra de progreso
+		 */
+		_validateLoadingBarMinValue: function(min){
+			if (this.settings.min && this.settings.min >= 0) {
+				min = this._setLoadingBarMinValue(min);
+			}
+			return min;
+		},
+
+		/**
+		 * Funcion que establece el valor minimo de la barra de progreso
+		 */
+	_setLoadingBarMinValue: function(min){
+		if (this.settings.max && this.settings.max <= 100 && this.settings.min <= this.settings.max) {
+			min = settings.min;
+		}
+		return min;
+	},
+
+		/**
+		 * Funcion que valida el valor maximo de la barra de progreso
+		 */
+		_validateLoadingBarMaxValue: function (max){
+			if (this.settings.max && this.settings.max <= 100) {
+				max = this._setLoadingBarMaxValue(max);
+			}
+			return max;
+		},
+
+		/**
+		 * Funcion que establece el valor maximo de la barra de progreso
+		 */
+		_setLoadingBarMaxValue: function(max){
+			if (this.settings.min && this.settings.min >= 0 && this.settings.max >= this.settings.min) {
+				max = this.settings.max;
+			}
+			return max;
+		},
+
+		/**
+		 * Funcion que se encarga de editar la informacion de animacion de la barra de progreso
+		 */
+		_setLoadingAnimation: function (variable){
+			if(this.settings.animation){
+				var curr = this.settings.value;
+				this.settings.value = variable;
+				this.settings.intervalRunning = true;
+				var update = setInterval($BLUEJQuery.proxy(function () {
+					curr = this._startAnimation(curr);
+					if(curr == 'break'){
+						clearInterval(update);
+						this.settings.intervalRunning = false;
+						}
+					}, this),
+					this.settings.animationTime);
+			} else {
+				this.settings.value = variable;
+				this.$element.children('.bel-loading__bar').children('progress').val(this.settings.value);
+				if (this.settings.percent) {
+					this.$element.children('.bel-loading__percent').children('p').text(this.settings.value + '%');
+				}
+			}
+		},
+
+		/**
+		 * Funcion que se encarga de editar la informacion de texto y porcentaje de la barra de progreso
+		 */
+		_setLoadingTextAndPorcent: function (){
+			if(this.settings.loadingText){
+				if(this.settings.percent){
+						$BLUEJQuery('<div class="' + loadingTxtClass + '"><p class="bel-typography bel-typography-p">'+this.settings.txt + '</p></div>').insertAfter(this.$element.children('.bel-loading__percent'));
+				} else{
+						$BLUEJQuery('<div class="' + loadingTxtClass + '"><p class="bel-typography bel-typography-p">'+this.settings.txt + '</p></div>').insertAfter(this.$element.children('.bel-loading__bar'));
+				}
+			} else {
+				this.$element.children('.bel-loading__status').remove();
+			}
+		},
+
     _makeLoadingMarkup: function() {
 
       var loadingBarClass = 'bel-loading__bar bel-loading__bar--' + this.settings.color + ' bel-option-horizontal';
       var min = 0;
       var max = 100;
-      if (this.settings.min && this.settings.min >= 0 && this.settings.max && this.settings.max <= 100 && this.settings.min <= this.settings.max) {
-          min = this.settings.min;
-      }
-      
-      if (this.settings.max && this.settings.max <= 100 && this.settings.min && this.settings.min >= 0 && this.settings.max >= this.settings.min) {
-          max = this.settings.max;
-      }
-      
+
+			min = this._validateLoadingBarMinValue(min);
+			max = this._validateLoadingBarMaxValue(max);
+
       if (this.settings.value) {
         if (this.settings.value < min) {
           this.settings.value = min;
@@ -1394,16 +1484,17 @@ $BLUEJQuery.fn.createTextContiner = function (maxHeight) {
 
       this.$element.addClass(loadingClass);
     },
+
     _setMarkupWidths: function(){
     		var loadingWidth = this.$element.outerWidth(true);
         var percentWidth = 0;
         var txtWidth = 0;
         if(this.settings.percent){
-          percentWidth = this.$element.children('.bel-loading__percent').outerWidth(true);
+          percentWidth = this.$element.children('.bel-loading__percent').outerWidth(true)+5;
         }
 
         if(this.settings.loadingText){
-          txtWidth = this.$element.children('.bel-loading__status').outerWidth(true)+6;
+          txtWidth = this.$element.children('.bel-loading__status').outerWidth(true) + 10;
         }
         var loadingWidthPercent = parseInt((loadingWidth /100) * this.settings.minBarWidthPercent);
         if(loadingWidthPercent > (loadingWidth - percentWidth - txtWidth) ){
@@ -1416,6 +1507,7 @@ $BLUEJQuery.fn.createTextContiner = function (maxHeight) {
 
         this.$element.children('.bel-loading__bar').children('progress').css('width', loadingWidthPercent + 'px')
     },
+
     _setInitialValues: function() {
       if (this.settings.value) {
         this.$element.children('.bel-loading__bar').children('progress').val(this.settings.value);
@@ -1432,18 +1524,25 @@ $BLUEJQuery.fn.createTextContiner = function (maxHeight) {
         this.$element.children('.bel-loading__status').children('h4').text(this.settings.txt);
       }
     },
+
     _startAnimation: function (variable){
       if (variable == this.settings.value) {
         variable = 'break';
       } else {
         if(variable > this.settings.value){
-          variable--;
+          variable -= this.settings.step;
+					if(variable < this.settings.value){
+						variable = this.settings.value;
+					}
           this.$element.children('.bel-loading__bar').children('progress').val(variable);
           if (this.settings.percent) {
             this.$element.children('.bel-loading__percent').children('p').text(variable + '%');
           }
         } else {
-          variable++;
+          variable += this.settings.step;
+					if(variable > this.settings.value){
+						variable = this.settings.value;
+					}
           this.$element.children('.bel-loading__bar').children('progress').val(variable);
           if (this.settings.percent) {
             this.$element.children('.bel-loading__percent').children('p').text(variable + '%');
@@ -1452,30 +1551,22 @@ $BLUEJQuery.fn.createTextContiner = function (maxHeight) {
       }
       return variable;
     },
+
+		step: function(variable){
+			if (variable != undefined && !isNaN(parseInt(variable))) {
+				if(variable > 0){
+					this.settings.step = variable;
+				}
+			} else {
+				return this.settings.step;
+			}
+		},
+
     value: function(variable) {
       if(!this.settings.intervalRunning){
-    	var a = NaN; 
-        if (variable != undefined && !parseInt(variable).isNaN(a)) {
+        if (variable != undefined && !isNaN(parseInt(variable))) {
           if (this.settings.min <= variable && this.settings.max >= variable) {
-            if(this.settings.animation){
-              var curr = this.settings.value;
-              this.settings.value = variable;
-              this.settings.intervalRunning = true;
-              var update = setInterval($BLUEJQuery.proxy(function () {
-            	  curr = this._startAnimation(curr);
-            	  if(curr == 'break'){
-            		  clearInterval(update);
-            		  this.settings.intervalRunning = false;
-            	  	}
-            	  },
-            	  this), this.settings.animationTime);
-            } else {
-              this.settings.value = variable;
-              this.$element.children('.bel-loading__bar').children('progress').val(this.settings.value);
-              if (this.settings.percent) {
-                this.$element.children('.bel-loading__percent').children('p').text(this.settings.value + '%');
-              }
-            }
+						this._setLoadingAnimation(variable);
           }
         } else {
           return this.settings.value;
@@ -1484,6 +1575,7 @@ $BLUEJQuery.fn.createTextContiner = function (maxHeight) {
         setTimeout($BLUEJQuery.proxy(function(){this.value(variable)}, this), this.settings.animationTime);
       }
     },
+
     color: function(variable) {
       if (variable !== undefined) {
         this.$element.children('.bel-loading__bar').removeClass('bel-loading__bar--' + this.settings.color);
@@ -1493,6 +1585,7 @@ $BLUEJQuery.fn.createTextContiner = function (maxHeight) {
         return this.settings.color;
       }
     },
+
     percent: function(variable) {
       if(typeof(variable) === "boolean"){
         if(this.settings.percent !== variable){
@@ -1508,25 +1601,19 @@ $BLUEJQuery.fn.createTextContiner = function (maxHeight) {
         return this.settings.percent;
       }
     },
+
     loadingText: function(variable) {
       if(typeof(variable) === "boolean"){
         if(this.settings.loadingText !== variable){
           this.settings.loadingText = variable
-          if(this.settings.loadingText){
-            if(this.settings.percent){
-                $BLUEJQuery('<div class="' + loadingTxtClass + '"><p class="bel-typography bel-typography-p">'+this.settings.txt + '</p></div>').insertAfter(this.$element.children('.bel-loading__percent'));
-            } else{
-                $BLUEJQuery('<div class="' + loadingTxtClass + '"><p class="bel-typography bel-typography-p">'+this.settings.txt + '</p></div>').insertAfter(this.$element.children('.bel-loading__bar'));
-            }
-          } else {
-            this.$element.children('.bel-loading__status').remove();
-          }
+					this._setLoadingTextAndPorcent();
           this._setMarkupWidths();
         }
       } else {
         return this.settings.loadingText;
       }
     },
+
     txt: function(variable) {
       if(!this.settings.intervalRunning){
         if(typeof(variable) === "string"){
@@ -1541,6 +1628,7 @@ $BLUEJQuery.fn.createTextContiner = function (maxHeight) {
         setTimeout($BLUEJQuery.proxy(function(){this.txt(variable)}, this), this.settings.animationTime);
       }
     },
+
     animation: function (variable) {
       if(!this.settings.intervalRunning){
         if(typeof(variable) === "boolean"){
@@ -1552,10 +1640,10 @@ $BLUEJQuery.fn.createTextContiner = function (maxHeight) {
         setTimeout($BLUEJQuery.proxy(function(){this.animation(variable)}, this), this.settings.animationTime);
       }
     },
+
     animationTime: function (variable) {
       if(!this.settings.intervalRunning){
-      	var a = NaN; 
-        if (variable != undefined && !parseInt(variable).isNaN(a)) {
+          if (variable != undefined && !isNaN(parseInt(variable))) {
           this.settings.animationTime = variable;
         } else {
           return this.settings.animationTime;
@@ -1565,6 +1653,7 @@ $BLUEJQuery.fn.createTextContiner = function (maxHeight) {
       }
     }
   });
+
 
   // A really lightweight plugin wrapper around the constructor,
   // preventing against multiple instantiations
@@ -1604,6 +1693,336 @@ $BLUEJQuery.fn.createTextContiner = function (maxHeight) {
     }
   };
 
-})(jQuery, window, document);
+})();
 
 /* Funciones para la barra de progreso ---------------------------------- FIN */
+
+
+
+/* Funciones para el drag and drop -------------------------------- Inicio */
+//the semi-colon before function invocation is a safety net against concatenated
+//scripts and/or other plugins which may not be closed properly.
+;(function() {
+
+"use strict";
+
+// undefined is used here as the undefined global variable in ECMAScript 3 is
+// mutable (ie. it can be changed by someone else). undefined isn't really being
+// passed in so we can ensure the value of it is truly undefined. In ES5, undefined
+// can no longer be modified.
+
+// window and document are passed through as local variables rather than global
+// as this (slightly) quickens the resolution process and can be more efficiently
+// minified (especially when both are regularly referenced in your plugin).
+
+// Create the defaults once
+var pluginName = "blueDragDrop",
+ dragdropClass = 'bel-drag_drop',
+ dragdropContainerClass = 'bel-drag_drop__dropcontainer',
+ dragdropLabelClass = 'bel-drag_drop__label',
+ dragdropTableClass = 'bel-drag_drop__table',
+
+ defaults = {
+   fileAccept: ".txt|.doc|image.*",
+   multiple: true,
+   maxSize: '2.5 Mb',
+   dashColor: 'blue',
+   inputName: 'fileInput1',
+   tableId: 'dropTable1',
+   tableProperties: {
+     toggleable: false,
+     extensible: true,
+     rowHover: true,
+     bigIcon: true,
+     maxItemsCollapsed: 5,
+     extensibleLabel: "Ver m&aacute;s",
+     collapseLabel: "Ver menos",
+     tdWidth: [30, 25, 45],
+     thAlign: ["left", "left", "left"],
+     tdAlign: ["left", "left", "left"]
+   },
+   loadingBar: {
+     color: 'green',
+     percent: true,
+     loadingText: true,
+     txt: 'Cargando...',
+     value: 0,
+     min: 0,
+     max: 100,
+     minBarWidthPercent: 100,
+     animation: true,
+     animationTime: 100
+   },
+   _tableInitialization: false,
+   _fileList: [],
+   _fileId: 0
+ };
+
+// The actual plugin constructor
+function DragDrop(element, options) {
+ this.element = element;
+ this.$element = $BLUEJQuery(element);
+
+ // jQuery has an extend method which merges the contents of two or
+ // more objects, storing the result in the first object. The first object
+ // is generally empty as we don't want to alter the default options for
+ // future instances of the plugin
+ this.settings = $BLUEJQuery.extend({}, defaults, options);
+ this._defaults = defaults;
+ this._name = pluginName;
+ this.init();
+}
+
+// Avoid Plugin.prototype conflicts
+$BLUEJQuery.extend(DragDrop.prototype, {
+ init: function() {
+
+   // You already have access to the DOM element and the options via the instance, e.g. this.element and this.settings
+   this.$element = $BLUEJQuery(this.element).addClass(this._name);
+   this._makeDragDropMarkup();
+
+   // listen for destroyed, call teardown
+   this.$element.bind("destroyed", $BLUEJQuery.proxy(this.teardown, this));
+
+   this.$element.children('.' + dragdropContainerClass).find('#' + this.settings.inputName).bind("dragenter mouseenter", $BLUEJQuery.proxy(this._dragenter, this));
+   this.$element.children('.' + dragdropContainerClass).find('#' + this.settings.inputName).bind("dragleave dragend mouseleave drop", $BLUEJQuery.proxy(this._dragleave, this));
+   this.$element.children('.' + dragdropContainerClass).find('#' + this.settings.inputName).bind("change", $BLUEJQuery.proxy(this._drop, this));
+
+   // call bind to attach events
+   this.bind();
+
+ },
+ bind: function() {},
+ unbind: function() {},
+ destroy: function() {
+   // Remove elements, unregister listerners, etc
+   this.$element.unbind("destroyed", this.teardown);
+   this._teardown();
+ },
+ _teardown: function() {
+   this.$element.removeData();
+   $BLUEJQuery.removeData(this.$element[0], this._name);
+   this.$element.removeClass(this._name);
+   this.$element.removeClass(dragdropClass);
+   this.$element.html('');
+   this.unbind();
+   this.$element = null;
+ },
+ _hover: function() {},
+ _dragenter: function() {
+	 var $belDastContainer= this.$element.children('.bel-drag_drop__dropcontainer').children('.bel-dash-container');
+	 var $belIconUpload = this.$element.children('.bel-drag_drop__dropcontainer').children('.bel-dash-container').children('.bel-space-top-m').children('.bel-icon-upload-xl');
+	 $belDastContainer.addClass('bel-drag_drop--hover');
+	 $belDastContainer.removeClass('bel-dash--border-'+ this.settings.dashColor);
+	 $belIconUpload.addClass('bel-dragdrop-icon--hover');
+ },
+ _dragleave: function() {
+	 var $belDastContainer= this.$element.children('.bel-drag_drop__dropcontainer').children('.bel-dash-container');
+	 var $belIconUpload = this.$element.children('.bel-drag_drop__dropcontainer').children('.bel-dash-container').children('.bel-space-top-m').children('.bel-icon-upload-xl');
+	 $belDastContainer.removeClass('bel-drag_drop--hover');
+	 $belDastContainer.addClass('bel-dash--border-'+ this.settings.dashColor);
+	 $belIconUpload.removeClass('bel-dragdrop-icon--hover');
+ },
+ _drop: function(evt) {
+   if (!this.settings._tableInitialization) {
+     this._setTable();
+   }
+   this._handleFiles(evt);
+ },
+ _makeDragDropMarkup: function() {
+
+   var dashedClass = 'bel-dash-container bel-drag_drop--default bel-dash--border-' + this.settings.dashColor + ' bel-position-center';
+   var dashedContainer = $BLUEJQuery('<div class="' + dashedClass + '"></div>');
+   var dashContent = $BLUEJQuery('<div class="bel-space-top-m bel-space-bottom-m">' +
+     '<div class="bel-icon-upload-xl bel-dragdrop-icon--default"></div>' +
+     '<p class="bel-typography bel-typography-p">Arraste el documento en este espacio o <span class="bel-typography bel-typography-link">seleccione</span> un archivo</p>' +
+     '</div>');
+
+   var dashAccept = "";
+   if(this.settings.dashColor=="error"){
+	   dashAccept = $BLUEJQuery('<h5 class="bel-typography bel-typography-label-error bel-space-xs bel-dragdrop-typography--error">Archivo no compatible, debe ser formato: ' + this.settings.fileAccept + ' y no debe superar los: ' + this.settings.maxSize + ' Mb.</h5>');   
+   }else{
+	   dashAccept = $BLUEJQuery('<h5 class="bel-typography bel-typography-h5 bel-space-xs">Formato de archivo: ' + this.settings.fileAccept + ' y no debe superar los: ' + this.settings.maxSize + ' Mb.</h5>');   
+   }
+   var dashInput = $BLUEJQuery('<input id="' + this.settings.inputName + '" multiple="true" name="' + this.settings.inputName + '[]" type="file" multiple"' + this.settings.multiple + '" />');
+
+   var dragDropContainer = $BLUEJQuery('<div class="' + dragdropContainerClass + '"></div>');;
+   var dragDropLabel = $BLUEJQuery('<div class="' + dragdropLabelClass + '"></div>');
+   var dragDropTable = $BLUEJQuery('<div class="' + dragdropTableClass + '"></div>');;
+
+   dashedContainer.append(dashContent);
+   dashedContainer.append(dashInput);
+   dragDropContainer.append(dashedContainer);
+   dragDropLabel.append(dashAccept);
+
+   this.$element.append(dragDropContainer);
+   this.$element.append(dragDropLabel);
+   this.$element.append(dragDropTable);
+
+
+   this.$element.addClass(dragdropClass);
+ },
+ _setMarkupWidths: function() {
+   var loadingWidth = this.$element.outerWidth(true);
+   var percentWidth = 0;
+   var txtWidth = 0;
+   if (this.settings.percent) {
+     percentWidth = this.$element.children('.bel-loading__percent').outerWidth(true);
+     console.log(percentWidth);
+   }
+   if (this.settings.loadingText) {
+     txtWidth = this.$element.children('.bel-loading__status').outerWidth(true);
+     console.log(txtWidth);
+   }
+   var loadingWidthPercent = parseInt((loadingWidth / 100) * this.settings.minBarWidthPercent);
+   if (loadingWidthPercent > (loadingWidth - percentWidth - txtWidth)) {
+     loadingWidthPercent = (loadingWidth - percentWidth - txtWidth);
+   }
+   if (loadingWidthPercent < 100) {
+     loadingWidthPercent = 100;
+   }
+   this.$element.children('.bel-loading__bar').children('progress').css('width', loadingWidthPercent + 'px')
+ },
+ _setTable: function() {
+   var tableHTML = '<table class="bel-space-top-l" id="' + this.settings.tableId + '">' +
+     '<thead class=""><tr><th class="">Nombre del archivo</th><th class="">Tama&ntilde;o del archivo</th><th class="">Estado</th><th class=""></th></tr></thead>' +
+     '<tbody></tbody>' +
+     '<tfoot></tfoot>' +
+     '</table>';
+   this.$element.children('.' + dragdropTableClass).append(tableHTML);
+   this.$element.children('.' + dragdropTableClass).find('#' + this.settings.tableId).blueTable(this.settings.tableProperties);
+   this.settings._tableInitialization = true;
+ },
+ _handleFiles: function(evt) {
+   var files = evt.target.files; // FileList object
+   var ext = new Array('Bytes', 'KB', 'MB', 'GB');
+
+   // Loop through the FileList and render image files as thumbnails.
+   for (var i = 0, f; f = files[i]; i++) {
+
+     // Only process accept files.
+     if (!f.type.match(this.settings.fileAccept)) {
+       continue;
+     }
+     // Only process with max size files.
+     var bytesMaxSize = this.settings.maxSize * 1024 * 1024;
+     if (bytesMaxSize < f.size) {
+       continue;
+     }
+
+     var reader = new FileReader();
+     var fz = 0;
+     var fileSize = f.size;
+     while (fileSize > 900) {
+       fileSize /= 1024;
+       fz++;
+     }
+     var timeAnimation = 50;
+     switch (true) {
+       case (ext[fz] === 'KB'):
+         timeAnimation = 50;
+         break;
+       case (ext[fz] === 'MB'):
+         timeAnimation = 100;
+         break;
+       case (ext[fz] === 'GB'):
+         timeAnimation = 1000;
+         break;
+       default:
+         timeAnimation = 50;
+     }
+     var fileSizeTxt = (Math.round(fileSize * 100) / 100) + ' ' + ext[fz];
+     var extension = getFilePathExtension(f.name);
+     var name = f.name.replace(extension,'').substring(0, 25);
+
+     this.settings._fileList.push({'id':this.settings._fileId, 'file':f});
+     var tabletr = $BLUEJQuery(
+       '<tr class="bel-table_row bel-generic-hover bel-main-background" id="'+this.settings.tableId+'_file'+this.settings._fileId+'">' +
+         '<td class="bel-table_column_default">' +
+           '<div class="bel-icon-receipt-s bel-display-inline bel-space-right-s"></div>'+
+           '<p class="bel-display-inline bel-typography bel-typography-p">'+name+'___.'+extension+'</p>'+
+         '</td>' +
+         '<td class="bel-table_column_default bel-position-center">'+
+           '<p class="bel-typography bel-typography-p">'+fileSizeTxt+'</p>'+
+         '</td>' +
+         '<td class="bel-table_column_default">' +
+           '<div class="bel-loading" id="loading'+this.settings._fileId+'"></div>' +
+         '</td>' +
+         '<td class="bel-table_column_default">' +
+           '<div class="bel-loading__action bel-position-right" onclick="belDeleteElement('+this.settings.tableId+'_file'+this.settings._fileId+')">' +
+             '<div class="bel-icon-error-xs"></div>' +
+           '</div>' +
+         '</td>' +
+       '</tr>');
+     this.$element.children('.'+ dragdropTableClass).find('#'+this.settings.tableId).children('tbody').append(tabletr);
+     tabletr.find('#loading'+this.settings._fileId).blueLoadingBar(this.settings.loadingBar);
+     this.$element.children('.'+ dragdropTableClass).find('#'+this.settings.tableId).children('tbody').find('#loading'+this.settings._fileId).blueLoadingBar('animationTime', timeAnimation).blueLoadingBar('value', 100).blueLoadingBar('txt', 'Completo');
+
+     // Closure to capture the file information.
+     reader.onload = (function(theFile) {
+       return (function(e) {  	   
+         // Render thumbnail.
+       })(theFile);
+     })(f);
+     
+
+     // Read in the image file as a data URL.
+     reader.readAsDataURL(f);
+     this.$element.children('.'+ dragdropTableClass).find('#'+this.settings.tableId).children('tbody').find('#'+this.settings.tableId+'_file'+this.settings._fileId).removeClass('bel-main-background');
+     this.settings._fileId++;
+     
+   }
+
+ }
+});
+function getFilePathExtension(path) {
+	var filename = path.split('\\').pop().split('/').pop();
+	var lastIndex = filename.lastIndexOf(".");
+	if (lastIndex < 1) return "";
+	return filename.substr(lastIndex + 1);
+}
+// A really lightweight plugin wrapper around the constructor,
+// preventing against multiple instantiations
+$BLUEJQuery.fn[pluginName] = function(options) {
+ var args = arguments;
+
+ if (options === undefined || typeof options === 'object') {
+   // Creates a new plugin instance, for each selected element, and
+   // stores a reference withint the element's data
+   return this.each(function() {
+     if (!$BLUEJQuery.data(this, 'plugin_' + pluginName)) {
+       $BLUEJQuery.data(this, 'plugin_' + pluginName, new DragDrop(this, options));
+     }
+   });
+ } else if (typeof options === 'string' && options[0] !== '_' && options !== 'init') {
+   // Cache the method call
+   // to make it possible
+   // to return a value
+   var returns;
+   this.each(function() {
+     var instance = $BLUEJQuery.data(this, 'plugin_' + pluginName);
+     if (instance instanceof DragDrop && typeof instance[options] === 'function') {
+       // Call the method of our plugin instance,
+       // and pass it the supplied arguments.
+       returns = instance[options].apply(instance, Array.prototype.slice.call(args, 1));
+     }
+
+     // Allow instances to be destroyed via the 'destroy' method
+     if (options === 'destroy') {
+       $BLUEJQuery.data(this, 'plugin_' + pluginName, null);
+     }
+   });
+   // If the earlier cached method
+   // gives a value back return the value,
+   // otherwise return this to preserve chainability.
+   return returns !== undefined ? returns : this
+ }
+};
+
+})();
+
+function belDeleteElement(element){
+	$BLUEJQuery(document.getElementById(element.id)).remove();
+ }
+
+/* Funciones para  el drag and drop ---------------------------------- FIN */
