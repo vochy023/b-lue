@@ -776,8 +776,8 @@ function makeBody(element, properties){
 		var nivelActual = 0;
 		
 		$BLUEJQuery(this).find( 'tr' ).each(function () {
-			var dataLevel = $BLUEJQuery(this).attr('data-subrow-level');
-				var subrowFlag = false;
+var subrowFlag = false;
+			
 			//1. Si es un arbol diferente
 			if((arbolActual.cantidadDeRamas - arbolActual.cantidadDeRamasPintadas ) == 0){
 				
@@ -809,26 +809,20 @@ function makeBody(element, properties){
 				$BLUEJQuery(this).addClass("bel-generic-hover");
 			}
 			$BLUEJQuery(this).find( 'td' ).each(function () {
-
+				var dataLevel = $BLUEJQuery(this).attr('data-tree-level');
 				if (dataLevel!= undefined){
 						 subrowFlag = true;
 				    if (dataLevel==='1' ){
 				    	 $BLUEJQuery(this).prepend( "<span class='bel-icon-subcategory-before-m bel-position-subrow-icon_level-1 color-icon-table bel-position-subrow-icon'/>");
 			    	 	 $BLUEJQuery(this).addClass("bel-table-subrow bel-table-subrow_level-1");
-			    	 	dataLevel= undefined;
 				    }else{if(dataLevel==='2' ){
 				    	 $BLUEJQuery(this).prepend( "<span class='bel-icon-subcategory-before-m bel-position-subrow-icon_level-2 color-icon-table bel-position-subrow-icon'/>");
-			   	    	  $BLUEJQuery(this).addClass("bel-table-subrow bel-table-subrow_level-2");	
-			   	    	   dataLevel= undefined;
+			   	    	  $BLUEJQuery(this).addClass("bel-table-subrow bel-table-subrow_level-2");		   	    		
 				    	   }else{
 				    		   $BLUEJQuery(this).prepend( "<span class='bel-icon-subcategory-before-m bel-position-subrow-icon_level-3 color-icon-table bel-position-subrow-icon'/>");
 			   	    		   $BLUEJQuery(this).addClass("bel-table-subrow bel-table-subrow_level-3");	
-			   	    		    dataLevel= undefined;
 				    		   }
 				    }
-			   }else{if (subrowFlag){
-				   $BLUEJQuery(this).addClass("bel-table-subrow");
-			   		}
 			   }
 				//si es el primer td del tr padre entonces pongo el icono de toggle
 				if(arbolActual.setToggleIcon){
@@ -851,7 +845,7 @@ function makeBody(element, properties){
 				 $BLUEJQuery(this).addClass("bel-table_column_default");
 				thCounter++;
 			});
-				if(subrowFlag){
+if(subrowFlag){
 				$BLUEJQuery(this).removeClass('bel-table_border-column');
 			}
 			
