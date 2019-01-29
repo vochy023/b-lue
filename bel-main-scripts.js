@@ -711,21 +711,20 @@ function isNotNullOrEmpty(data){
 	return false;
 }
 
-
 /*
 * Obtiene la clase correspondientes segun el tipo de alerta
 */
 function getAlertClassByType(alertType){
 	switch (alertType) {
-		case 1: return "bel-alertMessage_grayIcon";
+		case 1: return "bel-alertMessage_info-color";
 				break;
-		case 2: return "bel-alertMessage_greenIcon";
+		case 2: return "bel-alertMessage_success-color";
 				break;
-		case 3: return "bel-alertMessage_redIcon";
+		case 3: return "bel-alertMessage_error-color";
 				break;
-		case 4: return "bel-alertMessage_orangeIcon";
+		case 4: return "bel-alertMessage_warning-color";
 				break;
-		default: return "bel-alertMessage_grayIcon";
+		default: return "bel-alertMessage_info-color";
 				 break;
 
 	}
@@ -955,6 +954,8 @@ function makeCaption(element, properties){
     var iconDiv = null;
     var headerLeftGrupDiv = null;
     var headerRigthtGrupDiv = null;
+    var headerRigthtBtnCont = null;
+    
 
     $BLUEJQuery(element).find( 'caption' ).each(function () {
         headerLeftGrupDiv =  $BLUEJQuery("<div></div>").addClass("bel-table_caption-group");
@@ -1586,7 +1587,7 @@ $BLUEJQuery.fn.createTextContiner = function (maxHeight) {
 				}
 			}
 		},
-    clearLoadingInterval: function(variable) {
+    clearLoadingInterval: function() {
       var actualValue = this.settings._actualInterval;
       clearInterval(this.settings._interval);
       this.settings.value = actualValue;
@@ -1886,12 +1887,28 @@ $BLUEJQuery.fn.createTextContiner = function (maxHeight) {
     dragdropContainerClass = 'bel-drag_drop__dropcontainer',
     dragdropLabelClass = 'bel-drag_drop__label',
     dragdropTableClass = 'bel-drag_drop__table',
+    inputText = {
+    	inputText1: "Para seleccionar los archivos a subir haga clic dentro del área punteada o  ",
+    	inputText2: "haga clic aquí",
+    	inputTextDrag1: "Arraste el documento en este espacio o ",
+    	inputTextDrag2: "seleccione ",
+    	inputTextDrag3: "un archivo",
+    	inputFormat: "Formato del archivo: ",
+    	inputFormatExt: " y no debe superar los ",
+    	inputFormatSize: " Mb.",
+    	inputNameFile: "Nombre del archivo",
+    	inputSizeFile: "Tamaño del archivo",
+    	inputStatus: "Estado",
+    	inputFileDelete: "Para eliminar un archivo o agregar otros se debe volver a seleccionar todos los archivos a cargar.",
+    	inputComplete: "Completo",
+    	inputOnError: "Archivo no compatible, debe ser formato: ",
+    	inputTextRemoveAll: "Remover todos"
+    },
+
     navInfo = getBrowserInfo(),
     defaults = {
       fileAccept: ".txt|.doc|image.*",
       language: "es",
-      inputText1: "Para seleccionar los archivos a subir haga clic dentro del área punteada o  ",
-  	  inputText2: "haga clic aquí",
       multiple: true,
       maxSize: '2.5',
       dashColor: 'default',
@@ -1946,7 +1963,23 @@ $BLUEJQuery.fn.createTextContiner = function (maxHeight) {
   // Avoid Plugin.prototype conflicts
   $BLUEJQuery.extend(DragDrop.prototype, {
     init: function() {
-
+    	if (this.settings.language=="en"){
+    		inputText.inputText1= "To select the files you wish to upload, click inside the dotted line or  ";
+    		inputText.inputText2= "click here.";
+    		inputText.inputTextDrag1= "Drag the file into this space or ";
+    		inputText.inputTextDrag2= "select ";
+    		inputText.inputTextDrag3= "a file.";  
+    		inputText.inputFormat="File format: ";
+    		inputText.inputFormatExt=" and must not exceed ";
+    		inputText.inputFormatSize=" Mb.";	   
+    		inputText.inputNameFile="File name";
+    		inputText.inputSizeFile="File size";
+    		inputText.inputStatus="Status";
+    		inputText.inputFileDelete="To delete a file or add other files, you must select all the files you wish to upload once more.";           
+    		inputText.inputComplete="Complete";
+            inputText.inputOnError="File not compatible, must be: ";
+            inputText.inputTextRemoveAll="Remove all";
+     	}
       // You already have access to the DOM element and the options via the instance, e.g. this.element and this.settings
       this.$element = $BLUEJQuery(this.element).addClass(this._name);
       this._makeDragDropMarkup();
@@ -2006,19 +2039,19 @@ $BLUEJQuery.fn.createTextContiner = function (maxHeight) {
       this._handleFiles(evt);
     },
     _makeDragDropMarkup: function() {
-    	var inputText =""; 
+    	var inputTextData =""; 
     	var dragDropTable = $BLUEJQuery('<div class="' + dragdropTableClass + ' bel-space-top-l"></div>');
     	if (navInfo.indexOf('IE') == 0 || isSafari() == true){
-    		inputText =  '<p class="bel-typography bel-typography-p"> '+  this.settings.inputText1  + ' <span class="bel-typography bel-typography-link bel-typography_size-m">'+  this.settings.inputText2  + '</span></p>';
+    		inputTextData =  '<p class="bel-typography bel-typography-p"> '+ inputText.inputText1 + ' <span class="bel-typography bel-typography-link bel-typography_size-m">'+  inputText.inputText2  + '</span></p>';
     		dragDropTable = $BLUEJQuery('<div class="' + dragdropTableClass + ' "></div>');
     	}else{
-    		inputText = '<p class="bel-typography bel-typography-p">Arraste el documento en este espacio o <span class="bel-typography bel-typography-link bel-typography_size-m">seleccione</span> un archivo</p>';
+    		inputTextData = '<p class="bel-typography bel-typography-p"> '+ inputText.inputTextDrag1 +' <span class="bel-typography bel-typography-link bel-typography_size-m">' + inputText.inputTextDrag2 + '</span>' + inputText.inputTextDrag3 + '</p>';
     	}
       var dashedClass = 'bel-dash-container bel-drag_drop--default bel-dash--border-' + this.settings.dashColor + ' bel-position-center';
       var dashedContainer = $BLUEJQuery('<div class="' + dashedClass + '"></div>');
       var dashContent = $BLUEJQuery('<div class="bel-space-top-m bel-space-bottom-m">' +
     		  '<div class="bel-icon-upload-xl bel-dragdrop-icon--default"></div>' +
-    		  inputText + '</div>');
+    		  inputTextData + '</div>');
 
       var dashAccept = "";
 	  
@@ -2026,9 +2059,9 @@ $BLUEJQuery.fn.createTextContiner = function (maxHeight) {
       var fileAccepts= fileAcceptsPrint.replace(/\|/g , ' | ');
      
       if (this.settings.dashColor == "error") {
-        dashAccept = $BLUEJQuery('<h5 class="bel-typography bel-typography-label-error bel-space-xs bel-dragdrop-typography--error">Archivo no compatible, debe ser formato: ' + this.settings.fileAccept + ' y no debe superar los: ' + this.settings.maxSize + ' Mb.</h5>');
+        dashAccept = $BLUEJQuery('<h5 class="bel-typography bel-typography-label-error bel-space-xs bel-dragdrop-typography--error">'+ inputText.inputOnError + this.settings.fileAccept +inputText.inputFormatExt+ this.settings.maxSize + inputText.inputFormatSize+'</h5>');
       } else {
-        dashAccept = $BLUEJQuery('<h5 class="bel-typography bel-typography-h5 bel-space-xs">Formato de archivo: ' + fileAccepts + ' y no debe superar los: ' + this.settings.maxSize + ' Mb.</h5>');
+        dashAccept = $BLUEJQuery('<h5 class="bel-typography bel-typography-h5 bel-space-xs">'+inputText.inputFormat + fileAccepts + inputText.inputFormatExt + this.settings.maxSize + inputText.inputFormatSize+'</h5>');
       }
       var dashInput = $BLUEJQuery('<input class="bel-drag_drop_input" id="' + this.settings.inputName + '"name="' + this.settings.inputName + '[]" type="file" multiple="' + this.settings.multiple + '" />');
 
@@ -2068,21 +2101,25 @@ $BLUEJQuery.fn.createTextContiner = function (maxHeight) {
       this.$element.children('.bel-loading__bar').children('progress').css('width', loadingWidthPercent + 'px')
     },
     _setTable: function() {
-    	
-    	var inputRemoveAll = '<div class="deleteAllFiles bel-cursor-pointer bel-float-right bel-auxiliary-component-container"><button class="bel-icon-deleted-before-s bel-display-inline bel-auxiliary-component">Remover todos</button><div>';
-    	var ieSelectionTxt = '</table>'; 
+    	var inputRemoveAll = '<div class="deleteAllFiles bel-float-right bel-auxiliary-component-container bel-space-top-s"><button class="bel-icon-deleted-before-s bel-display-inline bel-auxiliary-component bel-cursor-pointer">'+inputText.inputTextRemoveAll+'</button><div>';
+    	var ieSelectionTxt = '</table>';
+    	var tableThHeaderDelete='<th class=""></th>';
     	if (navInfo.indexOf('IE') == 0 || isSafari() == true){
     		this.$element.children('.' + dragdropTableClass).append(inputRemoveAll);
     		this.$element.children('.' + dragdropTableClass).children('.deleteAllFiles').bind("click", $BLUEJQuery.proxy(this._deleteAllFiles, this));
-    		ieSelectionTxt= '</table><div class=" bel-space-top-xs"><h5 class="bel-typography bel-typography-h5">Para eliminar un archivo o agregar otros se debe volver a seleccionar todos los archivos a cargar.</h5></div>';	
+    		ieSelectionTxt= '</table><div class=" bel-space-top-xs"><h5 class="bel-typography bel-typography-h5">'+inputText.inputFileDelete+'</h5></div>';	
+    		tableThHeaderDelete='';
     	}
       var tableHTML = '<table class="bel-space-top-l" id="' + this.settings.tableId + '">' +
-      '<thead class=""><tr><th class="">Nombre del archivo</th><th class="">Tama&ntilde;o del archivo</th><th class="">Estado</th><th class=""></tr></th></thead>' +
+      '<thead class=""><tr><th class="">'+inputText.inputNameFile+'</th><th class="">'+inputText.inputSizeFile+'</th><th class="">'+inputText.inputStatus+'</th>'+tableThHeaderDelete+'</tr></thead>' +
       '<tbody></tbody>' +
       '<tfoot></tfoot>' +
         ieSelectionTxt;
       
       this.$element.children('.' + dragdropTableClass).append(tableHTML);
+      if (navInfo.indexOf('IE') == 0 || isSafari() == true){
+    	  this.settings.tableProperties.tdWidth=[35, 20, 45];
+      }
       this.$element.children('.' + dragdropTableClass).find('#' + this.settings.tableId).blueTable(this.settings.tableProperties);
       this.settings._tableInitialization = true;
     },
@@ -2115,7 +2152,16 @@ $BLUEJQuery.fn.createTextContiner = function (maxHeight) {
 			  var timeAnimation = fileMb;
 			  var fileSizeTxt = (Math.round(fileSize * 100) / 100) + ' ' + ext[fz];
 			  var extension = getFilePathExtension(f.name);
-			  var name = f.name.replace(extension, '').substring(0, 25);		
+			  var name = f.name.replace(extension, '').substring(0, 25);
+			  var deleteRow='';
+			  if ((isSafari() == false) && navInfo.indexOf('IE') != 0){
+				  deleteRow='<td class="bel-table_column_default">' +
+		          '<div class="bel-loading__action bel-position-right bel-cursor-pointer" data-fileid="' + this.settings._fileId + '">' +
+		          '<div class="bel-icon-error-xs"></div>' +
+		        '</div>' +
+		      '</td>'
+			  }
+			  
 			  var tabletr = $BLUEJQuery(
 				          '<tr class="bel-table_row bel-generic-hover bel-main-background" id="' + this.settings.tableId + '_file' + this.settings._fileId + '">' +
 			      '<td class="bel-table_column_default">' +
@@ -2127,19 +2173,12 @@ $BLUEJQuery.fn.createTextContiner = function (maxHeight) {
 			      '</td>' +
 			      '<td class="bel-table_column_default">' +
 				          '<div class="bel-loading" id="loading' + this.settings._fileId + '"></div>' +
-			      '</td>' +
-			      '<td class="bel-table_column_default">' +
-				          '<div class="bel-loading__action bel-position-right bel-cursor-pointer" data-fileid="' + this.settings._fileId + '">' +
-			          '<div class="bel-icon-error-xs"></div>' +
-			        '</div>' +
-			      '</td>' +
+			      '</td>' +deleteRow+
 			    '</tr>');
 
 		        this.$element.children('.' + dragdropTableClass).find('#' + this.settings.tableId).children('tbody').append(tabletr);
-		        if (navInfo.indexOf('IE') == 0 || isSafari()){
-		        	tabletr.find('.bel-loading__action').bind("click", $BLUEJQuery.proxy(this._openInputFile, this));
-		        	
-		        }else{
+
+				if ((isSafari() == false) && navInfo.indexOf('IE') != 0){
 		        	tabletr.find('.bel-loading__action').bind("click", $BLUEJQuery.proxy(this._deleteFile, this));
 		        }
 		        this.bind();
@@ -2165,13 +2204,13 @@ $BLUEJQuery.fn.createTextContiner = function (maxHeight) {
 		        }(loadingBar); 
 				 reader.onloadend = function (myloadingBar, myTr) {
 					 return function() {
-						 myloadingBar.blueLoadingBar('value', 100).blueLoadingBar('txt', 'Completo');
+						 myloadingBar.blueLoadingBar('value', 100).blueLoadingBar('txt', inputText.inputComplete);
 						 myTr.removeClass('bel-main-background');
 					 };
 		         }(loadingBar, tabletr);
 
-		        reader.onerror = function(event) {
-		          console.error("File could not be read! Code " + event.target.error.code);
+		        reader.onerror = function() {
+		        	this.settings.dashColor = "error";
 		        };
 		        reader.readAsText(f);
 		        this.settings._fileId++;
@@ -2509,7 +2548,9 @@ $BLUEJQuery.fn.createTextContiner = function (maxHeight) {
 			if(!$BLUEJQuery(evt.currentTarget).hasClass('disabled') && page != this.settings.actualPage){
 				this.actualPage(page);
 				if(typeof this.settings.callback == 'function'){
-				    this.settings.callback.call(evt, {totalItems: this.settings.totalItems, pageSize: this.settings.pageSize, goToPage: page});
+					var initItem = (this.settings.pageSize * this.settings.actualPage)-this.settings.pageSize;
+				    var finishItem = initItem + this.settings.pageSize;
+				    this.settings.callback.call(evt, {InitItem: initItem, FinishItem: finishItem});
 				}
 			}
 		},
@@ -2565,7 +2606,9 @@ $BLUEJQuery.fn.createTextContiner = function (maxHeight) {
     },
 		callback: function() {
 			if(typeof this.settings.callback == 'function'){
-		    this.settings.callback.call(this, {totalItems: this.settings.totalItems, pageSize: this.settings.pageSize, goToPage: this.settings.actualPage});
+				 var initItem = (this.settings.pageSize * this.settings.actualPage)-this.settings.pageSize;
+			     var finishItem = initItem + this.settings.pageSize;
+		         this.settings.callback.call(this, {InitItem: initItem, FinishItem: finishItem});
 			}
 		}
   });
