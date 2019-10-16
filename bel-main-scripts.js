@@ -1433,27 +1433,6 @@ function genericPlugin(pluginName,options,args,GenericFunction,elemt){
 	  };
 
 /**
-* Funcion que pasa a minusculas la hilera de texto recibido, luego reemplaza las
-* tildes de las vocales por sus caracteres equivalentes sin tildes y elimina espacios en blanco.
-*/
-function replaceTildeCharacter(str) {
-	str = str.toLowerCase();
-	str= str.replace(/ /g, "");
-	var normalizeConversions = [
-		{ regex: new RegExp('à|á|â|ã|å||ă|ä|ǎ', 'g'), clean: 'a' },
-		{ regex: new RegExp('è|é|ê|ë|ē|ĕ|ė|ě', 'g'), clean: 'e' },
-		{ regex: new RegExp('ì|í|î|ï|ĩ|ī|ĭ', 'g'), clean: 'i' },  
-		{ regex: new RegExp('ò|ó|ô|õ|ö|ǒ|ő', 'g'), clean: 'o' },
-		{ regex: new RegExp('ù|ú|û|ũ|ū|ŭ|ů|ű|ü|', 'g'), clean: 'u' },
-		{ regex: new RegExp('ñ|ń|ņ|ň|ŉ', 'g'), clean: 'n' },
-	];
-	normalizeConversions.forEach(function(normalizeEntry){
-	str = str.replace(normalizeEntry.regex, normalizeEntry.clean);
-	});
-	return str;	
-}
-
-/**
 * Funcion que pasa de estados a los botones, para permitir el uso de 
 * loading, recibiendo el id del botton y el estado en el que debería estar.
 */
@@ -1496,15 +1475,17 @@ function loadingButton(buttonId, state){
 }
 
 function normalizeText(text) {
+	text= text.replace(/\n/ig, '');
    return text.normalize('NFD').replace(/[\u0300-\u036f]/g,"");
 }
+
 /*
 * Funcion que activa o desactiva el desplazamiento automatico de los combos de seleccionada
 * comboId: es el identificador del combo de seleccionada
 * comboState: es el estado del combo de seleccion, se puede usar "true" o "false"
 */
 
-$BLUEJQuery.fn.blueSelect = function(size, language){
+$BLUEJQuery.fn.blueSelect = function(size, language, optionsCount){
  if(this.attr('id') == undefined){
 	 this.attr('id', this.attr('name'));
  }
@@ -1512,6 +1493,7 @@ $BLUEJQuery.fn.blueSelect = function(size, language){
 
  var noResultsText = 'No se han encontrado resultados';
  var placeholdertext = 'Buscar'
+ var searcherConditionCount = 6;
  var elementId = this.attr('id');
  this.removeClass();
  this.removeAttr( 'style' );
@@ -1519,6 +1501,10 @@ $BLUEJQuery.fn.blueSelect = function(size, language){
  if(language != undefined && language == 'en'){
 	 noResultsText = 'No results found';
 	 placeholdertext = 'Search'
+ }
+
+ if(optionsCount != undefined){
+	 searcherConditionCount = optionsCount;
  }
 
  $BLUEJQuery( "#"+elementId+"Div").remove();
@@ -1536,7 +1522,7 @@ $BLUEJQuery.fn.blueSelect = function(size, language){
 
  var selectList = $BLUEJQuery('<ul id="'+elementId+'List" class="bel-option-list bel-option-list-'+size+'"></ul>');
 
- if($BLUEJQuery(this).find('option').length > 6){
+ if($BLUEJQuery(this).find('option').length > searcherConditionCount){
 	 var selectSearcher = '';
 	 selectSearcher += '<div><input id="'+elementId+'Searcher" type="text"  onkeyup="selectSearcherFilter(\''+elementId+'List\',\''+elementId+'Searcher\',\''+elementId+'NoResults\',\''+elementId+'CleanBtn\')" class="bel-input--icon bel-input--icon-'+size+' bel-input-default bel-input-searcher" placeholder="'+placeholdertext+'">';
 	 selectSearcher += '<span class="bel-icon-search-s bel-input-searcher-left-icon"></span>';
@@ -1552,7 +1538,7 @@ $BLUEJQuery.fn.blueSelect = function(size, language){
 		 }
 	 }else{
 		 if ($BLUEJQuery(this).prop('selected')){
-			 $BLUEJQuery(selectList).append($BLUEJQuery('<li class="bel-option selected" onclick="updateBelSelect(\''+elementId+'\', \''+$BLUEJQuery(this).attr('value')+'\', this.innerHTML, this);">'+$BLUEJQuery(this).text()+'</li>'));
+			 $BLUEJQuery(selectList).append($BLUEJQuery('<li class="bel-option bel-selected-option" onclick="updateBelSelect(\''+elementId+'\', \''+$BLUEJQuery(this).attr('value')+'\', this.innerHTML, this);">'+$BLUEJQuery(this).text()+'</li>'));
 		 }
 		 else{
 			 $BLUEJQuery(selectList).append($BLUEJQuery('<li class="bel-option" onclick="updateBelSelect(\''+elementId+'\', \''+$BLUEJQuery(this).attr('value')+'\', this.innerHTML, this);">'+$BLUEJQuery(this).text()+'</li>'));
@@ -1576,7 +1562,7 @@ $BLUEJQuery.fn.blueSelect = function(size, language){
  if(this.prop('disabled')){
 	 $BLUEJQuery(selectDiv).append($BLUEJQuery('<label id="'+elementId+'Label" class="bel-select bel-select-'+size+' bel-select-default bel-select-close-icon bel-select-close-icon-disabled" style=" background: #ededed;"  onclick="displayBelOption(\''+elementId+'List\', \''+elementId+'Label\',\''+elementId+'Searcher\',\''+elementId+'CleanBtn\');">'+selectedLabel+'</label>'));
  }else{
-	 $BLUEJQuery(selectDiv).append($BLUEJQuery('<label id="'+elementId+'Label" class="bel-select bel-select-'+size+' bel-select-default bel-select-close-icon" onclick="displayBelOption(\''+elementId+'List\', \''+elementId+'Label\',\''+elementId+'Searcher\',\''+elementId+'CleanBtn\');">'+selectedLabel+'</label>'));
+	 $BLUEJQuery(selectDiv).append($BLUEJQuery('<label id="'+elementId+'Label" class="bel-select bel-select-'+size+' bel-select-default bel-select-close-icon bel-cursor-pointer" onclick="displayBelOption(\''+elementId+'List\', \''+elementId+'Label\',\''+elementId+'Searcher\',\''+elementId+'CleanBtn\');">'+selectedLabel+'</label>'));
 	 }
 
  $BLUEJQuery(selectDiv).append($BLUEJQuery(selectList));
@@ -1599,8 +1585,8 @@ function updateBelSelect(id, value, optionText, element) {
 	$BLUEJQuery("#" + id + "Label").removeClass('bel-select-open-icon');
 	$BLUEJQuery("#" + id + "Label").addClass('bel-select-close-icon');
 	var allOptions = $BLUEJQuery("#" + id + "List").children('li');
-	allOptions.removeClass('selected');
-	$BLUEJQuery(element).addClass('selected');
+	allOptions.removeClass('bel-selected-option');
+	$BLUEJQuery(element).addClass('bel-selected-option');
 	$BLUEJQuery('#'+id+' option').removeAttr("selected");
   $BLUEJQuery('#'+id+' option[value="'+value+'"]').attr('selected', true);
 	$BLUEJQuery("#" + id).val(value);
@@ -1608,6 +1594,7 @@ function updateBelSelect(id, value, optionText, element) {
 }
 
 function displayBelOption(idList, idLabel, inputSearcherId, cleanBtnId) {
+  event.stopPropagation();
 	if ($BLUEJQuery('#' + idLabel).hasClass('bel-select-open-icon')) {
 		$BLUEJQuery("#" + idLabel).removeClass('bel-select-open-icon');
 		$BLUEJQuery("#" + idLabel).addClass('bel-select-close-icon');
@@ -1622,8 +1609,6 @@ function displayBelOption(idList, idLabel, inputSearcherId, cleanBtnId) {
 		allSelectLabels.removeClass('bel-select-open-icon');
 		allSelectLabels.addClass('bel-select-close-icon');
 		if (!$BLUEJQuery('#' + idLabel).hasClass('bel-select-disabled')) {
-		  allOptions = $BLUEJQuery("#mySelect").children('li');
-			allOptions.removeClass('selected');
 			$BLUEJQuery('#' + idList).toggleClass('bel-display-list');
 			$BLUEJQuery("#" + idLabel).addClass('bel-select-open-icon');
 		}
@@ -1650,10 +1635,6 @@ function cleanSearcherInput(inputSearcherId, noResultsLabel) {
 	$BLUEJQuery('#'+noResultsLabel).css('display','none');
 }
 
-function eliminarDiacriticos(texto) {
-   return texto.normalize('NFD').replace(/[\u0300-\u036f]/g,"");
-}
-
 function selectSearcherFilter(selectId, inputSearcherId, noResultsLabel, cleanBtnId) {
 	var searchText = $BLUEJQuery('#'+inputSearcherId).val().toLowerCase();
 	var compareWith = '';
@@ -1672,7 +1653,7 @@ function selectSearcherFilter(selectId, inputSearcherId, noResultsLabel, cleanBt
 					$BLUEJQuery(this).css('display','none');
 					parentId = this;
 				}else{
-						if (eliminarDiacriticos(compareWith).search(eliminarDiacriticos(searchText)) == -1) {
+						if (normalizeText(compareWith).search(normalizeText(searchText)) == -1) {
 								$BLUEJQuery(this).css('display','none');
 						}else{
 								boldText = searchText.bold();
@@ -1853,8 +1834,8 @@ function makeBody(element, properties){
 				$BLUEJQuery(this).hide(0);
 			 } 
 		 });
+		//En caso de que tenga scroll remueve clases y mueve el scroll a la izquierda
 		removeFixedColumns($BLUEJQuery(element).attr("id"));
-		$BLUEJQuery("#divScroll"+$BLUEJQuery(element).attr("id")).animate({scrollLeft: 0}, 500);
 	}
 }
 
@@ -2112,30 +2093,18 @@ function manageTableResult(idTable,searchValue){
 	var quantityFind, quantityToShow;
 	var idTableName=idTable+" >tbody";    
 	var searchTextLabel;
-	var quantityFindRows;
-	quantityFind = $BLUEJQuery("#"+idTable+" >tbody >tr[statusDisplayRow!='neutral']:visible ").length;
-	 
-	 
-	 var indexRowParent=-1;
-	 $BLUEJQuery("#"+idTable+" tr[statusDisplayRow!='neutral']").each(function (i) {
-		if($BLUEJQuery(this).attr('data-subrowcount')!=undefined){
-		indexRowParent=i;
-			if($BLUEJQuery(this).is(":visible")){
-			$BLUEJQuery("#"+idTable+" tr[statusDisplayRow!='neutral']:eq('"+indexRowParent+"') td:eq(0).bel-icon-subaccount-open").removeClass('bel-icon-subaccount-open').addClass('bel-icon-subaccount-close');
-			}
-		}
-		else if($BLUEJQuery(this).is(":visible") && $BLUEJQuery(this).attr('data-subrow-level')!=undefined && indexRowParent>-1){
-			filterSubRowSearch(idTable,indexRowParent,i,$BLUEJQuery(this).attr('data-subrow-level'));
-			$BLUEJQuery("#"+idTable+" tr[statusDisplayRow!='neutral']:eq('"+indexRowParent+"') td:eq(0).bel-icon-subaccount-close").removeClass('bel-icon-subaccount-close').addClass('bel-icon-subaccount-open');
-			indexRowParent=-1;
-		}
-	 });
+	var quantityFindRows;	 
+	
+	displayMoreSubRows(idTable);
+	quantityFind = $BLUEJQuery("#"+idTable+" >tbody >tr[statusDisplayRow!='neutral']:visible ").length;		
 	quantityFindRows=$BLUEJQuery("#"+idTable+" >tbody >tr[statusDisplayRow='true']:not([data-subrow-level])").length;
+	
 	if($BLUEJQuery("#footerFixed"+idTable+" >tr[id='heTR"+idTable+"']").length>0){
 		idTableName="footerFixed"+idTable;
 	}
 	$BLUEJQuery("#"+idTableName+" >tr[id='heTR"+idTable+"'] >td >a").keypress();		             
 	quantityToShow= $BLUEJQuery("#"+idTableName+" >tr[id=seTR"+idTable+"]").attr('maxItemsCollapsed');
+	
 	if(quantityToShow>=quantityFindRows){	            	 
 		$BLUEJQuery("#"+idTableName+" >tr[id=seTR"+idTable+"]").hide();
 		$BLUEJQuery("#"+idTableName+" >tr[id=heTR"+idTable+"]").hide();
@@ -2159,20 +2128,45 @@ function manageTableResult(idTable,searchValue){
 	}
 }
 
+/**
+ * Función que se encarga del ver más y ver menos en las tablas con subrows y 
+ * llama a la función filterSubRowSearch que muestra las filas correspondientes
+ * @param idTable : Id de la tabla 
+ */	
+function displayMoreSubRows(idTable){
+	var indexRowParent = -1;
+	if ($BLUEJQuery("#"+idTable+" >tbody >tr[data-subrowcount]").length){
+		$BLUEJQuery("#"+idTable+" tr[statusDisplayRow!='neutral']").each(function (i) {
+			if(undefined!= $BLUEJQuery(this).attr('data-subrowcount')){
+			indexRowParent=i;
+				if($BLUEJQuery(this).is(":visible")){
+				$BLUEJQuery("#"+idTable+" tr[statusDisplayRow!='neutral']:eq('"+indexRowParent+"') td:eq(0).bel-icon-subaccount-open").removeClass('bel-icon-subaccount-open').addClass('bel-icon-subaccount-close');
+				}
+			}
+			else if($BLUEJQuery(this).is(":visible") && $BLUEJQuery(this).attr('data-subrow-level')!=undefined && indexRowParent>-1){
+				filterSubRowSearch(idTable,indexRowParent,i,$BLUEJQuery(this).attr('data-subrow-level'));
+				$BLUEJQuery("#"+idTable+" tr[statusDisplayRow!='neutral']:eq('"+indexRowParent+"') td:eq(0).bel-icon-subaccount-close").removeClass('bel-icon-subaccount-close').addClass('bel-icon-subaccount-open');
+				indexRowParent=-1;
+			}
+		 });
+	}
+}
+
 function filterTableSearch(element, idTable){
-	  var searchValue = replaceTildeCharacter($BLUEJQuery(element).val());
+	  var searchValue = normalizeText($BLUEJQuery(element).val().toUpperCase().trim());
 	  $BLUEJQuery("#"+idTable+" >tbody>tr[statusDisplayRow!='neutral']").filter(function() {
-		  if ((replaceTildeCharacter($BLUEJQuery(this).text()).indexOf(searchValue))>-1){
+		  if ((normalizeText($BLUEJQuery(this).text().toUpperCase().trim()).indexOf(searchValue))>-1){
 			  $BLUEJQuery(this).attr('statusDisplayRow', 'true');
+			  $BLUEJQuery(this).toggle(true);
 		  }else{
 			  $BLUEJQuery(this).attr('statusDisplayRow','false');
-		  }	             	  
-		  $BLUEJQuery(this).toggle(replaceTildeCharacter($BLUEJQuery(this).text()).indexOf(searchValue) > -1)		
+			  $BLUEJQuery(this).toggle(false);
+		  }	             	  	
 	   }); 
 	  manageTableResult(idTable,searchValue);
-		 removeFixedColumns(idTable);
-			$BLUEJQuery("#divScroll"+idTable).animate({scrollLeft: 0}, 500);
- }
+	//En caso de que tenga scroll remueve clases y mueve el scroll a la izquierda
+	  removeFixedColumns(idTable);
+}
 
 
 function hasNotSubrows(element){
@@ -2325,21 +2319,24 @@ function validateScrollTable(idTable, properties){
   * Función que elimina la clase que le da el sombreado a la última columna fixed  
   * @param idTable : Id de la tabla a eliminar las clase  
   */
-  function removeFixedColumns(idTable) {
-  	$BLUEJQuery("#" +idTable+ " tr").each(function(item) {
-  		$BLUEJQuery(this).children('tbody td').each(function(item) {
-  			if($BLUEJQuery(this).hasClass('bel-column__last-fixed')){
-  				$BLUEJQuery(this).removeClass('bel-column__last-fixed');
-  			}
-  		});
-  		
-  		$BLUEJQuery(this).children('th').each(function(item) {
-  			if($BLUEJQuery(this).hasClass('bel-column__last-fixed')){
-  				$BLUEJQuery(this).removeClass('bel-column__last-fixed');
-  			}
-  		});
-  	});
-  }
+function removeFixedColumns(idTable) {
+	  if($BLUEJQuery("#divScroll"+idTable).length){
+	  	$BLUEJQuery("#" +idTable+ " tr").each(function(item) {
+	  		$BLUEJQuery(this).children('tbody td').each(function(item) {
+	  			if($BLUEJQuery(this).hasClass('bel-column__last-fixed')){
+	  				$BLUEJQuery(this).removeClass('bel-column__last-fixed');
+	  			}
+	  		});
+	  		
+	  		$BLUEJQuery(this).children('th').each(function(item) {
+	  			if($BLUEJQuery(this).hasClass('bel-column__last-fixed')){
+	  				$BLUEJQuery(this).removeClass('bel-column__last-fixed');
+	  			}
+	  		});
+	  	});
+	  	$BLUEJQuery("#divScroll"+idTable).animate({scrollLeft: 0}, 500);
+	  }
+}
 
 
 /* Inicio ----------- Funciones para el soporte de columnas fixed en Internet Explorer ----------- Inicio */
@@ -3012,4 +3009,219 @@ function calcFileSize(fileSize, ext){
 
 
 
+
+/*
+* Funcion que activa o desactiva el desplazamiento automatico de los combos de seleccionada
+* comboId: es el identificador del combo de seleccionada
+* comboState: es el estado del combo de seleccion, se puede usar "true" o "false"
+*/
+
+$BLUEJQuery.fn.blueSelect = function(size, language, optionsCount){
+ if(this.attr('id') == undefined){
+	 this.attr('id', this.attr('name'));
+ }
+
+
+ var noResultsText = 'No se han encontrado resultados';
+ var placeholdertext = 'Buscar'
+ var searcherConditionCount = 6;
+ var elementId = this.attr('id');
+ this.removeClass();
+ this.removeAttr( 'style' );
+
+ if(language != undefined && language == 'en'){
+	 noResultsText = 'No results found';
+	 placeholdertext = 'Search'
+ }
+
+ if(optionsCount != undefined){
+	 searcherConditionCount = optionsCount;
+ }
+
+ $BLUEJQuery( "#"+elementId+"Div").remove();
+ var selectDiv;
+ var selectedLabel = null;
+
+ if(this.prop('disabled')){
+		 selectDiv = $BLUEJQuery("<div id='"+ elementId +"Div' class='bel-click-disable'></div>");
+ }else{
+	 selectDiv = $BLUEJQuery("<div id='"+ elementId +"Div'></div>");
+	 if($BLUEJQuery(this).attr('scrollable') != undefined){
+		 selectDiv.prop('scrollable', true);
+	 }
+ }
+
+ var selectList = $BLUEJQuery('<ul id="'+elementId+'List" class="bel-option-list bel-option-list-'+size+'"></ul>');
+
+ if($BLUEJQuery(this).find('option').length > searcherConditionCount){
+	 var selectSearcher = '';
+	 selectSearcher += '<div><input id="'+elementId+'Searcher" type="text"  onkeyup="selectSearcherFilter(\''+elementId+'List\',\''+elementId+'Searcher\',\''+elementId+'NoResults\',\''+elementId+'CleanBtn\')" class="bel-input--icon bel-input--icon-'+size+' bel-input-default bel-input-searcher" placeholder="'+placeholdertext+'">';
+	 selectSearcher += '<span class="bel-icon-search-s bel-input-searcher-left-icon"></span>';
+	 selectSearcher += '<span id="'+elementId+'CleanBtn" class="bel-icon-error-xxs bel-input-searcher-right-icon" style="display:none;" onclick="cleanSearcherInput(\''+elementId+'Searcher\',\''+elementId+'NoResults\'); showAllSelectOptions(\''+elementId+'List\',\''+elementId+'CleanBtn\')"></span>';
+	 selectSearcher += '<h5 id="'+elementId+'NoResults" class="bel-typography bel-typography-h5 bel-position-center bel-option-no-results" style="display:none">'+noResultsText+'</h5>';
+	 $BLUEJQuery(selectList).append($BLUEJQuery(selectSearcher));
+ }
+
+ $BLUEJQuery(this).children( 'option' ).each(function () {
+	 if($BLUEJQuery(this).prop('disabled')){
+		 if($BLUEJQuery(this).attr('value') != '-1'){
+			 $BLUEJQuery(selectList).append($BLUEJQuery('<li class="bel-option-disabled">'+$BLUEJQuery(this).text()+'</li>'));
+		 }
+	 }else{
+		 if ($BLUEJQuery(this).prop('selected')){
+			 $BLUEJQuery(selectList).append($BLUEJQuery('<li class="bel-option bel-selected-option" onclick="updateBelSelect(\''+elementId+'\', \''+$BLUEJQuery(this).attr('value')+'\', this.innerHTML, this);">'+$BLUEJQuery(this).text()+'</li>'));
+		 }
+		 else{
+			 $BLUEJQuery(selectList).append($BLUEJQuery('<li class="bel-option" onclick="updateBelSelect(\''+elementId+'\', \''+$BLUEJQuery(this).attr('value')+'\', this.innerHTML, this);">'+$BLUEJQuery(this).text()+'</li>'));
+		 }
+	 }
+	 if($BLUEJQuery(this).prop('selected')){
+		 selectedLabel= '<p class="bel-truncate-text bel-display-inline bel-space-reset" style="max-width: calc(100% - 25px);">' +$BLUEJQuery(this).text()+'</p>';
+	 }
+ });
+
+
+ this.find( 'optgroup' ).each(function () {
+	 $BLUEJQuery(selectList).append($BLUEJQuery('<li class="bel-option-disabled">'+$BLUEJQuery(this).attr("label")+'</li>'));
+	 $BLUEJQuery(this).find( 'option' ).each(function () {
+		 $BLUEJQuery(selectList).append($BLUEJQuery('<li class="bel-option" onclick="updateBelSelect(\''+elementId+'\', \''+$BLUEJQuery(this).attr('value')+'\', this.innerHTML, this);">'+$BLUEJQuery(this).text()+'</li>'));
+		 if($BLUEJQuery(this).prop('selected')){
+			 selectedLabel = '<p class="bel-truncate-text bel-display-inline bel-space-reset" style="max-width: calc(100% - 25px);">' +$BLUEJQuery(this).text()+'</p>';
+		 }
+	 });
+ });
+ if(this.prop('disabled')){
+	 $BLUEJQuery(selectDiv).append($BLUEJQuery('<label id="'+elementId+'Label" class="bel-select bel-select-'+size+' bel-select-default bel-select-close-icon bel-select-close-icon-disabled" style=" background: #ededed;"  onclick="displayBelOption(\''+elementId+'List\', \''+elementId+'Label\',\''+elementId+'Searcher\',\''+elementId+'CleanBtn\');">'+selectedLabel+'</label>'));
+ }else{
+	 $BLUEJQuery(selectDiv).append($BLUEJQuery('<label id="'+elementId+'Label" class="bel-select bel-select-'+size+' bel-select-default bel-select-close-icon bel-cursor-pointer" onclick="displayBelOption(\''+elementId+'List\', \''+elementId+'Label\',\''+elementId+'Searcher\',\''+elementId+'CleanBtn\');">'+selectedLabel+'</label>'));
+	 }
+
+ $BLUEJQuery(selectDiv).append($BLUEJQuery(selectList));
+ this.before( selectDiv);
+ this.addClass('bel-box-hidden');
+};
+
+function onBlurSelect(idList, idLabel, inputSearcherId, cleanBtnId){
+	if ($BLUEJQuery('#' + idLabel).hasClass('bel-select-open-icon')) {
+		displayBelOption(idList, idLabel, inputSearcherId, cleanBtnId);
+	}
+}
+
+// select
+function updateBelSelect(id, value, optionText, element) {
+	$BLUEJQuery("#"+id+"Label").html('<p class="bel-truncate-text bel-display-inline bel-space-reset" style="max-width: calc(100% - 25px)">' +optionText+'</p>');
+	$BLUEJQuery("#"+id+"Label").html($BLUEJQuery("#"+id+"Label").text());
+	$BLUEJQuery("#" + id + "Label").addClass("bel-select-filled");
+	$BLUEJQuery("#" + id + "List").removeClass("bel-display-list");
+	$BLUEJQuery("#" + id + "Label").removeClass('bel-select-open-icon');
+	$BLUEJQuery("#" + id + "Label").addClass('bel-select-close-icon');
+	var allOptions = $BLUEJQuery("#" + id + "List").children('li');
+	allOptions.removeClass('bel-selected-option');
+	$BLUEJQuery(element).addClass('bel-selected-option');
+	$BLUEJQuery('#'+id+' option').removeAttr("selected");
+  $BLUEJQuery('#'+id+' option[value="'+value+'"]').attr('selected', true);
+	$BLUEJQuery("#" + id).val(value);
+	$BLUEJQuery("#" + id).trigger("change");
+}
+
+function displayBelOption(idList, idLabel, inputSearcherId, cleanBtnId) {
+  event.stopPropagation();
+	if ($BLUEJQuery('#' + idLabel).hasClass('bel-select-open-icon')) {
+		$BLUEJQuery("#" + idLabel).removeClass('bel-select-open-icon');
+		$BLUEJQuery("#" + idLabel).addClass('bel-select-close-icon');
+		$BLUEJQuery("#" + idList).removeClass("bel-display-list");
+	} else {
+		if($BLUEJQuery("#" + idList).parent().prop('scrollable') == true){
+			scrollToGroup("#" + idLabel);
+		}
+		var allOptions = $BLUEJQuery(".bel-option-list");
+		allOptions.removeClass('bel-display-list');
+		var allSelectLabels = $BLUEJQuery(".bel-select");
+		allSelectLabels.removeClass('bel-select-open-icon');
+		allSelectLabels.addClass('bel-select-close-icon');
+		if (!$BLUEJQuery('#' + idLabel).hasClass('bel-select-disabled')) {
+			$BLUEJQuery('#' + idList).toggleClass('bel-display-list');
+			$BLUEJQuery("#" + idLabel).addClass('bel-select-open-icon');
+		}
+		inputSearcherFocus(inputSearcherId);
+		$BLUEJQuery(document).click(function(event){
+			if($BLUEJQuery(event.target)[0].id != idList &&
+				 $BLUEJQuery(event.target)[0].id != idLabel &&
+				 $BLUEJQuery(event.target)[0].id != cleanBtnId &&
+				 $BLUEJQuery(event.target)[0].id != inputSearcherId){
+				onBlurSelect(idList, idLabel, inputSearcherId, cleanBtnId);
+			}
+	  });
+	}
+}
+
+var inputSearcherFocus = function getFocus(inputSearcherId) {  
+	if(document.getElementById(inputSearcherId) != null){        
+  	document.getElementById(inputSearcherId).focus();
+	}
+}
+
+function cleanSearcherInput(inputSearcherId, noResultsLabel) {
+	$BLUEJQuery('#'+inputSearcherId).val('');
+	$BLUEJQuery('#'+noResultsLabel).css('display','none');
+}
+
+function selectSearcherFilter(selectId, inputSearcherId, noResultsLabel, cleanBtnId) {
+	var searchText = $BLUEJQuery('#'+inputSearcherId).val().toLowerCase();
+	var compareWith = '';
+	var resultCount = 0;
+	var parentId = null;
+	var boldText;
+	var i;
+
+	if(searchText != ''){
+		$BLUEJQuery('#'+cleanBtnId).css('display','block');
+		$BLUEJQuery('#'+selectId+' li').each(
+			function(){
+				compareWith = $BLUEJQuery(this).text().toLowerCase();
+
+				if($BLUEJQuery(this).hasClass('bel-option-disabled')){
+					$BLUEJQuery(this).css('display','none');
+					parentId = this;
+				}else{
+						if (normalizeText(compareWith).search(normalizeText(searchText)) == -1) {
+								$BLUEJQuery(this).css('display','none');
+						}else{
+								boldText = searchText.bold();
+								boldText = compareWith.replace(searchText, boldText);
+								if(boldText.charAt(0) != '<'){
+									compareWith = boldText.charAt(0).toUpperCase() + boldText.substr(1).toLowerCase();
+								}else{
+									compareWith = boldText.substr(0,3) + boldText.substr(3,1).toUpperCase() + boldText.substr(4).toLowerCase();
+								}
+								$BLUEJQuery(this).html(compareWith);
+								$BLUEJQuery(this).css('display','block');
+								if(parentId != null){
+									$BLUEJQuery(parentId).css('display','block');
+									parentId = null;
+								}
+								resultCount += 1
+						}
+				}
+		});
+	}else{
+		showAllSelectOptions(selectId, cleanBtnId);
+		resultCount = 1;
+	}
+
+	if(resultCount < 1){
+		$BLUEJQuery('#'+noResultsLabel).css('display','block');
+	}else{
+		$BLUEJQuery('#'+noResultsLabel).css('display','none');
+	}
+}
+
+function showAllSelectOptions(selectId, cleanBtnId){
+	$BLUEJQuery('#'+selectId+' li').each(
+		function(){
+			$BLUEJQuery('#'+cleanBtnId).css('display','none');
+			$BLUEJQuery(this).css('display','block');
+			$BLUEJQuery(this).html($BLUEJQuery(this).text());
+		});
+}
 
