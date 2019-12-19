@@ -204,46 +204,49 @@ function validateBLUEJQuery() {
 $BLUEJQuery.fn.belCreateWizardProcessStep = function(steps, messagesStep, selectedStep) {
 	if (steps <= 5) {
 
-		var processList = $BLUEJQuery('<ul class="bel-wizard"></ul>');
+		var processList = $BLUEJQuery('<ul class="wizard"></ul>');
 		for (var i = 0; i < steps; i++) {
-			var step = $BLUEJQuery('<li class="bel-wizard-li bel-wizard-step-inactive bel-wizard-steps-'
+			var step = $BLUEJQuery('<li class="w-step w-step-inactive w-steps-'
 					+ steps
 					+ '"><label id="step'
 					+ (i + 1)
-					+ '" class="bel-wizard-label bel-wizard-label-inactive">'
+					+ '" class="w-label w-label-inactive">'
 					+ messagesStep[i] + '</label></li>');
 			if ((i + 1) == selectedStep) {
-				step = $BLUEJQuery('<li class="bel-wizard-li bel-wizard-step-active bel-wizard-steps-'
+				step = $BLUEJQuery('<li class="w-step w-step-active w-steps-'
 						+ steps
 						+ '"><label id="step'
 						+ (i + 1)
-						+ '" class="bel-wizard-label bel-wizard-label-active">'
+						+ '" class="w-label w-label-active">'
 						+ messagesStep[i] + '</label></li>');
 			} else if ((i + 1) < selectedStep) {
-				step = $BLUEJQuery('<li class="bel-wizard-li bel-wizard-step-completed bel-wizard-steps-'
+				step = $BLUEJQuery('<li class="w-step w-step-completed w-steps-'
 						+ steps
 						+ '"><label id="step'
 						+ (i + 1)
-						+ '" class="bel-wizard-label bel-wizard-label-active">'
+						+ '" class="w-label w-label-active">'
 						+ messagesStep[i] + '</label></li>');
 			}
 			processList.append(step);
 		}
 
-		this.append(processList);
-		animationProgressBar(steps, selectedStep);
+		this.html(processList).css('display', 'flex');
+		animationProgressBar(this, steps, selectedStep);
 
 	}
 	/*IMPORTANTE: El numero de pasos no debe estar por encima de la capacidad de Wizard*/
 }
 
-function animationProgressBar(steps, selectedStep){
-
+function animationProgressBar(elem, steps, selectedStep){
 	if(selectedStep <= steps){
-		var barEfect = document.getElementsByClassName("bel-wizard-step-active")[0];
-		var lblEfect = document.getElementsByClassName("bel-wizard-label-active")[selectedStep-1];
-		barEfect.className += " bel-wizard-step-actual";
-		lblEfect.className += " bel-wizard-label-actual";
+		$BLUEJQuery(elem).children('.wizard').children('.w-step').each(function(){
+			if($BLUEJQuery(this).hasClass("w-step-active")){
+				$BLUEJQuery(this).addClass("w-step-actual");
+			}
+			if($BLUEJQuery(this).children('.w-label').hasClass("w-label-active")){
+				$BLUEJQuery(this).children('.w-label').addClass("w-label-actual");
+			}
+		});
 	}
 	/*IMPORTANTE: El numero de pasos no debe estar por encima de la capacidad de Wizard*/
 }
@@ -1440,259 +1443,59 @@ function genericPlugin(pluginName,options,args,GenericFunction,elemt){
 function loadingButton(buttonId, state){
  var button= $BLUEJQuery("#"+buttonId);
  
-	if(undefined!=button){
+		if(undefined!=button){
 		switch (state) {
 		case "loading":
 			button.addClass("btn-pressed");
 			button.removeClass("btn-pressed__check");
 			if(button.hasClass("bel-btn-primary")){
 				button.addClass("loading-icon-active");
-				button.removeClass("bel-btn-primary-active");
+				button.removeClass("bel-btn-primary-active bel-btn__animation-text");
 			}else{
 				button.addClass("loading-icon-neutral");
-				button.removeClass("bel-btn-default-active bel-btn-secondary-active");
+				button.removeClass("bel-btn-default-active bel-btn-secondary-active bel-btn__animation-text");
 			}
 		break;
 		case "checked":
 			button.addClass("btn-pressed btn-pressed__check");
 			button.removeClass("bel-btn-primary-active bel-btn-default-active " +
-					"bel-btn-secondary-active loading-icon-active loading-icon-neutral");
+					"bel-btn-secondary-active loading-icon-active loading-icon-neutral bel-btn__animation-text");
 		break;
 		case "initial":
-			button.removeClass("btn-pressed btn-pressed__check loading-icon-active loading-icon-neutral")
+			
 			if(button.hasClass("bel-btn-primary")){
-				button.addClass("bel-btn-primary-active");
+				button.addClass("bel-btn-primary-active bel-btn__animation-text");
 			}else if(button.hasClass("bel-btn-secondary")){
-				button.addClass("bel-btn-secondary-active");
+				button.addClass("bel-btn-secondary-active bel-btn__animation-text");
 			}
 			else{
-				button.addClass("bel-btn-default-active");
+				button.addClass("bel-btn-default-active bel-btn__animation-text");
 			}
+			button.removeClass("btn-pressed btn-pressed__check loading-icon-active loading-icon-neutral")
 		break;
 	 }
 	}	
  
 }
 
-function normalizeText(text) {
-	text= text.replace(/\n/ig, '');
-   return text.normalize('NFD').replace(/[\u0300-\u036f]/g,"");
-}
-
 /*
-* Funcion que activa o desactiva el desplazamiento automatico de los combos de seleccionada
-* comboId: es el identificador del combo de seleccionada
-* comboState: es el estado del combo de seleccion, se puede usar "true" o "false"
+* Funcion que reemplaza de una hilera que recibe por parametro los caracteres especiales
+* por sus equivalentes sin tildes ni acentos, pasa todo a minusculas y quita espacios
+* al inicio y final de la cadena.
 */
 
-$BLUEJQuery.fn.blueSelect = function(size, language, optionsCount){
- if(this.attr('id') == undefined){
-	 this.attr('id', this.attr('name'));
- }
-
-
- var noResultsText = 'No se han encontrado resultados';
- var placeholdertext = 'Buscar'
- var searcherConditionCount = 6;
- var elementId = this.attr('id');
- this.removeClass();
- this.removeAttr( 'style' );
-
- if(language != undefined && language == 'en'){
-	 noResultsText = 'No results found';
-	 placeholdertext = 'Search'
- }
-
- if(optionsCount != undefined){
-	 searcherConditionCount = optionsCount;
- }
-
- $BLUEJQuery( "#"+elementId+"Div").remove();
- var selectDiv;
- var selectedLabel = null;
-
- if(this.prop('disabled')){
-		 selectDiv = $BLUEJQuery("<div id='"+ elementId +"Div' class='bel-click-disable'></div>");
- }else{
-	 selectDiv = $BLUEJQuery("<div id='"+ elementId +"Div'></div>");
-	 if($BLUEJQuery(this).attr('scrollable') != undefined){
-		 selectDiv.prop('scrollable', true);
-	 }
- }
-
- var selectList = $BLUEJQuery('<ul id="'+elementId+'List" class="bel-option-list bel-option-list-'+size+'"></ul>');
-
- if($BLUEJQuery(this).find('option').length > searcherConditionCount){
-	 var selectSearcher = '';
-	 selectSearcher += '<div><input id="'+elementId+'Searcher" type="text"  onkeyup="selectSearcherFilter(\''+elementId+'List\',\''+elementId+'Searcher\',\''+elementId+'NoResults\',\''+elementId+'CleanBtn\')" class="bel-input--icon bel-input--icon-'+size+' bel-input-default bel-input-searcher" placeholder="'+placeholdertext+'">';
-	 selectSearcher += '<span class="bel-icon-search-s bel-input-searcher-left-icon"></span>';
-	 selectSearcher += '<span id="'+elementId+'CleanBtn" class="bel-icon-error-xxs bel-input-searcher-right-icon" style="display:none;" onclick="cleanSearcherInput(\''+elementId+'Searcher\',\''+elementId+'NoResults\'); showAllSelectOptions(\''+elementId+'List\',\''+elementId+'CleanBtn\')"></span>';
-	 selectSearcher += '<h5 id="'+elementId+'NoResults" class="bel-typography bel-typography-h5 bel-position-center bel-option-no-results" style="display:none">'+noResultsText+'</h5>';
-	 $BLUEJQuery(selectList).append($BLUEJQuery(selectSearcher));
- }
-
- $BLUEJQuery(this).children( 'option' ).each(function () {
-	 if($BLUEJQuery(this).prop('disabled')){
-		 if($BLUEJQuery(this).attr('value') != '-1'){
-			 $BLUEJQuery(selectList).append($BLUEJQuery('<li class="bel-option-disabled">'+$BLUEJQuery(this).text()+'</li>'));
-		 }
-	 }else{
-		 if ($BLUEJQuery(this).prop('selected')){
-			 $BLUEJQuery(selectList).append($BLUEJQuery('<li class="bel-option bel-selected-option" onclick="updateBelSelect(\''+elementId+'\', \''+$BLUEJQuery(this).attr('value')+'\', this.innerHTML, this);">'+$BLUEJQuery(this).text()+'</li>'));
-		 }
-		 else{
-			 $BLUEJQuery(selectList).append($BLUEJQuery('<li class="bel-option" onclick="updateBelSelect(\''+elementId+'\', \''+$BLUEJQuery(this).attr('value')+'\', this.innerHTML, this);">'+$BLUEJQuery(this).text()+'</li>'));
-		 }
-	 }
-	 if($BLUEJQuery(this).prop('selected')){
-		 selectedLabel= '<p class="bel-truncate-text bel-display-inline bel-space-reset" style="max-width: calc(100% - 25px);">' +$BLUEJQuery(this).text()+'</p>';
-	 }
- });
-
-
- this.find( 'optgroup' ).each(function () {
-	 $BLUEJQuery(selectList).append($BLUEJQuery('<li class="bel-option-disabled">'+$BLUEJQuery(this).attr("label")+'</li>'));
-	 $BLUEJQuery(this).find( 'option' ).each(function () {
-		 $BLUEJQuery(selectList).append($BLUEJQuery('<li class="bel-option" onclick="updateBelSelect(\''+elementId+'\', \''+$BLUEJQuery(this).attr('value')+'\', this.innerHTML, this);">'+$BLUEJQuery(this).text()+'</li>'));
-		 if($BLUEJQuery(this).prop('selected')){
-			 selectedLabel = '<p class="bel-truncate-text bel-display-inline bel-space-reset" style="max-width: calc(100% - 25px);">' +$BLUEJQuery(this).text()+'</p>';
-		 }
-	 });
- });
- if(this.prop('disabled')){
-	 $BLUEJQuery(selectDiv).append($BLUEJQuery('<label id="'+elementId+'Label" class="bel-select bel-select-'+size+' bel-select-default bel-select-close-icon bel-select-close-icon-disabled" style=" background: #ededed;"  onclick="displayBelOption(\''+elementId+'List\', \''+elementId+'Label\',\''+elementId+'Searcher\',\''+elementId+'CleanBtn\');">'+selectedLabel+'</label>'));
- }else{
-	 $BLUEJQuery(selectDiv).append($BLUEJQuery('<label id="'+elementId+'Label" class="bel-select bel-select-'+size+' bel-select-default bel-select-close-icon bel-cursor-pointer" onclick="displayBelOption(\''+elementId+'List\', \''+elementId+'Label\',\''+elementId+'Searcher\',\''+elementId+'CleanBtn\');">'+selectedLabel+'</label>'));
-	 }
-
- $BLUEJQuery(selectDiv).append($BLUEJQuery(selectList));
- this.before( selectDiv);
- this.addClass('bel-box-hidden');
-};
-
-function onBlurSelect(idList, idLabel, inputSearcherId, cleanBtnId){
-	if ($BLUEJQuery('#' + idLabel).hasClass('bel-select-open-icon')) {
-		displayBelOption(idList, idLabel, inputSearcherId, cleanBtnId);
-	}
+function normalizeText (str) {
+	str = str.trim().toLowerCase();
+	str = str.replace(/à|á|â|ã|å|ă|ä|ǎ/g, 'a');
+	str = str.replace(/è|é|ê|ë|ē|ĕ|ė|ě/g, 'e');
+	str = str.replace(/ì|í|î|ï|ĩ|ī|ĭ/g, 'i');
+	str = str.replace(/ò|ó|ô|õ|ö|ǒ|ő/g, 'o');
+	str = str.replace(/ù|ú|û|ũ|ū|ŭ|ů|ű|ü/g, 'u');
+	str = str.replace(/ñ|ń|ņ|ň|ŉ/g, 'n');
+	str = str.replace(/ç/g, 'c');	 
+	return str; 
 }
 
-// select
-function updateBelSelect(id, value, optionText, element) {
-	$BLUEJQuery("#"+id+"Label").html('<p class="bel-truncate-text bel-display-inline bel-space-reset" style="max-width: calc(100% - 25px)">' +optionText+'</p>');
-	$BLUEJQuery("#"+id+"Label").html($BLUEJQuery("#"+id+"Label").text());
-	$BLUEJQuery("#" + id + "Label").addClass("bel-select-filled");
-	$BLUEJQuery("#" + id + "List").removeClass("bel-display-list");
-	$BLUEJQuery("#" + id + "Label").removeClass('bel-select-open-icon');
-	$BLUEJQuery("#" + id + "Label").addClass('bel-select-close-icon');
-	var allOptions = $BLUEJQuery("#" + id + "List").children('li');
-	allOptions.removeClass('bel-selected-option');
-	$BLUEJQuery(element).addClass('bel-selected-option');
-	$BLUEJQuery('#'+id+' option').removeAttr("selected");
-  $BLUEJQuery('#'+id+' option[value="'+value+'"]').attr('selected', true);
-	$BLUEJQuery("#" + id).val(value);
-	$BLUEJQuery("#" + id).trigger("change");
-}
-
-function displayBelOption(idList, idLabel, inputSearcherId, cleanBtnId) {
-  event.stopPropagation();
-	if ($BLUEJQuery('#' + idLabel).hasClass('bel-select-open-icon')) {
-		$BLUEJQuery("#" + idLabel).removeClass('bel-select-open-icon');
-		$BLUEJQuery("#" + idLabel).addClass('bel-select-close-icon');
-		$BLUEJQuery("#" + idList).removeClass("bel-display-list");
-	} else {
-		if($BLUEJQuery("#" + idList).parent().prop('scrollable') == true){
-			scrollToGroup("#" + idLabel);
-		}
-		var allOptions = $BLUEJQuery(".bel-option-list");
-		allOptions.removeClass('bel-display-list');
-		var allSelectLabels = $BLUEJQuery(".bel-select");
-		allSelectLabels.removeClass('bel-select-open-icon');
-		allSelectLabels.addClass('bel-select-close-icon');
-		if (!$BLUEJQuery('#' + idLabel).hasClass('bel-select-disabled')) {
-			$BLUEJQuery('#' + idList).toggleClass('bel-display-list');
-			$BLUEJQuery("#" + idLabel).addClass('bel-select-open-icon');
-		}
-		inputSearcherFocus(inputSearcherId);
-		$BLUEJQuery(document).click(function(event){
-			if($BLUEJQuery(event.target)[0].id != idList &&
-				 $BLUEJQuery(event.target)[0].id != idLabel &&
-				 $BLUEJQuery(event.target)[0].id != cleanBtnId &&
-				 $BLUEJQuery(event.target)[0].id != inputSearcherId){
-				onBlurSelect(idList, idLabel, inputSearcherId, cleanBtnId);
-			}
-	  });
-	}
-}
-
-var inputSearcherFocus = function getFocus(inputSearcherId) {  
-	if(document.getElementById(inputSearcherId) != null){        
-  	document.getElementById(inputSearcherId).focus();
-	}
-}
-
-function cleanSearcherInput(inputSearcherId, noResultsLabel) {
-	$BLUEJQuery('#'+inputSearcherId).val('');
-	$BLUEJQuery('#'+noResultsLabel).css('display','none');
-}
-
-function selectSearcherFilter(selectId, inputSearcherId, noResultsLabel, cleanBtnId) {
-	var searchText = $BLUEJQuery('#'+inputSearcherId).val().toLowerCase();
-	var compareWith = '';
-	var resultCount = 0;
-	var parentId = null;
-	var boldText;
-	var i;
-
-	if(searchText != ''){
-		$BLUEJQuery('#'+cleanBtnId).css('display','block');
-		$BLUEJQuery('#'+selectId+' li').each(
-			function(){
-				compareWith = $BLUEJQuery(this).text().toLowerCase();
-
-				if($BLUEJQuery(this).hasClass('bel-option-disabled')){
-					$BLUEJQuery(this).css('display','none');
-					parentId = this;
-				}else{
-						if (normalizeText(compareWith).search(normalizeText(searchText)) == -1) {
-								$BLUEJQuery(this).css('display','none');
-						}else{
-								boldText = searchText.bold();
-								boldText = compareWith.replace(searchText, boldText);
-								if(boldText.charAt(0) != '<'){
-									compareWith = boldText.charAt(0).toUpperCase() + boldText.substr(1).toLowerCase();
-								}else{
-									compareWith = boldText.substr(0,3) + boldText.substr(3,1).toUpperCase() + boldText.substr(4).toLowerCase();
-								}
-								$BLUEJQuery(this).html(compareWith);
-								$BLUEJQuery(this).css('display','block');
-								if(parentId != null){
-									$BLUEJQuery(parentId).css('display','block');
-									parentId = null;
-								}
-								resultCount += 1
-						}
-				}
-		});
-	}else{
-		showAllSelectOptions(selectId, cleanBtnId);
-		resultCount = 1;
-	}
-
-	if(resultCount < 1){
-		$BLUEJQuery('#'+noResultsLabel).css('display','block');
-	}else{
-		$BLUEJQuery('#'+noResultsLabel).css('display','none');
-	}
-}
-
-function showAllSelectOptions(selectId, cleanBtnId){
-	$BLUEJQuery('#'+selectId+' li').each(
-		function(){
-			$BLUEJQuery('#'+cleanBtnId).css('display','none');
-			$BLUEJQuery(this).css('display','block');
-			$BLUEJQuery(this).html($BLUEJQuery(this).text());
-		});
-}
 
 $BLUEJQuery.fn.blueTable =function (properties){
 
@@ -1836,6 +1639,7 @@ function makeBody(element, properties){
 		 });
 		//En caso de que tenga scroll remueve clases y mueve el scroll a la izquierda
 		removeFixedColumns($BLUEJQuery(element).attr("id"));
+		$BLUEJQuery("#divScroll"+$BLUEJQuery(element).attr("id")).animate({scrollLeft: 0}, 300);
 	}
 }
 
@@ -2153,9 +1957,9 @@ function displayMoreSubRows(idTable){
 }
 
 function filterTableSearch(element, idTable){
-	  var searchValue = normalizeText($BLUEJQuery(element).val().toUpperCase().trim());
+	  var searchValue = normalizeText($BLUEJQuery(element).val());
 	  $BLUEJQuery("#"+idTable+" >tbody>tr[statusDisplayRow!='neutral']").filter(function() {
-		  if ((normalizeText($BLUEJQuery(this).text().toUpperCase().trim()).indexOf(searchValue))>-1){
+		  if ((normalizeText($BLUEJQuery(this).text()).indexOf(searchValue))>-1){
 			  $BLUEJQuery(this).attr('statusDisplayRow', 'true');
 			  $BLUEJQuery(this).toggle(true);
 		  }else{
@@ -2166,6 +1970,7 @@ function filterTableSearch(element, idTable){
 	  manageTableResult(idTable,searchValue);
 	//En caso de que tenga scroll remueve clases y mueve el scroll a la izquierda
 	  removeFixedColumns(idTable);
+	  $BLUEJQuery("#divScroll"+idTable).animate({scrollLeft: 0}, 300);
 }
 
 
@@ -2185,7 +1990,7 @@ if ($BLUEJQuery("#"+element+" >tbody >tr[data-subrowcount]").length>0){
  
 function makeFixedColumns(element, properties) {
 	if(properties.tableScrollWidth && properties.tableScrollWidth != undefined){
-		var navInfo = getBrowserInfo()
+		var navInfo = getBrowserInfo();
 		if (navInfo.indexOf('IE') == 0){
 			if(element.children("thead").children("tr").children("th").length!=undefined){
 				makeCellColumFixedIE(element, properties, 'thead', 'th');
@@ -2198,13 +2003,13 @@ function makeFixedColumns(element, properties) {
 	      makeCellColumFixed($BLUEJQuery(element).attr("id"), properties);
 	      validateScrollTable($BLUEJQuery(element).attr("id"), properties);     
 		}
-		// Compatibilidad especial para firefox 
-		if (navigator.userAgent.indexOf("Firefox") != -1) {
-            element.css({'border-collapse': 'separate', 'border-spacing': 0}); 
-        }
-        element.css({'min-width': (properties.tableScrollWidth), 'table-layout': 'fixed'});   
+		if(navInfo.indexOf('Chrome') != 0){
+		element.css({'border-collapse': 'separate', 'border-spacing': 0});	  
+		}
+		element.css({'min-width': (properties.tableScrollWidth), 'table-layout': 'fixed'});	
 	}
 }
+
 
 /**
  * Función que se encarga de insertar las clases para que las columnas sean fixed
@@ -2334,7 +2139,6 @@ function removeFixedColumns(idTable) {
 	  			}
 	  		});
 	  	});
-	  	$BLUEJQuery("#divScroll"+idTable).animate({scrollLeft: 0}, 500);
 	  }
 }
 
@@ -3109,8 +2913,8 @@ function onBlurSelect(idList, idLabel, inputSearcherId, cleanBtnId){
 
 // select
 function updateBelSelect(id, value, optionText, element) {
-	$BLUEJQuery("#"+id+"Label").html('<p class="bel-truncate-text bel-display-inline bel-space-reset" style="max-width: calc(100% - 25px)">' +optionText+'</p>');
-	$BLUEJQuery("#"+id+"Label").html($BLUEJQuery("#"+id+"Label").text());
+  optionText = optionText.replace('<b>','').replace('</b>','');
+  $BLUEJQuery("#"+id+"Label").html('<p class="bel-truncate-text bel-display-inline bel-space-reset" style="max-width: calc(100% - 25px)">' +optionText+'</p>');
 	$BLUEJQuery("#" + id + "Label").addClass("bel-select-filled");
 	$BLUEJQuery("#" + id + "List").removeClass("bel-display-list");
 	$BLUEJQuery("#" + id + "Label").removeClass('bel-select-open-icon');
@@ -3155,8 +2959,8 @@ function displayBelOption(idList, idLabel, inputSearcherId, cleanBtnId) {
 	}
 }
 
-var inputSearcherFocus = function getFocus(inputSearcherId) {  
-	if(document.getElementById(inputSearcherId) != null){        
+var inputSearcherFocus = function getFocus(inputSearcherId) {
+	if(document.getElementById(inputSearcherId) != null){
   	document.getElementById(inputSearcherId).focus();
 	}
 }
