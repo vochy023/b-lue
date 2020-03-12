@@ -37,12 +37,15 @@ $BLUEJQuery(document).on('focus', '.bel-input-currency', function () {
 		
 	}
 });
-	
+
 $BLUEJQuery(document).on('focusout', '.bel-input-currency', function () {
 	if($BLUEJQuery(this).parent().hasClass("bel-currency-content")) {
 		$BLUEJQuery(this).parent().removeClass("bel-input-line");
 	}
 });
+
+
+
 //Fin de Focus en Input
 
 function displayDownloadOption(idList, idLabel) {
@@ -114,38 +117,35 @@ function OnInput(){
 //funcion tab
 //Caga los textos al hacer click en los tabs
 $BLUEJQuery.fn.makeTabs = function(tabSelected){
-	var tabContiner = this;
-	this.attr('class', 'bel-tab');
-	this.find( "ul" ).each(function () {
-		$BLUEJQuery(this).attr('class', 'bel-tab-container');
-	});
-	this.find( "ul" ).find( "li" ).each(function () {
-		var tab = $BLUEJQuery(this).find('a').attr( "href" );
-		$BLUEJQuery(tab).attr('class', 'bel-tab-container__bel-tab-content');
-		$BLUEJQuery(this).find('a').attr('class', 'bel-tab-container-element');
-		$BLUEJQuery(this).click(function(){
-			$BLUEJQuery(tabContiner).find( "div" ).each(function () {
-				$BLUEJQuery(this).hide();
-			});
-			$BLUEJQuery(tabContiner).find( "ul" ).find( "li" ).each(function () {
-				$BLUEJQuery(this).attr('class', 'bel-tab-container-link bel-tab-container-element__unselected');
-			});
-			$BLUEJQuery(this).attr('class', 'bel-tab-container-link bel-tab-container-element__selected');
-			$BLUEJQuery(tab).show();
-			$BLUEJQuery(tab).find( "div" ).each(function () {
-				$BLUEJQuery(this).removeAttr('style');
-			});
+  var tabContiner = this;
+  this.attr('class', 'bel-tab');
+									 
+  this.children('ul').attr('class', 'bel-tab-container');
+	
+  this.children('ul').find( "li" ).each(function () {
+      var tab = $BLUEJQuery(this).find('a').attr( "href" );
+      $BLUEJQuery(tab).attr('class', 'bel-tab-container__bel-tab-content');
+      $BLUEJQuery(this).find('a').attr('class', 'bel-tab-container-element');
+      $BLUEJQuery(this).click(function(){
+          $BLUEJQuery(tabContiner).find( "div" ).each(function () {
+              $BLUEJQuery(this).hide();
+          });															
+          $BLUEJQuery(tabContiner).children('ul').children('li').attr('class', 'bel-tab-container-link bel-tab-container-element__unselected');
+          $BLUEJQuery(this).attr('class', 'bel-tab-container-link bel-tab-container-element__selected');
+          $BLUEJQuery(tab).show();
+          $BLUEJQuery(tab).find( "div" ).each(function () {
+              $BLUEJQuery(this).removeAttr('style');
+          });
+      });
 
-		});
+      if("#"+tabSelected == tab){
+          $BLUEJQuery(this).attr('class', 'bel-tab-container-link bel-tab-container-element__selected');
+          $BLUEJQuery(this).click();
+      }else{
+          $BLUEJQuery(this).attr('class', 'bel-tab-container-link bel-tab-container-element__unselected');
+      }
 
-		if("#"+tabSelected == tab){
-			$BLUEJQuery(this).attr('class', 'bel-tab-container-link bel-tab-container-element__selected');
-			$BLUEJQuery(this).click();
-		}else{
-			$BLUEJQuery(this).attr('class', 'bel-tab-container-link bel-tab-container-element__unselected');
-		}
-
-	});
+  });
 
 };
 //fin funcion tab
@@ -204,7 +204,7 @@ function validateBLUEJQuery() {
 $BLUEJQuery.fn.belCreateWizardProcessStep = function(steps, messagesStep, selectedStep) {
 	if (steps <= 5) {
 
-		var processList = $BLUEJQuery('<ul class="wizard"></ul>');
+		var processList = $BLUEJQuery('<ul class="wizard-container"></ul>');
 		for (var i = 0; i < steps; i++) {
 			var step = $BLUEJQuery('<li class="w-step w-step-inactive w-steps-'
 					+ steps
@@ -230,7 +230,7 @@ $BLUEJQuery.fn.belCreateWizardProcessStep = function(steps, messagesStep, select
 			processList.append(step);
 		}
 
-		this.html(processList).css('display', 'flex');
+		this.html(processList);
 		animationProgressBar(this, steps, selectedStep);
 
 	}
@@ -239,7 +239,7 @@ $BLUEJQuery.fn.belCreateWizardProcessStep = function(steps, messagesStep, select
 
 function animationProgressBar(elem, steps, selectedStep){
 	if(selectedStep <= steps){
-		$BLUEJQuery(elem).children('.wizard').children('.w-step').each(function(){
+		$BLUEJQuery(elem).children('.wizard-container').children('.w-step').each(function(){
 			if($BLUEJQuery(this).hasClass("w-step-active")){
 				$BLUEJQuery(this).addClass("w-step-actual");
 			}
@@ -400,7 +400,7 @@ $BLUEJQuery.fn.delayKeyup = function(callback, ms){
  function belDeleteEmailCont(element){
 
 	$BLUEJQuery(document.getElementById(element.id)).remove();
- 	$BLUEJQuery( element ).parent(".bel-col-7").remove();
+ 	$BLUEJQuery( element ).parent(".col-7").remove();
  	$BLUEJQuery( element ).parent(".bel-space-top-xs").remove();
  }
 
@@ -463,11 +463,25 @@ function toggleInfoBox(elementID, showDetailsLabel, hideDetailsLabel){
  */
 $BLUEJQuery.fn.blueInputPasswordType = function(inputId, inputSize, show, hide){
 	 $BLUEJQuery('#'+inputId).removeClass();
-	 $BLUEJQuery('#'+inputId).addClass("bel-input--icon bel-input--icon-"+inputSize.toLowerCase()+" bel-input-default");
+	 var inputSizeClass=""
+	 if(inputSize!=''){
+		 inputSizeClass="bel-input--icon-"+inputSize.toLowerCase();
+	 }
+	 $BLUEJQuery('#'+inputId).addClass("bel-input--icon "+inputSizeClass+" bel-input--icon-reset");
+	 var parentDiv = $BLUEJQuery('<div class="display-flex"> </div>');
+	 $BLUEJQuery('#'+inputId).before( parentDiv);
+	 parentDiv.append($BLUEJQuery("#"+inputId));
+	 
 	 $BLUEJQuery('#'+inputId).prop("type", "password");
-	 $BLUEJQuery('#'+inputId).css("padding-right", "71px");
-	 var selectDiv = $BLUEJQuery('<span onclick="validateShowElementLabel(\''+inputId+'\',this,\''+show+'\',\''+hide+'\' )" style="margin-left: -26px;color:#6D6E71; font-size: 14px; cursor:pointer;" class="bel-validation-icon bel-typography bel-typography-label">'+show+'</span>');
+	 var selectDiv = $BLUEJQuery('<div class="input-password__border display-flex"><span onclick="validateShowElementLabel(\''+inputId+'\',this,\''+show+'\',\''+hide+'\' )" class="bel-typography bel-typography-label display-flex align-items-center bel-padding-right-s bel-padding-left-s">'+show+'</span></div>');
 	 $BLUEJQuery('#'+inputId).after( selectDiv);
+	
+	$BLUEJQuery(document).on('focus', '#'+inputId, function () {
+		$BLUEJQuery(this).parent().children().addClass("bel-input-line");
+	});
+	$BLUEJQuery(document).on('focusout', '#'+inputId, function () {
+		$BLUEJQuery(this).parent().children().removeClass("bel-input-line");
+	});
 };
 
 
@@ -564,8 +578,8 @@ function createAlertMessage(idContainer, alertType, iconClass, title, message, b
 	var navInfo = getBrowserInfo();
 
 	// Estilo del componente (tipo, color, icono)
-	var row = $BLUEJQuery("<div/>").addClass("bel-grid-row");
-	var column = $BLUEJQuery("<div/>").addClass("bel-col-12").appendTo(row);
+	var row = $BLUEJQuery("<div/>").addClass("grid-row");
+	var column = $BLUEJQuery("<div/>").addClass("col-12").appendTo(row);
 	var alertMessage = $BLUEJQuery("<div/>").addClass("bel-alertMessage").appendTo(column);
 	var alertClass = getAlertClassByType(alertType);
 	//Valida si el navegador es IE
@@ -1606,7 +1620,7 @@ function makeBody(element, properties){
 		});
 		if(properties.extensible && trCounter > maxItemsCollapsed && properties.itemPerPage==undefined ){
 			$BLUEJQuery(this).append( "<tr maxItemsCollapsed='"+maxItemsCollapsed+"' statusDisplayRow='neutral' id='seTR"+$BLUEJQuery(element).attr("id")+"'><td colspan='"+thCounter+"' class='bel-extensive-menu_link'><a class='bel-typography bel-typography-link bel-icon-arrow-down-xxs' href='javascript:void(0)' onclick='showMoreItems(\""+$BLUEJQuery(element).attr("id")+"\")'>"+extensibleLabel+"</a></td></tr>");
-			$BLUEJQuery(this).append( "<tr statusDisplayRow='neutral' id='heTR"+$BLUEJQuery(element).attr("id")+"' class='bel-hide-element'><td colspan='"+thCounter+"' class='bel-extensive-menu_link'><a class='bel-typography bel-typography-link bel-icon-arrow-up-xxs' href='javascript:void(0)' onkeypress='hideItems(\""+$BLUEJQuery(element).attr("id")+"\"\,"+ maxItemsCollapsed+"\,0)'; onclick='hideItems(\""+$BLUEJQuery(element).attr("id")+"\"\,"+ maxItemsCollapsed+"\,300)'>"+collapseLabel+"</a></td></tr>");
+			$BLUEJQuery(this).append( "<tr statusDisplayRow='neutral' id='heTR"+$BLUEJQuery(element).attr("id")+"' class='bel-display-none'><td colspan='"+thCounter+"' class='bel-extensive-menu_link'><a class='bel-typography bel-typography-link bel-icon-arrow-up-xxs' href='javascript:void(0)' onkeypress='hideItems(\""+$BLUEJQuery(element).attr("id")+"\"\,"+ maxItemsCollapsed+"\,0)'; onclick='hideItems(\""+$BLUEJQuery(element).attr("id")+"\"\,"+ maxItemsCollapsed+"\,300)'>"+collapseLabel+"</a></td></tr>");
 		}
 		
 		if (properties.itemPerPage != undefined){
@@ -1698,8 +1712,8 @@ $BLUEJQuery("#"+tableId+" >tbody>tr[statusDisplayRow='true']").each(function (i)
 		}
 		$BLUEJQuery(this).show(300);
 	 });		    
-	 $BLUEJQuery("#seTR"+tableId).hide();
-	 $BLUEJQuery("#heTR"+tableId).show();
+	 $BLUEJQuery("#seTR"+tableId).addClass("bel-display-none");
+	 $BLUEJQuery("#heTR"+tableId).removeClass("bel-display-none");
 }
 
 
@@ -1726,8 +1740,8 @@ function hideItems(tableId,itemsToShow,time){
 	 $BLUEJQuery("#"+tableId+" >tbody >tr[statusDisplayRow='false']").each(function (i) {
 		 $BLUEJQuery(this).hide(time);
 	 });
-    $BLUEJQuery("#heTR"+tableId).hide();
-	$BLUEJQuery("#seTR"+tableId).show();
+    $BLUEJQuery("#heTR"+tableId).addClass("bel-display-none");
+	$BLUEJQuery("#seTR"+tableId).removeClass("bel-display-none");
 	$BLUEJQuery("#seTR"+tableId).find('.bel-icon-subaccount-open').addClass("bel-icon-subaccount-close").removeClass( "bel-icon-subaccount-open" );
 }
 
@@ -1873,11 +1887,11 @@ function makeCaption(element, properties){
 
 function makeSearch(element,idTable) {	
 	var container= $BLUEJQuery("<div class='bel-table_caption-group bel-position-right'></div>")
-	var dataSearchContainer = $BLUEJQuery('<div class="bel-col-offset-4 bel-col-8 bel-position-relative" style="padding:0;">' +
+	var dataSearchContainer = $BLUEJQuery('<div class="offset-4 col-8 bel-position-relative" style="padding:0;">' +
 			'<span class="bel-icon-search-xs bel-search-icon-position"></span>' + '</div>');
 	var dataSearchInput = $BLUEJQuery('<input id="search_' + idTable + '" class="bel-input-search bel-search__input" type="text" name="" value="" placeholder= "'+ $BLUEJQuery(element).attr('placeholder') +'" onkeyup = "filterTableSearch(this, \''+idTable+'\');">');    
 			dataSearchContainer.append(dataSearchInput);
-	var  dataSearchResults = $BLUEJQuery('<div class="bel-col-offset-4 bel-col-8" style="padding:0;">' +
+	var  dataSearchResults = $BLUEJQuery('<div class="offset-4 col-8" style="padding:0;">' +
 		   '<p id="searchResults' + idTable + '" data-items-type-label="'+ $BLUEJQuery(element).attr('data-items-type-label') + '" class="bel-padding-top-xs bel-typography bel-typography-h5"> ' + $BLUEJQuery("#"+idTable+" >tbody >tr").length+ ' ' + $BLUEJQuery(element).attr('data-items-type-label') + '</p></div>');  
 	container.append(dataSearchContainer);
     container.append(dataSearchResults);
@@ -2004,7 +2018,8 @@ function makeFixedColumns(element, properties) {
 	      validateScrollTable($BLUEJQuery(element).attr("id"), properties);     
 		}
 		if(navInfo.indexOf('Chrome') != 0){
-		element.css({'border-collapse': 'separate', 'border-spacing': 0});	  
+		element.css({'border-collapse': 'separate', 'border-spacing': 0});
+		element.addClass('table-fixed-ie');
 		}
 		element.css({'min-width': (properties.tableScrollWidth), 'table-layout': 'fixed'});	
 	}
@@ -2310,7 +2325,7 @@ function isDeleteRow(mutation){
 		      }
 		      var loadingBarContainer = $BLUEJQuery('<div class="' + loadingBarClass + '"><progress min="' + min + '" max="' + max + '" value="0"></progress></div>');
 		      var loadingPercentContainer = $BLUEJQuery('<div class="' + loadingPercentClass + '"><p class="bel-typography bel-typography-p"></p></div>');
-		      var loadingTxtContainer = $BLUEJQuery('<div class="' + loadingTxtClass + '"><h4 class="bel-typography bel-typography-h4"></h4></div>');
+		      var loadingTxtContainer = $BLUEJQuery('<div class="' + loadingTxtClass + '"><h4 class="bel-typography bel-typography-h4 bel-truncate-text"></h4></div>');
 		
 		      this.$element.append(loadingBarContainer);
 		      if (this.loadingBarSettings.percentIndicator) {
@@ -2350,16 +2365,12 @@ function isDeleteRow(mutation){
 		    if(this.loadingBarSettings.statusText !=''){
 		      txtWidth = this.$element.children('.bel-loading__status').outerWidth(true) + 10;
 		    }
-		    var loadingWidthPercent = parseInt((loadingWidth /100) * 100);
-		    if(loadingWidthPercent > (loadingWidth - percentWidth - txtWidth) ){
-		      loadingWidthPercent = (loadingWidth - percentWidth - txtWidth);
-		    }
+			var sizeBar= loadingWidth-(txtWidth+percentWidth);
+			var porcentLoadingBarWidth =Math.ceil((sizeBar*100)/loadingWidth);
+			
+			this.$element.children('.bel-loading__bar').css('width',porcentLoadingBarWidth+'%');
 		
-		    if(loadingWidthPercent < 100){
-		      loadingWidthPercent = 100;
-		    }
-		
-		    this.$element.children('.bel-loading__bar').children('progress').css('width', loadingWidthPercent + 'px')
+		    this.$element.children('.bel-loading__bar').children('progress').css('width','100%')
 	    }, 	        
         updateBar: function(newValue,newStatusText) {
 			var lastValue = this.loadingBarSettings.startValue;
@@ -2404,12 +2415,14 @@ function isDeleteRow(mutation){
 		    
 	   //funciones que se llama desde el html para manejar la barra.
 	    changeValue: function(valueForUpdate) {
-	    	this.loadingBarSettings.stopStatus = false;
-	    	valueForUpdate = Math.round(valueForUpdate);
-	            if (valueForUpdate != undefined && !isNaN(parseInt(valueForUpdate)) && this.validateMinAndMax(valueForUpdate)) {
-	            	this.updateBar(valueForUpdate);
-	              }
-	        },
+			if(valueForUpdate != undefined){
+				this.loadingBarSettings.stopStatus = false;
+				valueForUpdate = Math.round(valueForUpdate);
+					if (!isNaN(parseInt(valueForUpdate)) && this.validateMinAndMax(valueForUpdate)) {
+						this.updateBar(valueForUpdate);
+					  }
+			}
+	    },
 	    changeColor: function(variable) {
 	      if (variable !== undefined) {
 	        this.$element.children('.bel-loading__bar').removeClass('bel-loading-bar__' + this.loadingBarSettings.color);
@@ -2426,7 +2439,7 @@ function isDeleteRow(mutation){
 	          if(this.$element.children().hasClass('bel-loading__status')){
 	            this.$element.children('.bel-loading__status').children('h4').text(this.loadingBarSettings.statusText);
 	          }else{
-	        	  var loadingTxtContainer = $BLUEJQuery('<div class="' + loadingTxtClass + '"><h4 class="bel-typography bel-typography-h4"></h4></div>');
+	        	  var loadingTxtContainer = $BLUEJQuery('<div class="' + loadingTxtClass + '"><h4 class="bel-typography bel-typography-h4 bel-truncate-text"></h4></div>');
 	        	  this.$element.append(loadingTxtContainer);
 	        	  this.$element.children('.bel-loading__status').children('h4').text(this.loadingBarSettings.statusText);
 	        	  this.setBarWidths();
@@ -2559,17 +2572,17 @@ $BLUEJQuery.extend(DragDrop.prototype, {
 		  var fileAcceptsPrint=this.settingsDragAndDrop.fileAccept;
 		  var fileAccepts= fileAcceptsPrint.replace(/\|/g , ' , ');		
 		  var dashAccept=$BLUEJQuery('<h5 class="bel-typography bel-typography-h5 bel-space-xs">'+inputText.inputFormat + fileAccepts + inputText.inputFormatExt + this.settingsDragAndDrop.maxSizeFileMB + inputText.inputFormatSize+'</h5>');	     
-	      var dragDropTableResult = $BLUEJQuery('<div id="resultContent'+this.settingsDragAndDrop.inputId+'" class=" bel-space-top-l"></div>');
-	      var dragDropContainer = $BLUEJQuery('<div class="' + dragdropContainerClass + '"></div>');
-		  var dashedContainer = $BLUEJQuery('<div class="' + 'bel-dash-container bel-drag_drop__default bel-drag_drop__border-color-default bel-position-center' + '"></div>');
+	      var dragDropTableResult = $BLUEJQuery('<div id="resultContent'+this.settingsDragAndDrop.inputId+'" class=" bel-space-top-l col-12"></div>');
+	      var dragDropContainer = $BLUEJQuery('<div class="' + dragdropContainerClass +' col-12"></div>');
+		  var dashedContainer = $BLUEJQuery('<div class="' + 'bel-dash-container bel-drag_drop__default bel-drag_drop__border-color-default bel-position-center bel-space-top-m' + '"></div>');
 	      var dashInput = this.$element.clone();      
-	      var dragDropLabel = $BLUEJQuery('<div class="' + dragdropLabelClass + ' bel-space-top-xs"></div>');
-	      var frame = $BLUEJQuery('<div class="bel-grid-row  bel-space-bottom-l"> <div class="bel-space-bottom-m"></div></div>');
+	      var dragDropLabel = $BLUEJQuery('<div class="' + dragdropLabelClass + ' col-12 bel-space-top-xs"></div>');
+	      var frame = $BLUEJQuery('<div class="grid-row  bel-space-bottom-l"></div>');
 	
 	      // valida el navedador para determinar la instruccion a el usurio 
 			if (navInfo.indexOf('IE') == 0 || isSafari() == true){
 		  		inputTextData =  '<p class="bel-typography bel-typography-p"> '+ inputText.inputText1 +'</p>';
-		  		dragDropTableResult = $BLUEJQuery('<div id="resultContent'+this.settingsDragAndDrop.inputId+'"></div>');
+		  		dragDropTableResult = $BLUEJQuery('<div class="col-12"><div id="resultContent'+this.settingsDragAndDrop.inputId+'"></div></div>');
 		  	}else{
 		  		inputTextData = '<p class="bel-typography bel-typography-p"> '+ inputText.inputTextDrag1 +'</p>';
 		  	}
@@ -2804,15 +2817,8 @@ function calcFileSize(fileSize, ext){
 		fileSize /= 1024;
 		fz++;
 	}
-	return ((Math.round(fileSize * 100) / 100) + ' ' + ext[fz]);
-	
+	return ((Math.round(fileSize * 100) / 100) + ' ' + ext[fz]);	
 }
-
-
-
-
-
-
 
 /*
 * Funcion que activa o desactiva el desplazamiento automatico de los combos de seleccionada
@@ -2825,7 +2831,18 @@ $BLUEJQuery.fn.blueSelect = function(size, language, optionsCount){
 	 this.attr('id', this.attr('name'));
  }
 
+ var size_option_list = "";
+ var size_input_select = "";
+ var size_select = "";
+ 
+ if(size!=""){
+	size_option_list = "bel-option-list-"+size;
+	size_input_select = "bel-input--icon-"+size;
+	size_select = "bel-select-"+size;
+	 
+ }
 
+ 
  var noResultsText = 'No se han encontrado resultados';
  var placeholdertext = 'Buscar'
  var searcherConditionCount = 6;
@@ -2849,21 +2866,33 @@ $BLUEJQuery.fn.blueSelect = function(size, language, optionsCount){
  if(this.prop('disabled')){
 		 selectDiv = $BLUEJQuery("<div id='"+ elementId +"Div' class='bel-click-disable'></div>");
  }else{
-	 selectDiv = $BLUEJQuery("<div id='"+ elementId +"Div'></div>");
+	 selectDiv = $BLUEJQuery("<div id='"+ elementId +"Div' class='bel-position-relative'></div>");
 	 if($BLUEJQuery(this).attr('scrollable') != undefined){
 		 selectDiv.prop('scrollable', true);
 	 }
  }
 
- var selectList = $BLUEJQuery('<ul id="'+elementId+'List" class="bel-option-list bel-option-list-'+size+'"></ul>');
+ var selectList = $BLUEJQuery('<ul id="'+elementId+'List" class="full-width bel-option-list '+size_option_list+'"></ul>');
 
  if($BLUEJQuery(this).find('option').length > searcherConditionCount){
 	 var selectSearcher = '';
-	 selectSearcher += '<div><input id="'+elementId+'Searcher" type="text"  onkeyup="selectSearcherFilter(\''+elementId+'List\',\''+elementId+'Searcher\',\''+elementId+'NoResults\',\''+elementId+'CleanBtn\')" class="bel-input--icon bel-input--icon-'+size+' bel-input-default bel-input-searcher" placeholder="'+placeholdertext+'">';
-	 selectSearcher += '<span class="bel-icon-search-s bel-input-searcher-left-icon"></span>';
-	 selectSearcher += '<span id="'+elementId+'CleanBtn" class="bel-icon-error-xxs bel-input-searcher-right-icon" style="display:none;" onclick="cleanSearcherInput(\''+elementId+'Searcher\',\''+elementId+'NoResults\'); showAllSelectOptions(\''+elementId+'List\',\''+elementId+'CleanBtn\')"></span>';
+	 selectSearcher += '<div class="display-flex"> <div class="input-search__border display-flex"><span class="bel-icon-search-s display-flex align-items-center bel-padding-right-xs bel-padding-left-xs"></span></div>';
+	 selectSearcher += '<input id="'+elementId+'Searcher" type="text"  onkeyup="selectSearcherFilter(\''+elementId+'List\',\''+elementId+'Searcher\',\''+elementId+'NoResults\',\''+elementId+'CleanBtn\')" class="bel-input--icon '+size_input_select+' bel-input-default bel-input--icon-search" placeholder="'+placeholdertext+'">';
+	 selectSearcher += '<div class="input-search__border display-flex"> <span id="'+elementId+'CleanBtn" class="bel-icon-error-xxs bel-input-searcher-right-icon" style="display:none;" onclick="cleanSearcherInput(\''+elementId+'Searcher\',\''+elementId+'NoResults\'); showAllSelectOptions(\''+elementId+'List\',\''+elementId+'CleanBtn\')"></span></div></div>';
 	 selectSearcher += '<h5 id="'+elementId+'NoResults" class="bel-typography bel-typography-h5 bel-position-center bel-option-no-results" style="display:none">'+noResultsText+'</h5>';
 	 $BLUEJQuery(selectList).append($BLUEJQuery(selectSearcher));
+	 
+	 $BLUEJQuery(document).on('focus', '#'+elementId+'Searcher', function () {
+		$BLUEJQuery(this).parent().children().addClass("bel-input-line");
+		
+		if($BLUEJQuery('#'+elementId+'Searcher').val().length){
+			$BLUEJQuery('#'+elementId+'CleanBtn').css('display','block');
+		}
+		
+	});
+	$BLUEJQuery(document).on('focusout', '#'+elementId+'Searcher', function () {
+		$BLUEJQuery(this).parent().children().removeClass("bel-input-line");
+	});
  }
 
  $BLUEJQuery(this).children( 'option' ).each(function () {
@@ -2895,9 +2924,9 @@ $BLUEJQuery.fn.blueSelect = function(size, language, optionsCount){
 	 });
  });
  if(this.prop('disabled')){
-	 $BLUEJQuery(selectDiv).append($BLUEJQuery('<label id="'+elementId+'Label" class="bel-select bel-select-'+size+' bel-select-default bel-select-close-icon bel-select-close-icon-disabled" style=" background: #ededed;"  onclick="displayBelOption(\''+elementId+'List\', \''+elementId+'Label\',\''+elementId+'Searcher\',\''+elementId+'CleanBtn\');">'+selectedLabel+'</label>'));
+	 $BLUEJQuery(selectDiv).append($BLUEJQuery('<label id="'+elementId+'Label" class="bel-select '+size_select+' bel-select-default bel-select-close-icon bel-select-close-icon-disabled" style=" background: #ededed;"  onclick="displayBelOption(\''+elementId+'List\', \''+elementId+'Label\',\''+elementId+'Searcher\',\''+elementId+'CleanBtn\');">'+selectedLabel+'</label>'));
  }else{
-	 $BLUEJQuery(selectDiv).append($BLUEJQuery('<label id="'+elementId+'Label" class="bel-select bel-select-'+size+' bel-select-default bel-select-close-icon bel-cursor-pointer" onclick="displayBelOption(\''+elementId+'List\', \''+elementId+'Label\',\''+elementId+'Searcher\',\''+elementId+'CleanBtn\');">'+selectedLabel+'</label>'));
+	 $BLUEJQuery(selectDiv).append($BLUEJQuery('<label id="'+elementId+'Label" class="bel-select '+size_select+' bel-select-default bel-select-close-icon bel-cursor-pointer" onclick="displayBelOption(\''+elementId+'List\', \''+elementId+'Label\',\''+elementId+'Searcher\',\''+elementId+'CleanBtn\');">'+selectedLabel+'</label>'));
 	 }
 
  $BLUEJQuery(selectDiv).append($BLUEJQuery(selectList));
@@ -3028,4 +3057,206 @@ function showAllSelectOptions(selectId, cleanBtnId){
 			$BLUEJQuery(this).html($BLUEJQuery(this).text());
 		});
 }
+
+/* Funciones para el slider ------------------------------- Inicio */
+
+// the semi-colon before function invocation is a safety net against concatenated scripts and/or other plugins which may not be closed properly.
+
+;(function() {
+  "use strict";
+  // Crea un arreglo con datos por defecto 
+  var dataBaseTheme = 'range-c-active',
+  navInfo = getBrowserInfo(),
+  defaults = {
+	  dataList: [],
+	  symbolCurrency: "",
+	  eventName : "input",
+	  colorsTypography: [{
+		  "range-c-informative":"slider__typography-informative",  
+		  "range-c-warning":"slider__typography-warning", 
+		  "range-c-success":"slider__typography-success", 
+		  "range-c-neutral":"slider__typography-neutral", 
+		  "range-c-black":"slider__typography-black", 
+		  "range-c-critical":"slider__typography-critical"
+	    }]
+	 
+  };
+  // constructor
+  function slider(element,options) {
+    this.element = element;
+    this.$element = $BLUEJQuery(element);
+
+    // Carga las configuraciones e inicia el plugin
+    this.settingsSlider = $BLUEJQuery.extend({},defaults, options);
+    this.settingsSlider.inputId = element.id;
+    this.name = "blueSlider";
+    this.init();
+  }
+
+  // Avoid Plugin.prototype conflicts
+  //pone a extender la funcion slider del prototipo creado para ella.
+  $BLUEJQuery.extend(slider.prototype, {
+    init: function() {
+      // You already have access to the DOM element and the options via the instance, e.g. this.element and this.loadingBarSettings
+      this.$element = $BLUEJQuery(this.element).addClass(this.name).addClass("bel-input-range");
+    
+      this.settingsSlider.max = $BLUEJQuery(this.element).attr("max");
+      this.settingsSlider.min = $BLUEJQuery(this.element).attr("min");
+      this.settingsSlider.val = $BLUEJQuery(this.element).attr("value");
+      this.settingsSlider.dataBaseTheme = dataBaseTheme;
+      
+      if (navInfo.indexOf('IE') == 0 ){
+    	  this.settingsSlider.eventName="change";
+ 	 }
+      if(this.settingsSlider.typeCurrency == null || this.settingsSlider.typeCurrency == undefined){
+    	  this.settingsSlider.typeCurrency = "";
+      }
+       this.setInitialValues();
+       this.setRangeList();
+       this.updateBar();
+       this.showBreakPointsSlider();
+    }, 	
+    //no se ocupa pintar el data list
+    setRangeList: function() {
+    	
+    	this.settingsSlider.dataList=this.settingsSlider.dataList.sort(function(a, b){
+    	    if (a.value < b.value) return -1;
+    	    return 0;
+    	  }); 
+    	
+    	var optionsList ='<datalist id="'+this.$element.attr('id')+'Ticks">';
+    	for (var i = 0; i < this.settingsSlider.dataList.length; i++) {
+    	optionsList=optionsList+ '<option>'+ (this.settingsSlider.dataList[i].value) +'</option>';
+    	}
+    	optionsList=optionsList+'</datalist>';
+    	$BLUEJQuery(this.element).after(optionsList);
+    	$BLUEJQuery(this.element).attr("list", this.$element.attr('id')+"Ticks");
+    },
+
+    setInitialValues: function() {
+          var max = this.settingsSlider.max;
+          var min = this.settingsSlider.min;
+          var val= this.settingsSlider.val;
+          this.$element.attr("style","--min :"+min+" ; --max : "+max+"; --val: "+val+";");
+         
+          var spacing = (100 / (max - min)).toFixed(20);
+          var offsetPX = 8;
+          var list = this.settingsSlider.dataList;
+         
+          if(this.settingsSlider.currencyInputId != null || this.settingsSlider.currencyInputId != undefined){
+        	  $BLUEJQuery('#' + this.settingsSlider.currencyInputId).val(this.$element.val());
+          }else{
+        	  this.$element.before('<div class="bel-space-bottom-xs"><p id="'+ this.$element.attr('id') + 'Currency" class="bel-typography bel-typography-p">' + this.settingsSlider.typeCurrency + ' ' + this.$element.val() + '</p></div>'); 
+        	  
+          }
+          
+          this.$element.before('<div id="rTxt' + this.$element.attr('id') + '" class="bel-range-txt-area bel-space-bottom-s"></div>');
+          var tickState = $BLUEJQuery('<div class="bel-position-relative" style="display: none;"><p id="rTickState' + this.$element.attr('id') + '" class="bel-display-block bel-typography bel-typography-p bel-typography_size-s"></p></div>');
+          $BLUEJQuery('#rTxt' + this.$element.attr('id')).append(tickState);
+          
+
+          this.$element.wrap('<div class="bel-position-relative bel-padding-bottom-l" id="' + this.$element.attr('id') + 'TickContainer"></div>');
+          this.$element.addClass(this.settingsSlider.dataBaseTheme);
+          if (list != null) {
+            for (var i = 0; i < list.length; i++) {	
+              var spacingPercentaje = (spacing * list[i].value).toFixed(20) - (spacing * min).toFixed(20);
+              spacingPercentaje = (spacingPercentaje <= 0) ? spacingPercentaje = 0 : spacingPercentaje;
+              var offset = (offsetPX - ((offsetPX / 50) * spacingPercentaje)).toFixed(20);
+              var symbolAdjustment="+";
+              if (spacingPercentaje > 50) {
+            	  offset = offsetPX - ((offsetPX / 50) * (100 - spacingPercentaje));
+            	  symbolAdjustment="-";
+              }
+                this.$element.parent().prepend($BLUEJQuery('<div class="range-tick-mark"></div>').css('left', 'calc(' + spacingPercentaje + '% '+symbolAdjustment+' '+ (offset) + 'px)'));
+                this.$element.parent().prepend($BLUEJQuery('<p id="rTickLabel' + this.$element.attr('id') + i + '" class="input-interval-label bel-position-absolute bel-display-block bel-typography bel-typography-p bel-typography_size-s bel-position-center ">' + this.settingsSlider.symbolCurrency +
+                  ' ' + list[i].value + '</p>').css({
+                  'left': 'calc(' + spacingPercentaje + '% '+symbolAdjustment+' ' + offset + 'px)'
+                }));
+               
+                var nextStep = (i < (list.length - 1) ? list[i + 1].value : undefined);   
+              
+            }
+          }
+          //$BLUEJQuery('#'+ this.$element.id).bind(this.settingsSlider.eventName, $BLUEJQuery.proxy(this.showBreakPointsSlider, this));
+          this.$element.bind(this.settingsSlider.eventName, $BLUEJQuery.proxy(this.showBreakPointsSlider, this));
+              
+	},
+	bind: function(){
+		//this is itentional
+	},
+	unbind: function(){
+		//this is itentional
+	},
+	
+	showBreakPointsSlider: function(evt) { 
+		var list = this.settingsSlider.dataList;
+		 var settings=this.settingsSlider;
+		 var element=this.$element;
+		if (list != null) {
+              for (var i = 0; i < list.length; i++) {
+            	  var nextStep = (i < (list.length - 1) ? list[i + 1].value : undefined); 
+            	  var listElem=list[i];
+            	  
+			    if ((parseFloat(element.val()) > parseFloat(listElem.value)) && ((parseFloat(element.val()) <= nextStep) || (nextStep == undefined))) {
+			        $BLUEJQuery('#rTickState' + element.attr('id')).attr('class', 'bel-display-block bel-typography bel-typography-p bel-typography_size-s');
+			        $BLUEJQuery('#rTickState' + element.attr('id')).text(listElem.infoMessage).addClass('font-weight-' + listElem.format).addClass(settings.colorsTypography[0][listElem.color]);
+			        element.attr('class', 'bel-input-range').addClass(listElem.color);
+			        $BLUEJQuery('#rTickState' + element.attr('id')).parent().slideDown();
+			        $BLUEJQuery('#' + element.attr('id') + 'TickContainer .input-interval-label').removeClass('font-weight-bold');
+			        $BLUEJQuery('#rTickLabel' + element.attr('id') + i).addClass('font-weight-bold');
+			      
+			    } else if (i == 0 && (parseFloat(element.val()) <= parseFloat(listElem.value))) {
+			        $BLUEJQuery('#' + element.attr('id') + 'TickContainer .input-interval-label').removeClass('font-weight-bold');
+			        element.attr('class', 'bel-input-range ' + settings.dataBaseTheme);
+			        $BLUEJQuery('#rTickState' + element.attr('id')).parent().slideUp();
+			      
+			     }
+		        }
+		      }
+	},
+	
+	setSliderValue: function(actualValue){
+		 $BLUEJQuery('#'+this.element.id).val(actualValue);
+		 var event;
+		    if (typeof(Event) === 'function') {
+		    	event = new Event(this.settingsSlider.eventName, {
+		            'bubbles': true,
+		            'cancelable': true
+		          });
+		    } else {
+		        event = document.createEvent('Event');
+		        event.initEvent(this.settingsSlider.eventName, true, true);
+		    }
+		this.element.dispatchEvent(event);
+
+	},
+	      
+	updateBar: function() {
+		 const inputSlider = document.getElementById(this.settingsSlider.inputId);
+		 var settings=this.settingsSlider;
+		
+          inputSlider.addEventListener(this.settingsSlider.eventName, function(e) {
+            inputSlider.style.setProperty("--val", +inputSlider.value);
+            $BLUEJQuery('#' +inputSlider.id).attr("value",inputSlider.value);
+            if (settings.currencyInputId != null || settings.currencyInputId != undefined) {
+            	$BLUEJQuery('#' + settings.currencyInputId).val(inputSlider.value);
+            	$BLUEJQuery('#' + settings.currencyInputId).attr("value",inputSlider.value);
+            }
+            else{
+            	$BLUEJQuery('#' + inputSlider.id+"Currency").text(settings.typeCurrency + ' ' + inputSlider.value);
+            }
+          }, false);
+            
+          $BLUEJQuery('#' + settings.currencyInputId).on('change', function (){
+        	  $BLUEJQuery('#' + inputSlider.id).blueSlider("setSliderValue",$BLUEJQuery(this).val());
+          });
+  
+        }
+  });  
+  $BLUEJQuery.fn.blueSlider = function(options) {
+	 genericPlugin('blueSlider',options,arguments,slider,this)
+  };
+})();
+
+/* Funciones para el slider ---------------------------------- FIN */
 
