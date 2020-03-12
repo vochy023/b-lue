@@ -3111,8 +3111,8 @@ function showAllSelectOptions(selectId, cleanBtnId){
       if(this.settingsSlider.typeCurrency == null || this.settingsSlider.typeCurrency == undefined){
     	  this.settingsSlider.typeCurrency = "";
       }
+      this.setRangeList();
        this.setInitialValues();
-       this.setRangeList();
        this.updateBar();
        this.showBreakPointsSlider();
     }, 	
@@ -3150,7 +3150,7 @@ function showAllSelectOptions(selectId, cleanBtnId){
         	  
           }
           
-          this.$element.before('<div id="rTxt' + this.$element.attr('id') + '" class="bel-range-txt-area bel-space-bottom-s"></div>');
+          this.$element.before('<div id="rTxt' + this.$element.attr('id') + '" class="bel-space-bottom-s"></div>');
           var tickState = $BLUEJQuery('<div class="bel-position-relative" style="display: none;"><p id="rTickState' + this.$element.attr('id') + '" class="bel-display-block bel-typography bel-typography-p bel-typography_size-s"></p></div>');
           $BLUEJQuery('#rTxt' + this.$element.attr('id')).append(tickState);
           
@@ -3160,7 +3160,7 @@ function showAllSelectOptions(selectId, cleanBtnId){
           if (list != null) {
             for (var i = 0; i < list.length; i++) {	
               var spacingPercentaje = (spacing * list[i].value).toFixed(20) - (spacing * min).toFixed(20);
-              spacingPercentaje = (spacingPercentaje <= 0) ? spacingPercentaje = 0 : spacingPercentaje;
+              spacingPercentaje = (spacingPercentaje <= 0) ? 0 : spacingPercentaje;
               var offset = (offsetPX - ((offsetPX / 50) * spacingPercentaje)).toFixed(20);
               var symbolAdjustment="+";
               if (spacingPercentaje > 50) {
@@ -3173,12 +3173,10 @@ function showAllSelectOptions(selectId, cleanBtnId){
                   'left': 'calc(' + spacingPercentaje + '% '+symbolAdjustment+' ' + offset + 'px)'
                 }));
                
-                var nextStep = (i < (list.length - 1) ? list[i + 1].value : undefined);   
-              
+            
             }
           }
-          //$BLUEJQuery('#'+ this.$element.id).bind(this.settingsSlider.eventName, $BLUEJQuery.proxy(this.showBreakPointsSlider, this));
-          this.$element.bind(this.settingsSlider.eventName, $BLUEJQuery.proxy(this.showBreakPointsSlider, this));
+           this.$element.bind(this.settingsSlider.eventName, $BLUEJQuery.proxy(this.showBreakPointsSlider, this));
               
 	},
 	bind: function(){
@@ -3192,29 +3190,37 @@ function showAllSelectOptions(selectId, cleanBtnId){
 		var list = this.settingsSlider.dataList;
 		 var settings=this.settingsSlider;
 		 var element=this.$element;
+		 
 		if (list != null) {
               for (var i = 0; i < list.length; i++) {
             	  var nextStep = (i < (list.length - 1) ? list[i + 1].value : undefined); 
-            	  var listElem=list[i];
-            	  
+            	  var listElem=list[i]; 
 			    if ((parseFloat(element.val()) > parseFloat(listElem.value)) && ((parseFloat(element.val()) <= nextStep) || (nextStep == undefined))) {
 			        $BLUEJQuery('#rTickState' + element.attr('id')).attr('class', 'bel-display-block bel-typography bel-typography-p bel-typography_size-s');
 			        $BLUEJQuery('#rTickState' + element.attr('id')).text(listElem.infoMessage).addClass('font-weight-' + listElem.format).addClass(settings.colorsTypography[0][listElem.color]);
 			        element.attr('class', 'bel-input-range').addClass(listElem.color);
-			        $BLUEJQuery('#rTickState' + element.attr('id')).parent().slideDown();
+			        this.slideDownCustom(listElem.infoMessage);
 			        $BLUEJQuery('#' + element.attr('id') + 'TickContainer .input-interval-label').removeClass('font-weight-bold');
 			        $BLUEJQuery('#rTickLabel' + element.attr('id') + i).addClass('font-weight-bold');
 			      
 			    } else if (i == 0 && (parseFloat(element.val()) <= parseFloat(listElem.value))) {
 			        $BLUEJQuery('#' + element.attr('id') + 'TickContainer .input-interval-label').removeClass('font-weight-bold');
 			        element.attr('class', 'bel-input-range ' + settings.dataBaseTheme);
-			        $BLUEJQuery('#rTickState' + element.attr('id')).parent().slideUp();
-			      
+			        this.slideUpCustom(listElem.infoMessage);
 			     }
 		        }
 		      }
 	},
-	
+	slideUpCustom : function(infoMessage){
+		if(infoMessage!="" && infoMessage!=null && infoMessage!=undefined){
+			$BLUEJQuery('#rTickState' + this.$element.attr("id")).parent().slideUp();
+  		}
+	},
+	slideDownCustom : function(infoMessage){
+		if(infoMessage!="" && infoMessage!=null && infoMessage!=undefined){
+			$BLUEJQuery('#rTickState' + this.$element.attr("id")).parent().slideDown();
+  		}
+	},
 	setSliderValue: function(actualValue){
 		 $BLUEJQuery('#'+this.element.id).val(actualValue);
 		 var event;
