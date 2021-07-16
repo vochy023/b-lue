@@ -46,8 +46,8 @@
 
 @font-face {
 	font-family: "bluecredomatic-iconset";
-	src:url("icons/baccredomatic-iconset.woff?v=3.3") format("woff"),
-    	url("icons/baccredomatic-iconset.ttf?v=3.3") format("truetype");
+	src:url("icons/baccredomatic-iconset.woff?v=2.3") format("woff"),
+    	url("icons/baccredomatic-iconset.ttf?v=2.3") format("truetype");
 	font-weight: normal;
 	font-style: normal;
 }
