@@ -1408,6 +1408,48 @@ button {
   box-sizing: border-box;
   border: 1px solid #e6e6e6;
 }
+.card-tooltip * {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.card-tooltip {
+  visibility: hidden;
+  background-color: #ffffff;
+  -webkit-box-shadow: 0 0 6px 2px rgba(0, 0, 0, 0.28);
+  box-shadow: 0 0 6px 2px rgba(0, 0, 0, 0.28);
+  position: absolute;
+  z-index: 999;
+}
+.card-tooltip-header {
+  flex-grow: 2;
+  max-width: 100%;
+}
+.card-tooltip-size {
+  min-width: 299px;
+  max-width: 299px;
+}
+.card-tooltip-close {
+  position: relative;
+  height: auto;
+  width: 16px;
+  margin-right: 15px;
+  margin-top: 10px;
+}
+.tooltip-close {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.card-tooltip-body {
+  margin-bottom: 10px;
+  max-width: 100%;
+}
+.card-tooltip-footer {
+  background: #f3f8fc;
+  padding-bottom: 10px;
+  max-width: 100%;
+}
 .status-tag__icon,
 .status-tag__txt {
   padding: 0;
@@ -5186,6 +5228,9 @@ button {
   box-shadow: 0 0 0 3px rgba(16, 117, 187, 0.3) !important;
   outline: none !important;
 }
+.transition-none {
+  transition: none !important;
+}
 .align-content-start {
   -ms-flex-line-pack: start;
   align-content: flex-start;
@@ -7187,6 +7232,82 @@ button {
 .arrow-before:before {
   content: '\e198';
 }
+.icon-sinpe:after,
+.sinpe-before:before {
+  content: '\e199';
+}
+.icon-promotions:after,
+.promotions-before:before {
+  content: '\e200';
+}
+.icon-contacts:after,
+.contacts-before:before {
+  content: '\e201';
+}
+.icon-camera:after,
+.camera-before:before {
+  content: '\e202';
+}
+.icon-qr:after,
+.qr-before:before {
+  content: '\e203';
+}
+.icon-others-bold:after,
+.others-bold-before:before {
+  content: '\e204';
+}
+.icon-finances:after,
+.finances-before:before {
+  content: '\e205';
+}
+.icon-lifebuoy:after,
+.lifebuoy-before:before {
+  content: '\e206';
+}
+.icon-user:after,
+.user-before:before {
+  content: '\e207';
+}
+.icon-return:after,
+.return-before:before {
+  content: '\e208';
+}
+.icon-transaction:after,
+.transaction-before:before {
+  content: '\e209';
+}
+.icon-options:after,
+.options-before:before {
+  content: '\e210';
+}
+.icon-refresh:after,
+.refresh-before:before {
+  content: '\e211';
+}
+.icon-at:after,
+.at-before:before {
+  content: '\e212';
+}
+.icon-informative:after,
+.informative-before:before {
+  content: '\e213';
+}
+.icon-reminders:after,
+.reminders-before:before {
+  content: '\e214';
+}
+.icon-transactions:after,
+.transactions-before:before {
+  content: '\e215';
+}
+.icon-service-agent:after,
+.service-agent-before:before {
+  content: '\e216';
+}
+.icon-help-center:after,
+.help-center-before:before {
+  content: '\e217';
+}
 .bel-table_row__positive td {
   background-color: rgba(42, 148, 70, 0.12);
   font-weight: 500;
@@ -7226,6 +7347,24 @@ button {
   font-size: 8px;
   line-height: 1;
   margin: 0;
+}
+.card-tooltip::before {
+  content: '';
+  display: block;
+  background: #ffffff;
+  top: -5px;
+  height: 11px;
+  width: 11px;
+  transform: rotateZ(45deg);
+  -webkit-box-shadow: -2px -2px 2px 0 rgba(0, 0, 0, 0.14);
+  box-shadow: -2px -2px 2px 0 rgba(0, 0, 0, 0.14);
+  position: absolute;
+}
+.card-tooltip-left::before {
+  left: 18px;
+}
+.card-tooltip-right::before {
+  right: 18px;
 }
 .btn-action__icon:after {
   font-size: 8px;
