@@ -7360,10 +7360,10 @@ button {
   box-shadow: -2px -2px 2px 0 rgba(0, 0, 0, 0.14);
   position: absolute;
 }
-.card-tooltip-left::before {
+.card-tooltip-right::before {
   left: 18px;
 }
-.card-tooltip-right::before {
+.card-tooltip-left::before {
   right: 18px;
 }
 .btn-action__icon:after {
