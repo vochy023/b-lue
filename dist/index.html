@@ -1,0 +1,1445 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>BLUE 3.0</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <link rel="stylesheet" href="css/blue-main-style.css">
+    <script type="text/javascript" src="js/blue-main-script.js"></script>
+
+    <style>
+        /* Style the button that is used to open and close the collapsible content */
+        .collapsible {
+            cursor: pointer;
+        }
+
+        /* Style the collapsible content. Note: hidden by default */
+        .content {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="grid-container" id="myModal">
+        <div class="grid-row">
+            <div class="col-12">
+                <h2 class="typography-h2 f-size-4xl f-weight-m c-informative-medium">Loader component</h2>
+            </div>
+        </div>
+        <div class="grid-row">
+            <div class="col-3" id="loaderComponent1"></div>
+            <div class="col-3" id="loaderComponent2"></div>
+            <div class="col-3" id="loaderComponent3"></div>
+            <div class="col-3" id="loaderComponent4"></div>
+        </div>
+        <div class="grid-row m-bottom-m">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-2 m-bottom-m m-bottom-sm-reset">
+                <button id="btnAnimacion" class="btn btn-primary " style="position: relative;">Animar</button>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-2 m-bottom-m m-bottom-sm-reset">
+                <button id="btnEstado" class="btn btn-primary" style="position: relative;">Cambiar
+                    estado</button>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-2 m-bottom-m m-bottom-sm-reset">
+                <button id="btnLimpiar" class="btn btn-primary" style="position: relative;">Limpiar
+                    estado</button>
+            </div>
+        </div>
+        <div class="grid-row">
+            <div class="col-12">
+                <h2 class="typography-h2 f-size-4xl f-weight-m c-informative-medium">Animación Random</h2>
+            </div>
+            <div class="col-12">
+                <div id="randomContainer"></div>
+            </div>
+        </div>
+        <div class="grid-row m-bottom-m">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-2 p-bottom-m p-bottom-sm-reset">
+                <button id="btnStartAni" class="btn btn-primary " style="position: relative;">Animar</button>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-2 p-bottom-m p-bottom-sm-reset">
+                <button id="btnStopAni" class="btn btn-primary" style="position: relative;">Detener</button>
+            </div>
+        </div>
+        <div class="grid-row">  
+            <div class="col-12">
+                <h2 class="typography-h2 f-size-4xl f-weight-m c-informative-medium">Animaciones combinadas</h2>
+            </div>
+            <div class="col-12">
+                <div class="p-relative d-flex j-content-center a-items-center w-100">
+                    <div id="loaderComponent"></div>
+                    <div id="randomContainer1"></div>
+                </div>
+            </div>
+        </div>
+        <div class="grid-row m-bottom-m">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-2 p-bottom-m p-bottom-sm-reset">
+                <button id="btnStart" class="btn btn-primary " style="position: relative;">Animar</button>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-2 p-bottom-m p-bottom-sm-reset">
+                <button id="btnStop" class="btn btn-primary" style="position: relative;">Detener</button>
+            </div>
+        </div>
+        <!-- Tipografía -->
+        <div class="grid-row">
+            <div class="col-12">
+                <h2 class="typography-h2 f-size-4xl f-weight-m c-informative-medium">Tipografía</h2>
+            </div>
+            <div class="col-12">
+                <h1 class="typography-h1">Esto es un Título h1</h1>
+            </div>
+            <div class="col-12">
+                <h2 class="typography-h2">Esto es un Título h2</h2>
+            </div>
+            <div class="col-12">
+                <h3 class="typography-h3">Esto es un Título h3</h3>
+            </div>
+            <div class="col-12">
+                <h4 class="typography-h4">Esto es un Título h4</h4>
+            </div>
+            <div class="col-12">
+                <h5 class="typography-h5">Esto es un Título h5</h5>
+            </div>
+            <div class="col-12">
+                <h6 class="typography-h6">Esto es un Título h6</h6>
+            </div>
+            <div class="col-12">
+                <label class="typography-label">Esto es un Label</label>
+            </div>
+            <div class="col-12">
+                <p class="typography-p">Esto es un Parrafo</p>
+            </div>
+            <div class="col-12">
+                <a class="typography-link">Esto es un Link</a>
+            </div>
+            <div class="col-12">
+                <a class="typography-link-black">Esto es un Link negro</a>
+            </div>
+            <div class="col-12">
+                <a class="typography-link-contextual">Esto es un Link contextual</a>
+            </div>
+            <div class="col-12">
+                <a class="typography-placeholder">Esto es un Placeholder</a>
+            </div>
+        </div>
+
+        <!-- Iconografía -->
+        <div class="grid-row m-top-m">
+            <div class="col-12 p-reset">
+                <h2
+                    class="typography-h2 f-size-4xl f-weight-m c-informative-medium t-decoration-underline collapsible p-left-s">
+                    Iconografía before <span class="icons chevron-down-block-before icons-4xl"></span></h2>
+                <!-- Iconografía before -->
+                <div class="content">
+                    <div class="grid-row m-top-s" id="beforeIcons"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-row m-top-m">
+            <div class="col-12 p-reset">
+                <h2
+                    class="typography-h2 f-size-4xl f-weight-m c-informative-medium t-decoration-underline collapsible p-left-s">
+                    Iconografía after <span class="icons chevron-down-block-before icons-4xl"></span></h2>
+                <!-- Iconografía after -->
+                <div class="content">
+                    <div class="grid-row m-top-s" id="afterIcons"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botones nuevos -->
+        <div class="grid-row m-top-m m-bottom-s">
+            <div class="col-12">
+                <h2 class="typography-h2 f-size-4xl f-weight-m c-informative-medium">Botones</h2>
+            </div>
+        </div>
+        <div class="grid-row m-bottom-m">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-2 m-bottom-m m-bottom-sm-reset">
+                <button class="btn btn-primary">Primario habilitado</button>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-2 m-bottom-m m-bottom-sm-reset">
+                <button class="btn btn-primary btn-primary-disabled" disabled>Primario deshabilitado</button>
+            </div>
+        </div>
+        <div class="grid-row m-bottom-m">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-2 m-bottom-m m-bottom-sm-reset">
+                <button class="btn btn-secondary">Buscar</button>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-2 m-bottom-m m-bottom-sm-reset">
+                <button class="btn btn-secondary btn-secondary-disabled" disabled>Buscar</button>
+            </div>
+        </div>
+        <div class="grid-row m-bottom-m">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-2 m-bottom-m m-bottom-sm-reset">
+                <button class="btn btn-default">Abrir cuenta</button>
+            </div>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-2 m-bottom-m m-bottom-sm-reset">
+                <button class="btn btn-default btn-default-disabled" disabled>Abrir cuenta</button>
+            </div>
+        </div>
+
+        <!-- Campos de texto -->
+        <div class="grid-row m-top-m m-bottom-s">
+            <div class="col-12">
+                <h2 class="typography-h2 f-size-4xl f-weight-m c-informative-medium">Campos de texto</h2>
+            </div>
+        </div>
+        <!-- Campo de texto estado error -->
+        <div class="grid-row">
+            <div class="col-12">
+                <label class="typography-label">Label estado error</label>
+            </div>
+            <div class="col-12 m-top-xs">
+                <input class='input-main input-main_error typography-placeholder f-size-xl' name="" placeholder="Test"
+                    type="text" value="">
+                <span class='typography-h5 f-size-l c-brand-low'>Error text</span>
+            </div>
+        </div>
+
+        <!-- Campo de texto estado por defecto -->
+        <div class="grid-row m-top-m">
+            <div class="col-12 m-bottom-xs">
+                <label class="typography-label">Label estado por defecto</label>
+            </div>
+            <div class="col-12">
+                <input class='input-main input-main_default typography-placeholder f-size-xl' name="" placeholder="Test"
+                    type="text" value="">
+            </div>
+            <div class="col-12  m-top-xs">
+                <span class="icons check-block-before icons-l c-positive-medium"></span>
+                <label class="typography-h5 f-size-l">Description</label>
+            </div>
+        </div>
+
+        <!-- Campo de texto estado deshabilitado -->
+        <div class="grid-row m-top-m">
+            <div class="col-12 m-bottom-xs">
+                <label class="typography-label">Label estado deshabilitado</label>
+            </div>
+            <div class="col-12">
+                <input class='input-main input-main_disabled typography-placeholder f-size-xl' disabled name=""
+                    placeholder="Test" type="text" value="">
+            </div>
+        </div>
+
+        <!-- Campo de texto de contraseña-->
+        <div class="grid-row m-top-m">
+            <div class="col-12 m-bottom-s">
+                <label class="typography-label">Contraseña</label>
+            </div>
+            <div class="col-12 input-password">
+                <input class="input-main input-main_default typography-placeholder" name="password"
+                    placeholder="Digite su contraseña" type="password">
+                <span class="typography-link" data-hidden-message="Ocultar">Mostrar</span>
+            </div>
+        </div>
+
+        <!-- Listas -->
+        <div class="grid-row m-top-m m-bottom-s">
+            <div class="col-12">
+                <h2 class="typography-h2 f-size-4xl f-weight-m c-informative-medium">Listas</h2>
+            </div>
+        </div>
+
+        <!-- Lista ordenada -->
+        <div class="grid-row">
+            <div class="col-12">
+                <ol class="list">
+                    <li class="list__ordered-li"><span>Elemento 1</span></li>
+                    <li class="list__ordered-li"><span>Elemento 2</span></li>
+                    <li class="list__ordered-li"><span>Elemento 3</span></li>
+                    <li class="list__ordered-li"><span>Elemento 4</span></li>
+                    <li class="list__ordered-li"><span>Elemento 5</span></li>
+                    <li class="list__ordered-li"><span>Elemento 6</span></li>
+                    <li class="list__ordered-li"><span>Elemento 7</span></li>
+                    <li class="list__ordered-li"><span>Elemento 8</span></li>
+                    <li class="list__ordered-li"><span>Elemento 9</span></li>
+                    <li class="list__ordered-li"><span>Elemento 10</span></li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Lista no ordenada -->
+        <div class="grid-row m-top-m">
+            <div class="col-12">
+                <ul class="list list-group-unordered">
+                    <li class="icons circle-block-before list-item-unordered"><span>Elemento 1</span></li>
+                    <li class="icons check-block-before list-item-unordered"><span>Elemento 2</span></li>
+                    <li class="icons circle-block-before list-item-unordered"><span>Elemento 3</span></li>
+                    <li class="icons dot-filled-before icons-before-xs list-item-unordered"><span>Elemento 4</span>
+                    </li>
+                    <li class="icons dot-filled-before icons-before-xs list-item-unordered"><span>Elemento 5</span>
+                    </li>
+                    <li class="icons dot-filled-before icons-before-xs list-item-unordered"><span>Lorem Ipsum is
+                            simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                            industry's standard
+                            dummy text ever since the 1500s, when an unknown printer took a galley of type and
+                            scrambled it to make a type specimen book</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- CheckBox -->
+        <div class="grid-row m-top-m m-bottom-s">
+            <div class="col-12">
+                <h2 class="typography-h2 f-size-4xl f-weight-m c-informative-medium">Checkbox</h2>
+            </div>
+        </div>
+        <div class="grid-row">
+            <div class="col-12 col-md-3 m-bottom-m m-bottom-sm-reset">
+                <div class="checkbox-input">
+                    <input class="checkbox-button" type="checkbox" id="myCheckId3" name="option3" value="Tercero" />
+                    <label class="checkbox-button-icon" for="myCheckId3">
+                        <span class="checkbox-icon">
+                            <svg class="svg-check" viewbox="0 0 12 9">
+                                <polyline points="1 5 4 8 11 1"></polyline>
+                            </svg>
+                        </span>
+                        <span class="input-text m-left-s">Check</span>
+                    </label>
+                </div>
+            </div>
+            <div class="col-12 col-md-3 m-bottom-m m-bottom-sm-reset">
+                <div class="checkbox-input">
+                    <input class="checkbox-button" checked type="checkbox" id="myCheckId4" name="option6"
+                        value="cuarto" />
+                    <label class="checkbox-button-icon" for="myCheckId4">
+                        <span class="checkbox-icon checkbox-empty">
+                            <svg class="svg-check" viewbox="0 0 12 9">
+                                <polyline points="1 5 4 8 11 1"></polyline>
+                            </svg>
+                        </span>
+                        <span class="input-text m-left-s">Empty</span>
+                    </label>
+                </div>
+            </div>
+            <div class="col-12 col-md-3 m-bottom-m m-bottom-sm-reset">
+                <div class="checkbox-input">
+                    <input class="checkbox-button" checked type="checkbox" id="myCheckId5" name="option6"
+                        value="quinto" />
+                    <label class="checkbox-button-icon" for="myCheckId5">
+                        <span class="checkbox-icon onhold">
+                            <svg class="svg-check" viewbox="0 0 12 9">
+                                <polyline points="1 5 4 8 11 1"></polyline>
+                            </svg>
+                        </span>
+                        <span class="input-text m-left-s">Onhold</span>
+                    </label>
+                </div>
+            </div>
+            <div class="col-12 col-md-3 m-bottom-m m-bottom-sm-reset">
+                <div class="checkbox-input">
+                    <input class="checkbox-button" checked type="checkbox" id="myCheckId6" name="option6"
+                        value="sexto" />
+                    <label class="checkbox-button-icon" for="myCheckId6">
+                        <span class="checkbox-icon">
+                            <svg class="svg-check" viewbox="0 0 12 9">
+                                <polyline points="1 5 4 8 11 1"></polyline>
+                            </svg>
+                        </span>
+                        <span class="input-text m-left-s">Checked</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Switch -->
+        <div class="grid-row m-top-m m-bottom-s">
+            <div class="col-12">
+                <h2 class="typography-h2 f-size-4xl f-weight-m c-informative-medium">Switch</h2>
+            </div>
+        </div>
+        <!-- Switch default -->
+        <div class="grid-row">
+            <div class="col-12 col-md-3 m-bottom-m m-bottom-sm-reset">
+                <div class="d-flex a-items-center">
+                    <div class="m-right-s"><span class="input-text">Left</span></div>
+                    <div class="d-flex a-items-center">
+                        <label class="switch">
+                            <input class="switch-input" type="checkbox" data-bind="" id="">
+                            <span class="switch-slider">
+                                <span class="switch-status">
+                                    <i class="unselected anim-rotate-in"></i>
+                                    <i class="selected anim-rotate-in"></i>
+                                </span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+                <div>
+                </div>
+            </div>
+            <!-- Switch Default right label -->
+            <div class="col-12 col-md-3 m-bottom-m m-bottom-sm-reset">
+                <div class="d-flex a-items-center">
+                    <div class="d-flex a-items-center">
+                        <label class="switch">
+                            <input class="switch-input" type="checkbox" data-bind="" id="">
+                            <span class="switch-slider">
+                                <span class="switch-status">
+                                    <i class="unselected anim-rotate-in"></i>
+                                    <i class="selected anim-rotate-in"></i>
+                                </span>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="m-left-s"><span class="input-text">Right</span></div>
+                </div>
+                <div>
+                </div>
+            </div>
+            <!-- Switch Default top label -->
+            <div class="col-12 col-md-3 d-flex j-content-start m-bottom-m m-bottom-sm-reset">
+                <div class="d-flex f-column a-items-center">
+                    <div class="m-bottom-s"><span class="input-text">Top</span></div>
+                    <div class="d-flex a-items-center">
+                        <label class="switch">
+                            <input class="switch-input" type="checkbox" data-bind="" id="">
+                            <span class="switch-slider">
+                                <span class="switch-status">
+                                    <i class="unselected anim-rotate-in"></i>
+                                    <i class="selected anim-rotate-in"></i>
+                                </span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+                <div>
+                </div>
+            </div>
+            <!-- Switch Default bottom label -->
+            <div class="col-12 d-flex j-content-start col-md-3 m-bottom-m m-bottom-sm-reset">
+                <div class="d-flex f-column a-items-center">
+                    <div class="d-flex a-items-center">
+                        <label class="switch">
+                            <input class="switch-input" type="checkbox" data-bind="" id="">
+                            <span class="switch-slider">
+                                <span class="switch-status">
+                                    <i class="unselected anim-rotate-in"></i>
+                                    <i class="selected anim-rotate-in"></i>
+                                </span>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="m-top-s"><span class="input-text">Bottom</span></div>
+                </div>
+                <div>
+                </div>
+            </div>
+        </div>
+        <div class="grid-row m-top-m">
+            <!-- Switch responsive -->
+            <div class="col-12 col-md-2 m-bottom-m m-bottom-sm-reset">
+                <div class="d-flex a-items-center j-content-between">
+                    <div class="m-right-s"><span class="input-text">Responsive</span></div>
+                    <div class="d-flex a-items-center">
+                        <label class="switch">
+                            <input class="switch-input" type="checkbox" data-bind="" id="">
+                            <span class="switch-slider">
+                                <span class="switch-status">
+                                    <i class="unselected anim-rotate-in"></i>
+                                    <i class="selected anim-rotate-in"></i>
+                                </span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+                <div>
+                </div>
+            </div>
+            <!-- Disabled + Unchecked -->
+            <div class="col-12 col-md-4 m-bottom-m m-bottom-sm-reset">
+                <div class="d-flex a-items-center">
+                    <span class="input-text m-right-s">Disabled + Unchecked</span>
+                    <label class="switch">
+                        <input class="switch-input" type="checkbox" data-bind="" id="" />
+                        <span class="switch-slider switch-empty">
+                            <span class="switch-status">
+                                <i class="unselected anim-rotate-in"></i>
+                                <i class="selected anim-rotate-in"></i>
+                            </span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+            <!-- Disabled + Checked -->
+            <div class="col-12 col-md-4 m-bottom-m m-bottom-sm-reset">
+                <div class="d-flex a-items-center">
+                    <span class="input-text m-right-s">Disabled + Checked</span>
+                    <label class="switch">
+                        <input class="switch-input" checked type="checkbox" data-bind="" id="" />
+                        <span class="switch-slider switch-onhold">
+                            <span class="switch-status">
+                                <i class="unselected anim-rotate-in"></i>
+                                <i class="selected anim-rotate-in"></i>
+                            </span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+            <!-- Checked -->
+            <div class="col-12 col-md-2 m-bottom-m m-bottom-sm-reset">
+                <div class="d-flex a-items-center">
+                    <span class="input-text m-right-s">Checked</span>
+                    <label class="switch">
+                        <input class="switch-input" checked type="checkbox" data-bind="" id="" />
+                        <span class="switch-slider">
+                            <span class="switch-status">
+                                <i class="unselected anim-rotate-in"></i>
+                                <i class="selected anim-rotate-in"></i>
+                            </span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Efectos del switch -->
+        <div class="grid-row m-top-m m-bottom-s">
+            <div class="col-12">
+                <h2 class="typography-h2 f-size-xl f-weight-m c-informative-medium">Efectos del switch</h2>
+            </div>
+        </div>
+        <!-- Switch rotate in -->
+        <div class="grid-row">
+            <div class="col-12 col-md-2 m-bottom-m m-bottom-sm-reset">
+                <div class="d-flex a-items-center">
+                    <span class="input-text m-right-s">Rotate In</span>
+                    <label class="switch">
+                        <input class="switch-input" type="checkbox" data-bind="" id="" />
+                        <span class="switch-slider">
+                            <span class="switch-status">
+                                <i class="unselected anim-swing">
+                                    <div class="icons wrench-stroke-before icons-m"></div>
+                                </i>
+                                <i class="selected anim-rotate-in">
+                                    <div class="icons gear-stroke-before icons-m"></div>
+                                </i>
+                            </span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+            <!-- Switch Fade in -->
+            <div class="col-12 col-md-2 m-bottom-m m-bottom-sm-reset">
+                <div class="d-flex a-items-center">
+                    <span class="input-text m-right-s">Fade In</span>
+                    <label class="switch">
+                        <input class="switch-input" type="checkbox" data-bind="" id="" />
+                        <span class="switch-slider">
+                            <span class="switch-status">
+                                <i class="unselected anim-fade-in">
+                                    <div class="icons curved-right-arrow-filled-before icons-m"> </div>
+                                </i>
+                                <i class="selected anim-fade-in">
+                                    <div class="icons curved-left-arrow-filled-before icons-m"> </div>
+                                </i>
+                            </span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+            <!-- Switch Swing -->
+            <div class="col-12 col-md-2 m-bottom-m m-bottom-sm-reset">
+                <div class="d-flex a-items-center">
+                    <span class="input-text m-right-s">Swing</span>
+                    <label class="switch">
+                        <input class="switch-input" type="checkbox" data-bind="" id="" />
+                        <span class="switch-slider">
+                            <span class="switch-status">
+                                <i class="unselected anim-swing">
+                                    <div class="icons house-stroke-before icons-m"> </div>
+                                </i>
+                                <i class="selected anim-swing">
+                                    <div class="icons apartments-stroke-before icons-m"> </div>
+                                </i>
+                            </span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+            <!-- Switch Tada -->
+            <div class="col-12 col-md-2 m-bottom-m m-bottom-sm-reset">
+                <div class="d-flex a-items-center">
+                    <span class="input-text m-right-s">Tada</span>
+                    <label class="switch">
+                        <input class="switch-input" type="checkbox" data-bind="" id="" />
+                        <span class="switch-slider">
+                            <span class="switch-status">
+                                <i class="unselected anim-tada">
+                                    <div class="icons pig-piggy-bank-coin-stroke-before icons-m"> </div>
+                                </i>
+                                <i class="selected anim-tada">
+                                    <div class="icons first-aid-kit-stroke-before icons-m"> </div>
+                                </i>
+                            </span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+            <!-- Switch Shake -->
+            <div class="col-12 col-md-2 m-bottom-m m-bottom-sm-reset">
+                <div class="d-flex a-items-center">
+                    <span class="input-text m-right-s">Shake</span>
+                    <label class="switch">
+                        <input class="switch-input" type="checkbox" data-bind="" id="" />
+                        <span class="switch-slider">
+                            <span class="switch-status">
+                                <i class="unselected anim-shake">
+                                    <div class="icons clock-stroke-before icons-m"></div>
+                                </i>
+                                <i class="selected anim-shake">
+                                    <div class="icons clock-stroke-before icons-m"></div>
+                                </i>
+                            </span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mensajes de alerta -->
+        <div class="grid-row m-top-m m-bottom-s">
+            <div class="col-12">
+                <h2 class="typography-h2 f-size-4xl f-weight-m c-informative-medium">Mensajes de alerta</h2>
+            </div>
+        </div>
+
+        <div class="grid-row">
+            <div class="col-12">
+                <div id="createMessage1"></div>
+            </div>
+        </div>
+        <div class="grid-row">
+            <div class="col-12">
+                <div id="createMessage2"></div>
+            </div>
+        </div>
+        <div class="grid-row">
+            <div class="col-12">
+                <div id="createMessage3"></div>
+            </div>
+        </div>
+        <div class="grid-row">
+            <div class="col-12">
+                <div id="createMessage4"></div>
+            </div>
+        </div>
+        <div class="grid-row">
+            <div class="col-12">
+                <div id="createMessage5"></div>
+            </div>
+        </div>
+        <div class="grid-row">
+            <div class="col-12">
+                <div id="createMessage6"></div>
+            </div>
+        </div>
+
+        <div class="grid-row">
+            <div class="col-12">
+                <div id="createMessage7"></div>
+            </div>
+        </div>
+
+        <!-- Cards -->
+        <!-- Mensajes de alerta -->
+        <div class="grid-row m-top-m m-bottom-s">
+            <div class="col-12">
+                <h2 class="typography-h2 f-size-4xl f-weight-m c-informative-medium">Cards</h2>
+            </div>
+        </div>
+        <div class="grid-row">
+            <div class="col-12">
+                <label class="typography-label">Default</label>
+                <div class="card">
+                </div>
+            </div>
+            <div class="col-12">
+                <label class="typography-label">Neutral medium</label>
+                <div class="card neutral-medium border">
+                </div>
+            </div>
+        </div>
+        <div class="grid-row margin-top-s">
+            <div class="col-12">
+                <label class="typography-label">Neutral extrahigh</label>
+                <div class="card neutral-extrahigh border">
+                </div>
+            </div>
+        </div>
+        <div class="grid-row margin-top-s">
+            <div class="col-12">
+                <label class="typography-label">Informative medium</label>
+                <div class="card informative-medium border">
+                </div>
+            </div>
+        </div>
+        <div class="grid-row margin-top-s">
+            <div class="col-12">
+                <label class="typography-label">Interaction low</label>
+                <div class="card interaction-low border">
+                </div>
+            </div>
+        </div>
+        <div class="grid-row margin-top-s">
+            <div class="col-12">
+                <label class="typography-label">Positive medium</label>
+                <div class="card positive-medium border">
+                </div>
+            </div>
+        </div>
+        <div class="grid-row margin-top-s">
+            <div class="col-12">
+                <label class="typography-label">Attention low</label>
+                <div class="card attention-low border">
+                </div>
+            </div>
+        </div>
+        <div class="grid-row margin-top-s">
+            <div class="col-12">
+                <label class="typography-label">Critical low</label>
+                <div class="card critical-low border">
+                </div>
+            </div>
+        </div>
+        <div class="grid-row margin-top-s">
+            <div class="col-12">
+                <label class="typography-label">importance low</label>
+                <div class="card importance-low border">
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="grid-row m-top-m">
+            <div class="col-12">
+                <h2 class="typography-h2 f-size-4xl f-weight-m c-informative-medium">Modal</h2>
+            </div>
+        </div>
+        <div class="grid-row m-top-s">
+            <div class="col-12 col-md-3">
+                <button id="modalReference" class="btn btn-primary">Abrir modal</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        window.onload = () => {
+            var randomAnimation = new RandomAnimationComponent({
+                animationContainerID: "randomContainer",
+                maxAnimationTime: 12,
+                minAnimationTime: 6,
+                height: '150px',
+                width: '100%',
+                zIndex: '105',
+                paths: [{repeat: 5, d: IconPath.PATH_DOLAR},
+                        {repeat: 5, d: "M -12.818 3.818 C -15.28 1.356 -18.541 0 -22 0 C -25.459 0 -28.72 1.356 -31.182 3.818 C -33.644 6.281 -35 9.541 -35 13 C -35 16.459 -33.644 19.72 -31.182 22.182 C -28.72 24.644 -25.459 26 -22 26 C -18.541 26 -15.28 24.644 -12.818 22.182 C -10.356 19.72 -9 16.459 -9 13 C -9 9.541 -10.356 6.281 -12.818 3.818 Z M -22 24.477 C -28.328 24.477 -33.476 19.328 -33.476 13 C -33.476 6.672 -28.328 1.524 -22 1.524 C -15.672 1.524 -10.523 6.672 -10.523 13 C -10.523 19.328 -15.672 24.477 -22 24.477 Z M -22 3.098 C -27.46 3.098 -31.902 7.54 -31.902 13 C -31.902 18.46 -27.46 22.903 -22 22.903 C -16.54 22.903 -12.098 18.46 -12.098 13 C -12.098 7.54 -16.54 3.098 -22 3.098 Z M -22 21.379 C -26.62 21.379 -30.379 17.62 -30.379 13 C -30.379 8.38 -26.62 4.621 -22 4.621 C -17.38 4.621 -13.621 8.38 -13.621 13 C -13.621 17.62 -17.38 21.379 -22 21.379 Z M -18.953 11.469 C -19.374 11.469 -19.715 11.128 -19.715 10.707 C -19.715 10.059 -20.361 9.489 -21.238 9.275 L -21.238 12.292 C -20.547 12.402 -19.908 12.663 -19.388 13.052 C -18.628 13.623 -18.191 14.434 -18.191 15.278 C -18.191 16.121 -18.628 16.932 -19.388 17.503 C -19.908 17.893 -20.547 18.153 -21.238 18.264 L -21.238 19.094 C -21.238 19.515 -21.579 19.856 -22 19.856 C -22.421 19.856 -22.762 19.515 -22.762 19.094 L -22.762 18.264 C -23.452 18.153 -24.092 17.893 -24.611 17.503 C -25.372 16.932 -25.808 16.121 -25.808 15.278 C -25.808 14.857 -25.467 14.516 -25.047 14.516 C -24.626 14.516 -24.285 14.857 -24.285 15.278 C -24.285 15.926 -23.639 16.496 -22.762 16.71 L -22.762 13.693 C -23.452 13.583 -24.092 13.322 -24.611 12.933 C -25.372 12.362 -25.808 11.551 -25.808 10.707 C -25.808 9.864 -25.372 9.053 -24.611 8.482 C -24.092 8.092 -23.452 7.832 -22.762 7.721 L -22.762 6.899 C -22.762 6.478 -22.421 6.137 -22 6.137 C -21.579 6.137 -21.238 6.478 -21.238 6.899 L -21.238 7.721 C -20.547 7.832 -19.908 8.092 -19.388 8.482 C -18.628 9.053 -18.191 9.864 -18.191 10.707 C -18.191 11.128 -18.532 11.469 -18.953 11.469 Z M -22.762 9.275 C -23.639 9.489 -24.285 10.059 -24.285 10.707 C -24.285 11.356 -23.639 11.926 -22.762 12.14 L -22.762 9.275 Z M -21.238 16.71 C -20.361 16.496 -19.715 15.926 -19.715 15.278 C -19.715 14.629 -20.361 14.06 -21.238 13.845 L -21.238 16.71 Z"},
+                        {repeat: 5, d: IconPath.PATH_MOLECULE},
+                    ]
+            });
+
+            var randomAnimation1 = new RandomAnimationComponent({
+                animationContainerID: "randomContainer1",
+                maxAnimationTime: 10,
+                minAnimationTime: 6,
+                height: '150px',
+                width: '100%',
+                zIndex: '105',
+                paths: [{repeat: 7, d: IconPath.PATH_DOLAR},
+                        {repeat: 7, d: IconPath.PATH_CENT}
+                    ]
+            }); 
+
+            var loaderComponentObject = new LoaderComponent({
+                height: '150px',
+                width: '100%',
+                position: 'absolute',
+                fillTime: 2,
+                radialDash: 2,
+                zIndex: '110',
+                animationContainerID: "loaderComponent"
+            });
+
+            var loaderComponentObject1 = new LoaderComponent({
+                animationContainerID: "loaderComponent1"
+            });
+
+            var loaderComponentObject2 = new LoaderComponent({
+                initFill: '--neutral-low',
+                mainColor: '--informative-medium',
+                secondaryColor: '--critical-low',
+                iconFill: '--white',
+                fillTime: 1,
+                waveTime: 3.5,
+                waveCounter: 1,
+                iconInitPath: LoadingIconPath.DEFAULT_INIT_ICON,
+                iconMainPath: LoadingIconPath.DEFAULT_MAIN_ICON,
+                iconSecondaryPath: LoadingIconPath.DEFAULT_SECONDARY_ICON,
+                iconSecondary2Path: LoadingIconPath.DEFAULT_SECONDARY_ICON_2,
+                type: 1,
+                animationContainerID: "loaderComponent2"
+            });
+
+            var loaderComponentObject3 = new LoaderComponent({
+                initFill: '--neutral-low',
+                mainColor: '--attention-low',
+                secondaryColor: '--positive-low',
+                iconFill: '--white',
+                fillTime: 2,
+                waveTime: 3.5,
+                waveCounter: 2,
+                iconInitPath: LoadingIconPath.DEFAULT_INIT_ICON,
+                iconMainPath: LoadingIconPath.DEFAULT_MAIN_ICON,
+                iconSecondaryPath: LoadingIconPath.DEFAULT_SECONDARY_ICON,
+                iconSecondary2Path: LoadingIconPath.DEFAULT_SECONDARY_ICON_2,
+                type: 0,
+                animationContainerID: "loaderComponent3"
+            });
+
+            var loaderComponentObject4 = new LoaderComponent({
+                initFill: '--neutral-low',
+                mainColor: '--interaction-low',
+                secondaryColor: '--positive-low',
+                iconFill: '--white',
+                fillTime: 1,
+                waveTime: 3.5,
+                waveCounter: 5,
+                iconInitPath: LoadingIconPath.DEFAULT_INIT_ICON,
+                iconMainPath: LoadingIconPath.DEFAULT_MAIN_ICON,
+                iconSecondaryPath: LoadingIconPath.DEFAULT_SECONDARY_ICON,
+                iconSecondary2Path: LoadingIconPath.DEFAULT_SECONDARY_ICON_2,
+                type: 0,
+                animationContainerID: "loaderComponent4"
+            });
+
+            var loaderList = [
+                loaderComponentObject1,
+                loaderComponentObject2,
+                loaderComponentObject3,
+                loaderComponentObject4
+            ];
+
+            var timeout;
+            // document.getElementById('btnAnimacion').addEventListener('click', () => {
+            //     document.querySelectorAll(".loader").forEach(function (animation) {
+            //         if (!animation.classList.contains("animation")) {
+            //             timeout = setTimeout(function () {
+            //                 loaderComponentObject1.startAnimation();
+            //                 loaderComponentObject2.startAnimation();
+            //                 loaderComponentObject3.startAnimation();
+            //                 loaderComponentObject4.startAnimation();
+            //             }, 2000);
+            //         } else {
+            //             clearTimeout(timeout);
+            //             loaderComponentObject1.endAnimation();
+            //             loaderComponentObject2.endAnimation();
+            //             loaderComponentObject3.endAnimation();
+            //             loaderComponentObject4.endAnimation();
+            //         }
+            //         animation.classList.toggle("animation");
+            //     });
+            // });
+
+            document.getElementById('btnAnimacion').addEventListener('click', () => {
+                for (var loader of loaderList) {
+                        loader.startAnimation();
+                }
+            });
+
+            document.getElementById('btnEstado').addEventListener('click', () => {
+                for (var loader of loaderList) {
+                        loader.changeLoaderStatus();
+                }
+            });
+
+            document.getElementById('btnLimpiar').addEventListener('click', () => {
+                for (var loader of loaderList) {
+                        loader.clearStatus();
+                    }
+            });
+
+            document.getElementById('btnStartAni').addEventListener('click', () => {
+                randomAnimation.initAnimation();
+            });
+
+            document.getElementById('btnStopAni').addEventListener('click', () => {
+                randomAnimation.stopAnimation();
+            });
+
+            document.getElementById('btnStart').addEventListener('click', () => {
+                randomAnimation1.initAnimation();
+                loaderComponentObject.startAnimation();
+            });
+
+            document.getElementById('btnStop').addEventListener('click', () => {
+                randomAnimation1.stopAnimation();
+                loaderComponentObject.clearStatus();
+            });
+
+            const alertMessage1 = new AlertMessage({
+                icon: "check-block-after",
+                bgColor: "alert-message-succes",
+                description:
+                    "Descripción del mensaje ,hola asi debe verse el cintillo con más tres líneas de texto, Descripción del mensaje. Hola asi debe verse el cintillo con más tres líneas de texto, Descripción del mensaje. Hola asi debe verse el cintillo con más tres líneas de texto, Descripción del mensaje ,hola asi debe verse el cintillo con más tres líneas de texto, Descripción del mensaje. Hola asi debe verse el cintillo con más tres líneas de texto, Descripción del mensaje. Hola asi debe verse el cintillo con más tres líneas de texto, Descripción del mensaje. Hola asi debe verse el cintillo con más tres líneas de texto, Descripción del mensaje ,hola asi debe verse el cintillo ",
+            }).render("createMessage1");
+
+            const alertMessage2 = new AlertMessage({
+                icon: "check-block-after",
+                bgColor: "alert-message-succes",
+                description: "Descripción del mensaje ",
+                link: "Google",
+                linkUrl: "https://www.google.com/"
+            })
+                .render("createMessage2")
+                .setStatusStyles();
+
+            const alertMessage3 = new AlertMessage({
+                icon: "exclamation-mark-down-square-block-after",
+                bgColor: "alert-message-warning",
+                title: "Soy un titulo",
+                description: "Descripción del mensaje"
+            }).render("createMessage3");
+        };
+
+        const alertMessage4 = new AlertMessage({
+            icon: "exclamation-mark-up-square-block-after",
+            bgColor: "alert-message-informative",
+            title: "Este es un titulo",
+            description: "Descripción del mensaje",
+            button: "Botón terciario"
+        }).render("createMessage4");
+
+        const alertMessage5 = new AlertMessage({
+            icon: "exclamation-mark-up-square-block-after",
+            bgColor: "alert-message-informative",
+            description: "Descripción del mensaje",
+            button: "Botón terciario",
+        }).render("createMessage5");
+
+        const alertMessage6 = new AlertMessage({
+            icon: "x-block-after",
+            bgColor: "alert-message-error",
+            description: "Descripción del mensaje",
+            link: "Google",
+            linkUrl: "https://google.com",
+            button: "Botón terciario",
+        }).render("createMessage6");
+
+        const alertMessage7 = new AlertMessage({
+            icon: "x-block-after",
+            bgColor: "alert-message-error",
+            description: "Descripción del mensaje",
+        }).render("createMessage7");
+
+        const beforeIconsArray = [
+            "cone-stroke-before",
+            "documents-dollars-stroke-before",
+            "credit-card-brand-stroke-before",
+            "credit-card-stroke-before",
+            "card-stroke-before",
+            "chat-ellipsis-stroke-before",
+            "bell-stroke-before",
+            "cell-phone-stroke-before",
+            "cash-stroke-before",
+            "atsign-stroke-before",
+            "bags-stroke-before",
+            "apartments-stroke-before",
+            "bill-stroke-before",
+            "books-stroke-before",
+            "box-stroke-before",
+            "inverted-arrows-stroke-before",
+            "calendar-stroke-before",
+            "car-stroke-before",
+            "dumbbell-stroke-before",
+            "dart-board-stroke-before",
+            "cutlery-stroke-before",
+            "ellipsis-stroke-before",
+            "first-aid-kit-stroke-before",
+            "industry-stroke-before",
+            "house-stroke-before",
+            "group-of-three-stroke-before",
+            "gradutation-cap-stroke-before",
+            "racket-stroke-before",
+            "crossed-out-eye-stroke-before",
+            "eye-stroke-before",
+            "people-stroke-before",
+            "water-drop-stroke-before",
+            "umbrella-stroke-before",
+            "two-pages-stroke-before",
+            "tv-stroke-before",
+            "lens-stroke-before",
+            "triangle-exclamation-mark-stroke-before",
+            "pig-piggy-bank-coin-stroke-before",
+            "subcategory-stroke-before",
+            "certificate-stroke-before",
+            "wrench-stroke-before",
+            "store-stroke-before",
+            "bills-stroke-before",
+            "lightbulb-stroke-before",
+            "star-stroke-before",
+            "megaphone-stroke-before",
+            "municipality-stroke-before",
+            "briefcase-stroke-before",
+            "hands-heart-stroke-before",
+            "grave-stroke-before",
+            "security-check-stroke-before",
+            "clock-stroke-before",
+            "gear-stroke-before",
+            "service-agent-stroke-before",
+            "face-id-stroke-before",
+            "shopping-cart-stroke-before",
+            "envelope-stroke-before",
+            "monitor-stroke-before",
+            "touch-id-stroke-before",
+            "logo-uni-stroke-before",
+            "wifi-stroke-before",
+            "asterisk-padlock-stroke-before",
+            "mail-letter-stroke-before",
+            "pencil-stroke-before",
+            "phone-wifi-stroke-before",
+            "star-sparks-stroke-before",
+            "soccer-ball-filled-before",
+            "square-camera-filled-before",
+            "dot-filled-before",
+            "shield-check-filled-before",
+            "hourglass-filled-before",
+            "circle-dollars-filled-before",
+            "graduation-cap-filled-before",
+            "lock-filled-before",
+            "location-filled-before",
+            "square-right-arrow-filled-before",
+            "cell-phone-filled-before",
+            "triangle-exclamation-mark-filled-before",
+            "card-circle-star-filled-before",
+            "circle-ellipsis-filled-before",
+            "factory-ellipsis-filled-before",
+            "gift-filled-before",
+            "square-circles-filled-before",
+            "affiliates-filled-before",
+            "straight-profile-filled-before",
+            "badge-check-filled-before",
+            "chat-ellipsis-filled-before",
+            "timer-filled-before",
+            "card-exclamation-mark-filled-before",
+            "card-badge-plus-filled-before",
+            "pin-filled-before",
+            "circle-horizontal-lines-filled-before",
+            "squares-plus-filled-before",
+            "arrow-going-up-filled-before",
+            "bell-filled-before",
+            "receipt-filled-before",
+            "badge-check-dash-filled-before",
+            "bill-at-sign-filled-before",
+            "buildings-filled-before",
+            "bus-filled-before",
+            "calendar-filled-before",
+            "call-filled-before",
+            "camera-filled-before",
+            "card-circle-arrow-filled-before",
+            "card-circle-curved-arrow-filled-before",
+            "card-circle-plus-filled-before",
+            "card-circle-filled-before",
+            "card-line-filled-before",
+            "cashier-filled-before",
+            "equalizer-filled-before",
+            "circle-circle-filled-before",
+            "circle-horizontal-reverse-arrows-filled-before",
+            "circle-vertical-reverse-arrows-filled-before",
+            "graphics-filled-before",
+            "circle-vertical-lines-filled-before",
+            "coin-clock-filled-before",
+            "computer-arrow-filled-before",
+            "contact-book-filled-before",
+            "dumbbell-filled-before",
+            "envelope-filled-before",
+            "fractional-circle-filled-before",
+            "grave-filled-before",
+            "hand-coin-filled-before",
+            "hand-plus-filled-before",
+            "heart-plus-filled-before",
+            "house-filled-before",
+            "lifeguard-filled-before",
+            "megaphone-filled-before",
+            "money-bag-filled-before",
+            "municipality-filled-before",
+            "gear-filled-before",
+            "clipboard-check-filled-before",
+            "percentage-filled-before",
+            "mailbox-filled-before",
+            "qr-filled-before",
+            "racket-filled-before",
+            "right-arrow-filled-before",
+            "round-profile-filled-before",
+            "shield-filled-before",
+            "square-horizontal-reverse-arrows-filled-before",
+            "square-badge-filled-before",
+            "square-three-horizontal-lines-filled-before",
+            "rectangles-plus-filled-before",
+            "squares-arrow-up-filled-before",
+            "star-filled-before",
+            "user-tie-filled-before",
+            "two-users-filled-before",
+            "umbrella-filled-before",
+            "wastebasket-x-filled-before",
+            "water-drop-filled-before",
+            "wrench-filled-before",
+            "nine-squares-filled-before",
+            "atm-filled-before",
+            "card-lock-filled-before",
+            "logo-bac-filled-before",
+            "baggage-filled-before",
+            "car-filled-before",
+            "christmas-tree-filled-before",
+            "sport-car-filled-before",
+            "documents-filled-before",
+            "black-white-square-filled-before",
+            "circle-star-filled-before",
+            "filter-filled-before",
+            "message-question-mark-filled-before",
+            "circle-circular-left-arrow-filled-before",
+            "circle-letter-i-filled-before",
+            "circle-rounded-check-filled-before",
+            "circle-square-check-filled-before",
+            "circle-question-mark-filled-before",
+            "logo-kash-filled-before",
+            "lightbulb-filled-before",
+            "circle-white-circle-filled-before",
+            "printer-filled-before",
+            "circle-circular-right-arrow-filled-before",
+            "piggy-banks-dollars-filled-before",
+            "pig-piggy-bank-filled-before",
+            "share-filled-before",
+            "document-circle-check-filled-before",
+            "document-circle-dash-filled-before",
+            "document-circle-exclamation-mark-filled-before",
+            "piggy-banks-filled-before",
+            "circle-filled-before",
+            "horizontals-arrows-exclamation-mark-filled-before",
+            "logo-whatsapp-filled-before",
+            "wifi-filled-before",
+            "wireless-signal-crossed-out-filled-before",
+            "wireless-signal-filled-before",
+            "curved-left-arrow-filled-before",
+            "curved-right-arrow-filled-before",
+            "download-filled-before",
+            "upload-filled-before",
+            "circular-curved-arrows-filled-before",
+            "tv-filled-before",
+            "arrow-up-down-filled-before",
+            "arrow-left-right-filled-before",
+            "half-arrow-up-down-filled-before",
+            "pencil-filled-before",
+            "squad-block-before",
+            "x-block-before",
+            "x-circle-block-before",
+            "plus-sign-block-before",
+            "circle-block-before",
+            "circular-right-arrow-block-before",
+            "question-mark-block-before",
+            "magnifying-glass-block-before",
+            "check-block-before",
+            "ellipsis-block-before",
+            "loading-dashed-circle-block-before",
+            "chevron-left-block-before",
+            "chevron-right-block-before",
+            "chevron-down-block-before",
+            "chevron-up-block-before",
+            "circular-arrows-block-before",
+            "arrows-left-right-block-before",
+            "hamburguer-menu-block-before",
+            "exclamation-mark-down-square-block-before",
+            "exclamation-mark-up-square-block-before",
+            "ellipsis-vertical-block-before",
+        ];
+
+        const afterIconsArray = [
+            "cone-stroke-after",
+            "documents-dollars-stroke-after",
+            "credit-card-brand-stroke-after",
+            "credit-card-stroke-after",
+            "card-stroke-after",
+            "chat-ellipsis-stroke-after",
+            "bell-stroke-after",
+            "cell-phone-stroke-after",
+            "cash-stroke-after",
+            "atsign-stroke-after",
+            "bags-stroke-after",
+            "apartments-stroke-after",
+            "bill-stroke-after",
+            "books-stroke-after",
+            "box-stroke-after",
+            "inverted-arrows-stroke-after",
+            "calendar-stroke-after",
+            "car-stroke-after",
+            "dumbbell-stroke-after",
+            "dart-board-stroke-after",
+            "cutlery-stroke-after",
+            "ellipsis-stroke-after",
+            "first-aid-kit-stroke-after",
+            "industry-stroke-after",
+            "house-stroke-after",
+            "group-of-three-stroke-after",
+            "gradutation-cap-stroke-after",
+            "racket-stroke-after",
+            "crossed-out-eye-stroke-after",
+            "eye-stroke-after",
+            "people-stroke-after",
+            "water-drop-stroke-after",
+            "umbrella-stroke-after",
+            "two-pages-stroke-after",
+            "tv-stroke-after",
+            "lens-stroke-after",
+            "triangle-exclamation-mark-stroke-after",
+            "pig-piggy-bank-coin-stroke-after",
+            "subcategory-stroke-after",
+            "certificate-stroke-after",
+            "wrench-stroke-after",
+            "store-stroke-after",
+            "bills-stroke-after",
+            "lightbulb-stroke-after",
+            "star-stroke-after",
+            "megaphone-stroke-after",
+            "municipality-stroke-after",
+            "briefcase-stroke-after",
+            "hands-heart-stroke-after",
+            "grave-stroke-after",
+            "security-check-stroke-after",
+            "clock-stroke-after",
+            "gear-stroke-after",
+            "service-agent-stroke-after",
+            "face-id-stroke-after",
+            "shopping-cart-stroke-after",
+            "envelope-stroke-after",
+            "monitor-stroke-after",
+            "touch-id-stroke-after",
+            "logo-uni-stroke-after",
+            "wifi-stroke-after",
+            "asterisk-padlock-stroke-after",
+            "mail-letter-stroke-after",
+            "pencil-stroke-after",
+            "phone-wifi-stroke-after",
+            "star-sparks-stroke-after",
+            "soccer-ball-filled-after",
+            "square-camera-filled-after",
+            "dot-filled-after",
+            "shield-check-filled-after",
+            "hourglass-filled-after",
+            "circle-dollars-filled-after",
+            "graduation-cap-filled-after",
+            "lock-filled-after",
+            "location-filled-after",
+            "square-right-arrow-filled-after",
+            "cell-phone-filled-after",
+            "triangle-exclamation-mark-filled-after",
+            "card-circle-star-filled-after",
+            "circle-ellipsis-filled-after",
+            "factory-ellipsis-filled-after",
+            "gift-filled-after",
+            "square-circles-filled-after",
+            "affiliates-filled-after",
+            "straight-profile-filled-after",
+            "badge-check-filled-after",
+            "chat-ellipsis-filled-after",
+            "timer-filled-after",
+            "card-exclamation-mark-filled-after",
+            "card-badge-plus-filled-after",
+            "pin-filled-after",
+            "circle-horizontal-lines-filled-after",
+            "squares-plus-filled-after",
+            "arrow-going-up-filled-after",
+            "bell-filled-after",
+            "receipt-filled-after",
+            "badge-check-dash-filled-after",
+            "bill-at-sign-filled-after",
+            "buildings-filled-after",
+            "bus-filled-after",
+            "calendar-filled-after",
+            "call-filled-after",
+            "camera-filled-after",
+            "card-circle-arrow-filled-after",
+            "card-circle-curved-arrow-filled-after",
+            "card-circle-plus-filled-after",
+            "card-circle-filled-after",
+            "card-line-filled-after",
+            "cashier-filled-after",
+            "equalizer-filled-after",
+            "circle-circle-filled-after",
+            "circle-horizontal-reverse-arrows-filled-after",
+            "circle-vertical-reverse-arrows-filled-after",
+            "graphics-filled-after",
+            "circle-vertical-lines-filled-after",
+            "coin-clock-filled-after",
+            "computer-arrow-filled-after",
+            "contact-book-filled-after",
+            "dumbbell-filled-after",
+            "envelope-filled-after",
+            "fractional-circle-filled-after",
+            "grave-filled-after",
+            "hand-coin-filled-after",
+            "hand-plus-filled-after",
+            "heart-plus-filled-after",
+            "house-filled-after",
+            "lifeguard-filled-after",
+            "megaphone-filled-after",
+            "money-bag-filled-after",
+            "municipality-filled-after",
+            "gear-filled-after",
+            "clipboard-check-filled-after",
+            "percentage-filled-after",
+            "mailbox-filled-after",
+            "qr-filled-after",
+            "racket-filled-after",
+            "right-arrow-filled-after",
+            "round-profile-filled-after",
+            "shield-filled-after",
+            "square-horizontal-reverse-arrows-filled-after",
+            "square-badge-filled-after",
+            "square-three-horizontal-lines-filled-after",
+            "rectangles-plus-filled-after",
+            "squares-arrow-up-filled-after",
+            "star-filled-after",
+            "user-tie-filled-after",
+            "two-users-filled-after",
+            "umbrella-filled-after",
+            "wastebasket-x-filled-after",
+            "water-drop-filled-after",
+            "wrench-filled-after",
+            "nine-squares-filled-after",
+            "atm-filled-after",
+            "card-lock-filled-after",
+            "logo-bac-filled-after",
+            "baggage-filled-after",
+            "car-filled-after",
+            "christmas-tree-filled-after",
+            "sport-car-filled-after",
+            "documents-filled-after",
+            "black-white-square-filled-after",
+            "circle-star-filled-after",
+            "filter-filled-after",
+            "message-question-mark-filled-after",
+            "circle-circular-left-arrow-filled-after",
+            "circle-letter-i-filled-after",
+            "circle-rounded-check-filled-after",
+            "circle-square-check-filled-after",
+            "circle-question-mark-filled-after",
+            "logo-kash-filled-after",
+            "lightbulb-filled-after",
+            "circle-white-circle-filled-after",
+            "printer-filled-after",
+            "circle-circular-right-arrow-filled-after",
+            "piggy-banks-dollars-filled-after",
+            "pig-piggy-bank-filled-after",
+            "share-filled-after",
+            "document-circle-check-filled-after",
+            "document-circle-dash-filled-after",
+            "document-circle-exclamation-mark-filled-after",
+            "piggy-banks-filled-after",
+            "circle-filled-after",
+            "horizontals-arrows-exclamation-mark-filled-after",
+            "logo-whatsapp-filled-after",
+            "wifi-filled-after",
+            "wireless-signal-crossed-out-filled-after",
+            "wireless-signal-filled-after",
+            "curved-left-arrow-filled-after",
+            "curved-right-arrow-filled-after",
+            "download-filled-after",
+            "upload-filled-after",
+            "circular-curved-arrows-filled-after",
+            "tv-filled-after",
+            "arrow-up-down-filled-after",
+            "arrow-left-right-filled-after",
+            "half-arrow-up-down-filled-after",
+            "pencil-filled-after",
+            "squad-block-after",
+            "x-block-after",
+            "x-circle-block-after",
+            "plus-sign-block-after",
+            "circle-block-after",
+            "circular-right-arrow-block-after",
+            "question-mark-block-after",
+            "magnifying-glass-block-after",
+            "check-block-after",
+            "ellipsis-block-after",
+            "loading-dashed-circle-block-after",
+            "chevron-left-block-after",
+            "chevron-right-block-after",
+            "chevron-down-block-after",
+            "chevron-up-block-after",
+            "circular-arrows-block-after",
+            "arrows-left-right-block-after",
+            "hamburguer-menu-block-after",
+            "exclamation-mark-down-square-block-after",
+            "exclamation-mark-up-square-block-after",
+            "ellipsis-vertical-block-after",
+        ];
+
+        const bIcons = document.getElementById('beforeIcons');
+
+        beforeIconsArray.forEach((item) => {
+            bIcons.innerHTML += `<div class="col-2 col-sm-1 m-top-m">
+                                <div class="b b-color-neutral-low t-align-center">
+                                    <i class="icons ${item} icons-4xl"></i>
+                                </div>
+                            </div>`;
+        });
+
+        const aIcons = document.getElementById('afterIcons');
+
+        afterIconsArray.forEach((item) => {
+            aIcons.innerHTML += `<div class="col-2 col-sm-1 m-top-m">
+                                <div class="b b-color-neutral-low t-align-center">
+                                    <i class="icons ${item} icons-4xl"></i>
+                                </div>
+                            </div>`;
+        });
+
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                } else {
+                    content.style.display = "block";
+                }
+            });
+        }
+
+        //Ejemplo de HTML que puede contener el modal
+        const exampleHTMLContent = `<div class="grid-container">
+                            <div class="grid-row m-bottom-s">
+                                <div class="col-12 m-top-m">
+                                    <h2 class="typography-h2">Lorem Ipsum is simply dummy text</h2>
+                                </div>
+                                <div class="col-12 m-top-m">
+                                    <p class="typography-p">Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                                        when an unknown printer took a galley of type and scrambled it to make a type specimen book </p>
+                                </div>
+                                <div class="col-12 m-top-m">
+                                    <button class="btn btn-primary">Aceptar</button>
+                                </div>
+                            </div>
+                        </div>`;
+
+        //Forma de inicializar el plugin
+        var modalBlue = new modalBLUE({
+            idModal: "myModal",
+            elementReference: "modalReference",
+            contentHTML: exampleHTMLContent,
+            container: document.getElementById("myModal"),
+            closeButtom: true
+        })
+    </script>
+</body>
+
+</html>
